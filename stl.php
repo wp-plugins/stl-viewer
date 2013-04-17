@@ -1,12 +1,15 @@
 <?php
+
 /*
 Plugin Name: STL Viewer
-Plugin URI: https://www.db4cl.com
-Description: A STL Viewer
-Version: 0.3
-Author: Christian Lölkes
+Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
+Description: STL Viewer for WordPress
+Version: 0.4
+Author: Christian Loelkes
 Author URI: http://www.db4cl.com
 License: GPL2
+
+Copyright 2013  Christian Loelkes  (email : christian.loelkes@gmail.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as 
@@ -35,7 +38,7 @@ if(!class_exists('STLViewer'))
             	require_once(sprintf("%s/settings.php", dirname(__FILE__)));
 		$STLViewer_Settings = new STLViewer_Settings();
 
-		// [bartag foo="foo-value"]
+		// Function for the shortcode
 		function insert_stl( $atts ) {
 			extract( shortcode_atts( array(
 				'file' => 'default.stl',
@@ -86,9 +89,6 @@ if(!class_exists('STLViewer'))
 		}
 		add_shortcode( 'stl', 'insert_stl' );
 
-        	// Register custom post types
-           	// require_once(sprintf("%s/post-types/post_type_template.php", dirname(__FILE__)));
-           	// $Post_Type_Template = new Post_Type_Template();
 		} // END public function __construct
 		/**
 		 * Activate the plugin
@@ -128,6 +128,6 @@ if(class_exists('STLViewer')) {
         }
 
         $plugin = plugin_basename(__FILE__);
-        // add_filter("plugin_action_links_$plugin", 'plugin_settings_link');
+        add_filter("plugin_action_links_$plugin", 'plugin_settings_link');
     }
 }

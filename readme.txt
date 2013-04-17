@@ -1,29 +1,35 @@
 === Plugin Name ===
 
 Plugin Name: STL Viewer
-Plugin URI: https://www.db4cl.com
-Description: A STL Viewer for Wordpress
-Version: 0.3
+Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
+Description: STL Viewer for WordPress
+Version: 0.4
 Author: Christian Lölkes
 Author URI: http://www.db4cl.com
 License: GPLv2
 
 == Description ==
 
-Write something nice...
+With a simple shortcode you can enable and embed a javascript viewer called thingiview. This plugin is still under development and things might change alot until version 1.0.
+
+In the current version:
+* STL files have to be uploaded to /wp-content/uploads
+* the viewer can't be used more than one time per page. This might be a feature because the viewer needs a lot of resources.
+
+This plugin uses thingiview.
 
 == Installation ==
 
 1. Upload the directory to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
+2. Activate the plugin through the 'Plugins' menu in WordPress
 
-== Frequently Asked Questions ==
-
-Nothing yet.
-
-== Screenshots ==
+3. Upload an STL-File to WordPress
+4. Insert the shortcode [stl file="filename.stl" /]
 
 == Changelog ==
+
+= 0.4 =
+* added stuff to the readme file
 
 = 0.3 =
 * code cleaning
