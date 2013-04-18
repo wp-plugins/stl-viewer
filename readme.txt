@@ -3,7 +3,7 @@
 Plugin Name: STL Viewer
 Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
-Version: 0.4
+Version: 0.4.1
 Author: Christian Lölkes
 Author URI: http://www.db4cl.com
 License: GPLv2
@@ -32,8 +32,12 @@ This plugin uses thingiview.
 
 == Changelog ==
 
+= 0.4.1 =
+* the settings page is working again.
+
 = 0.4 =
 * added stuff to the readme file
+* cleanup
 
 = 0.3 =
 * code cleaning

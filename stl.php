@@ -4,7 +4,7 @@
 Plugin Name: STL Viewer
 Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
-Version: 0.4
+Version: 0.4.1
 Author: Christian Loelkes
 Author URI: http://www.db4cl.com
 License: GPL2

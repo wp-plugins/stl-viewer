@@ -19,11 +19,11 @@ if(!class_exists('STLViewer_Settings'))
         public function admin_init()
         {
         	// register your plugin's settings
-        	register_setting('stlviewer_template-group', 'stl_div_height');
-        	register_setting('stlviewer_template-group', 'stl_div_width');
-        	register_setting('stlviewer_template-group', 'stl_color');
-        	register_setting('stlviewer_template-group', 'stl_background');
-		register_setting('stlviewer_template-group', 'stl_show_controls');
+        	register_setting('stlviewer_settings-group', 'stl_div_height');
+        	register_setting('stlviewer_settings-group', 'stl_div_width');
+        	register_setting('stlviewer_settings-group', 'stl_color');
+        	register_setting('stlviewer_settings-group', 'stl_background');
+		register_setting('stlviewer_settings-group', 'stl_show_controls');
 
         	// add your settings section
         	add_settings_section(
