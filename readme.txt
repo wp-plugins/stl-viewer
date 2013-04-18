@@ -26,6 +26,10 @@ This plugin uses thingiview.
 3. Upload an STL-File to WordPress
 4. Insert the shortcode [stl file="filename.stl" /]
 
+== Screenshots ==
+
+1. The viewer with control buttons.
+
 == Changelog ==
 
 = 0.4 =
