@@ -1,9 +1,13 @@
 === Plugin Name ===
-
+Contributors: christian.loelkes
 Plugin Name: STL Viewer
 Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
 Version: 0.4.1
+Stable tag: trunk
+Tags: stl, 3d, viewer, shortcode, 3d printing, 3d scanning, kinect
+Requires at least: 3.0
+Tested up to: 3.5.1
 Author: Christian Lölkes
 Author URI: http://www.db4cl.com
 License: GPLv2
@@ -13,6 +17,7 @@ License: GPLv2
 With a simple shortcode you can enable and embed a javascript viewer called thingiview. This plugin is still under development and things might change alot until version 1.0.
 
 In the current version:
+
 * STL files have to be uploaded to /wp-content/uploads
 * the viewer can't be used more than one time per page. This might be a feature because the viewer needs a lot of resources.
 
