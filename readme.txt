@@ -21,7 +21,7 @@ In the current version:
 * STL files have to be uploaded to /wp-content/uploads
 * the viewer can't be used more than one time per page. This might be a feature because the viewer needs a lot of resources.
 
-This plugin uses thingiview.
+This plugin uses thingiview. Check out the HowTo in the Installtion tab.
 
 == Installation ==
 
@@ -30,6 +30,15 @@ This plugin uses thingiview.
 
 3. Upload an STL-File to WordPress
 4. Insert the shortcode [stl file="filename.stl" /]
+
+5. You can use the following options in the shortcode. These will override the default settings.
+
+* file: the filname in wp-content/uploads/
+* color: set the object color (hex value).
+* background: set the background color (hex value).
+* width: width of the viewer. Can be in % or px.
+* height: height of the viewer. Can be in % or px.
+* show controls: use true/false to show/hide the control buttons.
 
 == Screenshots ==
 
