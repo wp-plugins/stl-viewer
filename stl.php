@@ -4,7 +4,7 @@
 Plugin Name: STL Viewer
 Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
-Version: 0.4.1
+Version: 0.5
 Author: Christian Loelkes
 Author URI: http://www.db4cl.com
 License: GPL2
@@ -61,7 +61,7 @@ if(!class_exists('STLViewer'))
 			$thingiview='
 				<script>
      					window.onload = function() {
-       						thingiurlbase = "http://www.db4cl.com/wp-includes/js/thingiview";
+       						thingiurlbase = "'.plugin_dir_url(__FILE__).'js";
         					thingiview = new Thingiview("'.$name.'");
         					thingiview.loadSTL("'.$upload_dir_array[baseurl].'/'.$file.'");
         					thingiview.setObjectColor(\''.$color.'\');
