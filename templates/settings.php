@@ -1,9 +1,8 @@
 <div class="wrap">
-<?php screen_icon(); ?>
-    <h2>STL Viewer</h2>
+    <h2>WP Plugin Template</h2>
     <form method="post" action="options.php"> 
-        <?php @settings_fields('settings-group'); ?>
-        <?php @do_settings_fields('settings-group'); ?>
+        <?php @settings_fields('stlviewer_settings-group'); ?>
+        <?php @do_settings_fields('stlviewer_settings-group'); ?>
 
         <?php do_settings_sections('stlviewer'); ?>
 
