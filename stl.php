@@ -4,12 +4,10 @@
 Plugin Name: STL Viewer
 Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
-Version: 0.5
+Version: 0.6
 Author: Christian Loelkes
 Author URI: http://www.db4cl.com
 License: GPL2
-
-Copyright 2013  Christian Loelkes  (email : christian.loelkes@gmail.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as 
@@ -25,108 +23,150 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if(!class_exists('STLViewer'))
-{
-	class STLViewer
-	{
-		/**
-		 * Construct the plugin object
-		 */
-		public function __construct()
-		{
+if(!class_exists('STLViewer')) {
+	class STLViewer {
+
+		public function __construct() { 	// Construct the plugin object
+
         	// Initialize Settings
-            	require_once(sprintf("%s/settings.php", dirname(__FILE__)));
+        require_once(sprintf("%s/settings.php", dirname(__FILE__)));
 		$STLViewer_Settings = new STLViewer_Settings();
 
-		// Function for the shortcode
-		function insert_stl( $atts ) {
+		///////////////////////////////////////////
+		// Main function for the [stl] shortcode //
+		///////////////////////////////////////////
+
+		function insert_STL( $atts ) { 
+
+			global $post; 	//This is needed to generate the filename from the postname.
+			$upload_dir = wp_upload_dir();
+
 			extract( shortcode_atts( array(
-				'file' => 'default.stl',
-				'name' => 'default',
-				'color' => get_option('stl_color'),
-				'background' => get_option('stl_background'),
-				'width' => get_option('stl_div_width'),
-				'height' => get_option('stl_div_height'),
-				'show_controls' => get_option('stl_show_controls'),
+				'file' 		=> $post->post_name.'-web.stl',
+				'name' 		=> 'default',
+				'rotation' 	=> get_option('rotation'),
+				'width' 	=> get_option('width'),
+				'height' 	=> get_option('height'),
+				'floor' 	=> get_option('floor')
 			), $atts ) );
-
-			// Include the javascript stuff.
-			$javascript_includes=
-				sprintf('<script type="text/javascript" src="%sjs/Three.js"></script>', plugin_dir_url(__FILE__)).
-				sprintf('<script type="text/javascript" src="%sjs/plane.js"></script>', plugin_dir_url(__FILE__)).
-				sprintf('<script type="text/javascript" src="%sjs/thingiview.js"></script>', plugin_dir_url(__FILE__));
 			
-			$upload_dir_array = wp_upload_dir();
-			// This is the script for the viewer parameters.
-			$thingiview='
-				<script>
-     					window.onload = function() {
-       						thingiurlbase = "'.plugin_dir_url(__FILE__).'js";
-        					thingiview = new Thingiview("'.$name.'");
-        					thingiview.loadSTL("'.$upload_dir_array[baseurl].'/'.$file.'");
-        					thingiview.setObjectColor(\''.$color.'\');
-        					thingiview.setBackgroundColor(\''.$background.'\');
-        					thingiview.initScene();
-      					}
-				</script>
-				<div id="'.$name.'" style="width:'.$width.';height:'.$height.'"></div>';
+			// The code for the WebGL canvas
+			$thingiview="
 
-			// Include the controls for the viewer
-			$controls='
-				<p>
-  					<input class="btn btn-small" onclick="thingiview.setCameraView(\'top\');" type="button" value="Top" /> 
-  					<input class="btn btn-small" onclick="thingiview.setCameraView(\'side\');" type="button" value="Side" /> 
-  					<input class="btn btn-small" onclick="thingiview.setCameraView(\'bottom\');" type="button" value="Bottom" /> 
-  					<input class="btn btn-small" onclick="thingiview.setCameraView(\'diagonal\');" type="button" value="Diagonal" /> 
-  					<input class="btn btn-small" onclick="thingiview.setCameraZoom(5);" type="button" value="Zoom +" /> 
-  					<input class="btn btn-small" onclick="thingiview.setCameraZoom(-5);" type="button" value="Zoom -" /> 
-  					Rotation: <input class="btn btn-small" onclick="thingiview.setRotation(true);" type="button" value="on" /> | <input class="btn btn-small" onclick="thingiview.setRotation(false);" type="button" value="off" />
-				</p>';
+<script>
 
-			//return "foo = {$foo}";
-			if ($show_controls == 'true') return $javascript_includes.$thingiview.$controls;
-			else return $javascript_includes.$thingiview;
-		}
-		add_shortcode( 'stl', 'insert_stl' );
+	var container = document.getElementById('canvas');
+
+	var SCREEN_WIDTH = container.clientWidth;
+	var SCREEN_HEIGHT = container.clientHeight;
+
+	file = '".$upload_dir['baseurl']."/".$file."';
+	floor = '".$floor."';
+
+	if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
+	else {
+		
+		$( 'progress' ).style.display = 'block';
+		$( 'canvas' ).style.display = 'block';
+		$( 'webGLError' ).style.display = 'none'
+
+		init('STL');
+		
+		animate();
+
+	} // Closes the else-command at the beginning. This executes only if there is WebGL support.
+</script>";
+		
+		// The canvas where the scene will be rendered.
+		$thingiview_frame ='
+			<div id="progress" style="width: 100%; text-align: center">'.get_option('stl_div_loading_text').'</div>
+			<div id="webGLError" style="width: 100%; text-align: center">'.get_option('stl_div_webgl_error').'</div>
+			<div id="canvas" style="width:'.$width.';height:'.$height.'"></div>
+			<div id="quality_notes" style="width: 100%; text-align: center">'.get_option('stl_div_informations').'</div>
+		';
+
+		return $thingiview_frame.$thingiview;
+		} // End of insert_stl
+
+		//////////////////////////////////////////////////
+		// Main function for the [webgl_test] shortcode //
+		//////////////////////////////////////////////////
+
+		function WebGL_test() { 
+			// The javascript
+			$test_webgl="<script>
+				text = document.getElementById('text');
+				if ( Detector.webgl ) {
+					console.log('WebGL is supported by your system.')
+					text.innerHTML = '".get_option('webgl_success_msg')."';
+				}
+
+				else {
+					console.log('WebGL is not supported by your system.')
+					text.innerHTML = '".get_option('webgl_fail_msg')."';
+				}
+
+			</script>";
+
+			$text='<div id="text"></div>';
+			return $text.$test_webgl;
+		} // End of WebGL_test()
+
+		add_shortcode( 'stl', 'insert_STL' );
+		add_shortcode( 'webgl_test', 'WebGL_test' );
 
 		} // END public function __construct
-		/**
-		 * Activate the plugin
-		 */
-		public static function activate()
-		{
-		  // Do nothing
-		} // END public static function activate
 
-		/**
-		 * Deactivate the plugin
-		 */
-		public static function deactivate()
-		{
-			// Do nothing
-		} // END public static function deactivate
+		public static function activate() {}
+		public static function deactivate() {}
+
 	} // END class STLViewer
+
 } // END if(!class_exists('STLViewer'))
 
-if(class_exists('STLViewer')) {
-	// Installation and uninstallation hooks
-	register_activation_hook(__FILE__, array('STLViewer', 'activate'));
-	register_deactivation_hook(__FILE__, array('STLViewer', 'deactivate'));
+// Following functions are for upcoming versions.
+function isSTL($file_ID) {
+	$file = get_attached_file($file_ID);
+	$extension = strtolower( substr( $file, -3 ));
+	if( $extension == "stl" ) return true;
+	else return false;
+}
 
-	// instantiate the plugin class
-	$stlviewer_plugin = new STLViewer();
+function stl_img_create($file_ID) {
+	$plugin_dir = plugin_dir_path( __FILE__ );
+	if( isSTL($file_ID) ) mkdir( $plugin_dir.'img/stl-'.$file_ID );
+}
 
-    // Add a link to the settings page onto the plugin page
-    if(isset($stlviewer_plugin))
-    {
-        // Add the settings link to the plugins page
-        function plugin_settings_link($links)
-        {
+function stl_img_delete($file_ID) {
+	$plugin_dir = plugin_dir_path( __FILE__ );
+	if( isSTL($file_ID) ) rmdir( $plugin_dir.'img/stl-'.$file_ID );
+}
+
+// Add the JS Scripts
+function ThreeJS_Scripts() {
+	wp_enqueue_script( 'ThreeJS', 		plugins_url( 'js/three.min.js' , __FILE__ ));
+	wp_enqueue_script( 'STLLoader', 	plugins_url( 'js/STLLoader.js' , __FILE__ ));
+	//wp_enqueue_script( 'OBJLoader', 	plugins_url( 'js/OBJLoader.js' , __FILE__ )); // For later use
+	wp_enqueue_script( 'OrbitControls', plugins_url( 'js/OrbitControls.js' , __FILE__ ));
+	wp_enqueue_script( 'Detector', 		plugins_url( 'js/Detector.js' , __FILE__ ));
+	wp_enqueue_script( 'Viewer', 		plugins_url( 'js/STLViewer.js' , __FILE__ ));
+}
+
+if(class_exists('STLViewer')) { 						// Installation and uninstallation hooks
+	register_activation_hook( 	__FILE__, array( 'STLViewer', 'activate' ));
+	register_deactivation_hook( __FILE__, array( 'STLViewer', 'deactivate' ));
+	
+	$stlviewer_plugin = new STLViewer(); 					// instantiate the plugin class
+	//add_filter( 'add_attachment', 'stl_img_create' );		// For later use
+	//add_filter( 'delete_attachment', 'stl_img_delete' );	// For later use
+	add_action( 'wp_enqueue_scripts', 'ThreeJS_Scripts' );
+
+    if(isset($stlviewer_plugin)) { 							// Add a link to the settings page onto the plugin page 
+        function plugin_settings_link($links) { 			// Add the settings link to the plugins page
             $settings_link = '<a href="options-general.php?page=stlviewer">Settings</a>';
             array_unshift($links, $settings_link);
             return $links;
         }
-
         $plugin = plugin_basename(__FILE__);
         add_filter("plugin_action_links_$plugin", 'plugin_settings_link');
     }
