@@ -17,7 +17,7 @@ function setObjectRotation(x, y, z) {
 function cameraPosition() {				// This sets the camera position after loading the geometry.
   	if (geometry_object && !loaded) {
 
-        camera.position.set( dimensions_x/2, dimensions_y * 2, dimensions_y/2 );
+        camera.position.set( 0, 0, dimensions_y/2 );
         camera.fov = 2 * Math.atan( dimensions_z / ( 2 * dimensions_y ) ) * ( 180 / Math.PI ); // in degrees
         camera.lookAt(mesh_object.center);
 
