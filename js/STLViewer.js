@@ -3,35 +3,24 @@ var loader, controls, file;
 var camera, scene, renderer, mesh_object, mesh_floor, dimensions_x, dimensions_y, dimensions_z, loaded;
 var geometry_object, effect;
 
+// IMPORTANT
+
 function $( id ) {
 	return document.getElementById( id );
 }
 
 function setObjectRotation(x, y, z) {
-	rotation_x = x * Math.PI/2;
-	rotation_y = y * Math.PI/2;
-	rotation_z = z * Math.PI/2;
-	mesh_object.rotation.set( rotation_x, rotation_y, rotation_z );
+	mesh_object.rotation.set( x * Math.PI/2, y * Math.PI/2, z * Math.PI/2 );
 } // End of setObjectRotation()
 
 	
 function cameraPosition() {				// This sets the camera position after loading the geometry.
   	if (geometry_object && !loaded) {
-		// ToDo: Adjust these according to camera FOV.
-		//camera.position.x = dimensions_x/2;
-		//camera.position.z = dimensions_y*2;
-		//camera.position.y = dimensions_y/2;
 
-        camera.position.set(dimensions_x/2, dimensions_y*2, dimensions_y/2);
-        pointLight.position.set(0, dimensions_y/2, -2*dimensions_x);
-        directionalLight.position.set(0, dimensions_y * 3/4, dimensions_z * 3);
-
-     	//pointLight.position.x = 0;
-     	//pointLight.position.y = dimensions_y/2;
-     	//pointLight.position.z = -2*dimensions_x;
-      	//directionalLight.position.x = 0;
-     	//directionalLight.position.y = dimensions_y * 3/4;
-     	//directionalLight.position.z = dimensions_z * 3;
+        camera.position.set( dimensions_x/2, dimensions_y * 2, dimensions_y/2 );
+        camera.fov = 2 * Math.atan( dimensions_z / ( 2 * dimensions_y ) ) * ( 180 / Math.PI ); // in degrees
+        pointLight.position.set( 0, dimensions_y/2, -2*dimensions_x );
+        directionalLight.position.set( 0, dimensions_y * 3/4, dimensions_z * 3 );
 
 		loaded = true; 				//Only run once.
 		$( 'progress' ).style.display = 'none';
@@ -51,13 +40,11 @@ function init( inputfiletype ) {
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 
 	// Camera
+
 	camera = new THREE.PerspectiveCamera( 35, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 25000 );
-	camera.position.y = 100; 					// Default position.
-	camera.position.z = 1000;					// The camera position is set with cameraPosition() as soon as the geometry is loaded
 
 	// Controls
     controls = new THREE.OrbitControls( camera, container );
-	controls.minPolarAngle = 0;					// Do not rotate under the floor.
 	controls.maxPolarAngle = Math.PI/2;
     controls.addEventListener( 'change', render );
 
@@ -90,8 +77,7 @@ function init( inputfiletype ) {
 		dimensions_z = geometry_object.boundingBox.max.z - geometry_object.boundingBox.min.z;
 		dimensions_y = geometry_object.boundingBox.max.y - geometry_object.boundingBox.min.y;
 		dimensions_x = geometry_object.boundingBox.max.x - geometry_object.boundingBox.min.x;
-		mesh_object.castShadow = true;
-		mesh_object.receiveShadow = true;                                        
+		mesh_object.castShadow = mesh_object.receiveShadow = true;
 		camera.lookAt(mesh_object.center);
 		mesh_object.rotation.set( 0,0,Math.PI );
 		scene.add( mesh_object );
