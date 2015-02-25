@@ -18,15 +18,20 @@ function setObjectRotation(x, y, z) {
 function cameraPosition() {				// This sets the camera position after loading the geometry.
   	if (geometry_object && !loaded) {
 		// ToDo: Adjust these according to camera FOV.
-		camera.position.x = dimensions_x/2;
-		camera.position.z = dimensions_y*2;
-		camera.position.y = dimensions_y/2;
-     		pointLight.position.x = 0;
-     		pointLight.position.y = dimensions_y/2;
-     		pointLight.position.z = -2*dimensions_x;
-      		directionalLight.position.x = 0;
-     		directionalLight.position.y = dimensions_y * 3/4;
-     		directionalLight.position.z = dimensions_z * 3;
+		//camera.position.x = dimensions_x/2;
+		//camera.position.z = dimensions_y*2;
+		//camera.position.y = dimensions_y/2;
+
+        camera.position.set(dimensions_x/2, dimensions_y*2, dimensions_y/2);
+        pointLight.position.set(0, dimensions_y/2, -2*dimensions_x);
+        directionalLight.position.set(0, dimensions_y * 3/4, dimensions_z * 3);
+
+     	//pointLight.position.x = 0;
+     	//pointLight.position.y = dimensions_y/2;
+     	//pointLight.position.z = -2*dimensions_x;
+      	//directionalLight.position.x = 0;
+     	//directionalLight.position.y = dimensions_y * 3/4;
+     	//directionalLight.position.z = dimensions_z * 3;
 
 		loaded = true; 				//Only run once.
 		$( 'progress' ).style.display = 'none';
@@ -51,11 +56,12 @@ function init( inputfiletype ) {
 	camera.position.z = 1000;					// The camera position is set with cameraPosition() as soon as the geometry is loaded
 
 	// Controls
-    	controls = new THREE.OrbitControls( camera, container );
+    controls = new THREE.OrbitControls( camera, container );
 	controls.minPolarAngle = 0;					// Do not rotate under the floor.
 	controls.maxPolarAngle = Math.PI/2;
-    	controls.addEventListener( 'change', render );
+    controls.addEventListener( 'change', render );
 
+    // Init the scene
 	scene = new THREE.Scene(); // Scene
 	scene.fog = new THREE.Fog( 0xd9dee5, 1, 10000 ); // Fog
 				
@@ -63,11 +69,11 @@ function init( inputfiletype ) {
 	scene.add( new THREE.AmbientLight( 0x202020, 1 ) );
 
 	directionalLight = new THREE.DirectionalLight(0xffffff, 0.7); 
-    	directionalLight.position.normalize();
-    	scene.add(directionalLight);
+    directionalLight.position.normalize();
+    scene.add(directionalLight);
     
-    	pointLight = new THREE.PointLight(0xffffff, 0.7);
-    	scene.add(pointLight);
+    pointLight = new THREE.PointLight(0xffffff, 0.7);
+    scene.add(pointLight);
 
 	// Object
 	var material_object = new THREE.MeshLambertMaterial({color:0xffffff, shading: THREE.FlatShading});
