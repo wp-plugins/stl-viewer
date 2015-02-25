@@ -19,6 +19,9 @@ function cameraPosition() {				// This sets the camera position after loading th
 
         camera.position.set( dimensions_x/2, dimensions_y * 2, dimensions_y/2 );
         camera.fov = 2 * Math.atan( dimensions_z / ( 2 * dimensions_y ) ) * ( 180 / Math.PI ); // in degrees
+        camera.lookAt(mesh_object.center);
+
+
         pointLight.position.set( 0, dimensions_y/2, -2*dimensions_x );
         directionalLight.position.set( 0, dimensions_y * 3/4, dimensions_z * 3 );
 
@@ -85,6 +88,10 @@ function init( inputfiletype ) {
 	} ); // End of loader.addEventListener()
 
 	loader.load( file );
+
+    var bbox = new THREE.BoundingBoxHelper( mesh_object, hex );
+    bbox.update();
+    scene.add( bbox );
 
 	// Floor
 	var texture_floor = THREE.ImageUtils.loadTexture( floor );
