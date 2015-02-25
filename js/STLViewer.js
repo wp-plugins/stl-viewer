@@ -21,7 +21,6 @@ function cameraPosition() {				// This sets the camera position after loading th
         camera.fov = 2 * Math.atan( dimensions_z / ( 2 * dimensions_y ) ) * ( 180 / Math.PI ); // in degrees
         camera.lookAt(mesh_object.center);
 
-
         pointLight.position.set( 0, dimensions_y/2, -2*dimensions_x );
         directionalLight.position.set( 0, dimensions_y * 3/4, dimensions_z * 3 );
 
@@ -89,7 +88,7 @@ function init( inputfiletype ) {
 
 	loader.load( file );
 
-    var bbox = new THREE.BoundingBoxHelper( mesh_object, hex );
+    var bbox = new THREE.BoundingBoxHelper( mesh_object, 0xff0000 );
     bbox.update();
     scene.add( bbox );
 
