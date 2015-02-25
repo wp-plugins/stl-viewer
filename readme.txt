@@ -3,8 +3,8 @@ Contributors: christian.loelkes
 Plugin Name: STL Viewer
 Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
-Version: 0.5
-Stable tag: trunk
+Version: 0.6
+Stable tag: 0.5
 Tags: stl, 3d, viewer, shortcode, 3d printing, 3d scanning, kinect
 Requires at least: 3.0
 Tested up to: 3.5.1
