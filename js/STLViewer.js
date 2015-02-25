@@ -88,10 +88,6 @@ function init( inputfiletype ) {
 
 	loader.load( file );
 
-    var bbox = new THREE.BoundingBoxHelper( mesh_object, 0xff0000 );
-    bbox.update();
-    scene.add( bbox );
-
 	// Floor
 	var texture_floor = THREE.ImageUtils.loadTexture( floor );
 	var material_floor = new THREE.MeshBasicMaterial( { map: texture_floor } );
