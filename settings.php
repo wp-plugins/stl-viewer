@@ -4,13 +4,14 @@ if(!class_exists('STLViewer_Settings')) {
 
         private $tabs = array(
             'default'       => '<span class="dashicons dashicons-admin-settings"></span> General Settings',
-            'render'        => '<span class="dashicons dashicons-admin-settings"></span> Rendering options',
+            'render'        => '<span class="dashicons dashicons-desktop"></span> Rendering options',
             'webgl_test'    => '<span class="dashicons dashicons-admin-generic"></span> WebGL Test options',
             //'misc'          => 'Misc'
         );
         private $sections = array(
             array('name' => 'general', 		'title' =>'General settings',           'tab' => 'default'),
             array('name' => 'render', 		'title' =>'WebGL renderer settings',    'tab' => 'render'),
+            array('name' => 'default_rot', 	'title' =>'Default Object rotation',    'tab' => 'render'),
             array('name' => 'webgl_test', 	'title' =>'WebGL tester settings',      'tab' => 'webgl_test')
         );
         private $settings = array(
@@ -20,7 +21,11 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'stl_div_informations', 'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
             array('name' => 'stl_div_loading_text', 'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),
             array('name' => 'floor', 			    'title' => 'Floor texture (floor)',     'type' => 'text',		'section' => 'render'),
-            //array('name' => 'rotation', 			    'title' => 'Rotate object (rotation)', 	'type' => 'text',		'section' => 'render'),
+            array('name' => 'show_controls', 	    'title' => 'Show controls',             'type' => 'checkbox',	'section' => 'render'),
+            array('name' => 'autorotate', 			'title' => 'Enable autrotation',        'type' => 'checkbox',	'section' => 'render'),
+            array('name' => 'rotationX', 			'title' => 'Rotate object (X-Axis)', 	'type' => 'text',		'section' => 'default_rot'),
+            array('name' => 'rotationY', 			'title' => 'Rotate object (Y-Axis)', 	'type' => 'text',		'section' => 'default_rot'),
+            array('name' => 'rotationZ', 			'title' => 'Rotate object (Z-Achis)', 	'type' => 'text',		'section' => 'default_rot'),
             array('name' => 'webgl_test_success', 	'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'),
             array('name' => 'webgl_test_fail', 		'title' => 'Fail message', 			    'type' => 'textarea',	'section' => 'webgl_test'),
         );
