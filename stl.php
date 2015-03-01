@@ -30,24 +30,29 @@ if(!class_exists('STLViewer')) {
 	class STLViewer {
 
 		public function __construct() { 				// Construct the plugin object
-            require_once(sprintf("%s/settings.php", dirname(__FILE__))); 	// Initialize Settings
+            require_once( sprintf( "%s/settings.php", dirname(__FILE__) ) ); 	// Initialize Settings
 
-            function insert_STL( $atts ) {
+            add_shortcode( 'stl', array(&$this, 'insert_STL') );
+            add_shortcode( 'webgl_test', array(&$this, 'WebGL_test') );
 
-                global $post; 	//This is needed to generate the filename from the postname.
-                $upload_dir = wp_upload_dir();
+		} // END public function __construct
 
-                extract( shortcode_atts( array(
-                    'file' 		=> $post->post_name.'-web.stl',
-                    'name' 		=> 'default',
-                    'rotation' 	=> get_option('rotation'),
-                    'width' 	=> get_option('width'),
-                    'height' 	=> get_option('height'),
-                    'floor' 	=> get_option('floor')
-                ), $atts ) );
+        public function insert_STL( $atts ) {
 
-                // The code for the WebGL canvas
-                $thingiview="
+            global $post; 	//This is needed to generate the filename from the postname.
+            $upload_dir = wp_upload_dir();
+
+            extract( shortcode_atts( array(
+                'file' 		=> $post->post_name.'-web.stl',
+                'name' 		=> 'default',
+                'rotation' 	=> get_option('rotation'),
+                'width' 	=> get_option('width'),
+                'height' 	=> get_option('height'),
+                'floor' 	=> get_option('floor')
+            ), $atts ) );
+
+            // The code for the WebGL canvas
+            $thingiview="
                     <script>
 
                     var container = document.getElementById('canvas');
@@ -74,19 +79,19 @@ if(!class_exists('STLViewer')) {
                     </script>
                 ";
 
-                // The canvas where the scene will be rendered.
-                $thingiview_frame ='
+            // The canvas where the scene will be rendered.
+            $thingiview_frame ='
                     <div id="progress" style="width: 100%; text-align: center">'.get_option('stl_div_loading_text').'</div>
                     <div id="webGLError" style="width: 100%; text-align: center">'.get_option('stl_div_webgl_error').'</div>
                     <div id="canvas" style="width:'.$width.';height:'.$height.'"></div>
                     <div id="quality_notes" style="width: 100%; text-align: center">'.get_option('stl_div_informations').'</div>
                 ';
 
-                return $thingiview_frame.$thingiview;
-            } // End of insert_stl
-            function WebGL_test() {
-                // The javascript
-                $test_webgl="
+            return $thingiview_frame.$thingiview;
+        } // End of insert_stl
+        public function WebGL_test() {
+            // The javascript
+            $test_webgl="
                     <script>
                         text = document.getElementById('text');
                         if ( Detector.webgl ) {
@@ -99,14 +104,9 @@ if(!class_exists('STLViewer')) {
                         }
                     </script>";
 
-                $text='<div id="text"></div>';
-                return $text.$test_webgl;
-            } // End of WebGL_test()
-
-            add_shortcode( 'stl', 'insert_STL' );
-            add_shortcode( 'webgl_test', 'WebGL_test' );
-
-		} // END public function __construct
+            $text='<div id="text"></div>';
+            return $text.$test_webgl;
+        } // End of WebGL_test()
 
 		public static function activate() {}
 		public static function deactivate() {}
@@ -115,8 +115,8 @@ if(!class_exists('STLViewer')) {
 } // END if(!class_exists('STLViewer'))
 
 // Following functions are for upcoming versions.
-function isSTL($file_ID) {
-	$file = get_attached_file($file_ID);
+function isSTL( $file_ID ) {
+	$file = get_attached_file( $file_ID );
 	$extension = strtolower( substr( $file, -3 ));
 	if( $extension == "stl" ) return true;
 	else return false;
