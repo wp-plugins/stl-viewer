@@ -42,7 +42,7 @@ if(!class_exists('STLViewer_Settings')) {
 
         // Return the helptext for a section
         // Todo: is a callback, can't take any options -> fix
-        private function helptext( $arg ) {
+        public function helptext( $arg ) {
             echo $this->helptext[$arg['id']];
         }
 

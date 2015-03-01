@@ -46,16 +46,6 @@ function noWebGL() { 	// Runs if no WebGL is found
 } // End of noWebGL()
 
 function STLViewer() {
-    if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
-    else {
-        $( 'progress' ).style.display = 'block';
-        $( 'canvas' ).style.display = 'block';
-        $( 'webGLError' ).style.display = 'none'
-
-        init('STL');
-        animate();
-
-    }
 }
 	
 function init( inputfiletype ) {

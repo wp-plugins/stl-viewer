@@ -54,7 +54,16 @@ if(!class_exists('STLViewer')) {
             $thingiview="<script>
                     file = '".$upload_dir['baseurl']."/".$file."';
                     floor = '".$floor."';
-                    STLViewer();
+                    if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
+                    else {
+                        $( 'progress' ).style.display = 'block';
+                        $( 'canvas' ).style.display = 'block';
+                        $( 'webGLError' ).style.display = 'none'
+
+                        init('STL');
+                        animate();
+
+                    }
                     </script>";
 
             // The canvas where the scene will be rendered.
