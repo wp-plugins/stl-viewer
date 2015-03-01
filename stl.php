@@ -84,8 +84,6 @@ if(!class_exists('STLViewer')) {
 
                 return $thingiview_frame.$thingiview;
             } // End of insert_stl
-
-
             function WebGL_test() {
                 // The javascript
                 $test_webgl="
