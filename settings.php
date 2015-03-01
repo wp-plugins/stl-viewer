@@ -43,26 +43,27 @@ if(!class_exists('STLViewer_Settings')) {
 
         public function __construct() {
             // register actions
-            foreach($this->tabs as $tabID => $tabTitle) {
-                add_action('admin_init', array(&$this, 'render_settings("' . $tabID . '"")'));
+            while($tab = current($this->tabs)) {
+                add_action('admin_init', array(&$this, 'render_settings'));
+                next($this->tabs);
             }
             add_action('admin_menu', array(&$this, 'add_menu'));
         } // END public function __construct
 
-        function setup_field($field) {
+        private function setup_field($field) {
             register_setting($this->getTab($field), $field['name']);
             add_settings_field($field['name'], $field['title'], array(&$this, $field['type']), 'stlviewer', $field['section'], array('field' => $field['name']));
         }
-        function setup_section($section) {
+        private function setup_section($section) {
             add_settings_section( $section['name'], $section['title'], array(&$this, 'helptext('.$section['name'].')'), 'stlviewer');
         }
 
-        public function render_settings($tab) {
+        public function render_settings() {
             foreach( $this->settings as $field) {
-                if($tab == $this->getTab($field)) $this->setup_field($field);
+                if(current($this->tabs) == $this->getTab($field)) $this->setup_field($field);
             }
             foreach( $this->sections as $section ) {
-                if($tab == $section['tab']) $this->setup_section($section);
+                if(current($this->tabs) == $section['tab']) $this->setup_section($section);
             }
 
         } // END public static function activate
