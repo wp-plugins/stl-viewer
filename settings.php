@@ -1,29 +1,29 @@
 <?php
 if(!class_exists('STLViewer_Settings')) {
-    class STLViewer_Settings { 							// Construct the plugin object
+    class STLViewer_Settings {
 
         private $tabs = array(
             'default'       => 'General Settings',
             'render'        => 'Rendering options',
             'webgl_test'    => 'WebGL Test options',
-            'misc'          => 'Misc'
-        );          // Holding all tabs. Don't forget to add a callback for each tab!
+            //'misc'          => 'Misc'
+        );
         private $sections = array(
-            array('name' => 'general', 		'title' =>'General settings',    'tab' => 'default'),
-            array('name' => 'render', 		'title' =>'WebGL renderer settings',  'tab' => 'render'),
-            array('name' => 'webgl_test', 	'title' =>'WebGL tester settings',  'tab' => 'webgl_test')
-        );      // Holding all sections in all tabs
+            array('name' => 'general', 		'title' =>'General settings',           'tab' => 'default'),
+            array('name' => 'render', 		'title' =>'WebGL renderer settings',    'tab' => 'render'),
+            array('name' => 'webgl_test', 	'title' =>'WebGL tester settings',      'tab' => 'webgl_test')
+        );
         private $settings = array(
             array('name' => 'height', 				'title' => 'Height (height) ', 		    'type' => 'text',		'section' => 'general'),
             array('name' => 'width', 				'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'),
             array('name' => 'stl_div_webgl_error', 	'title' => 'WebGL error message', 	    'type' => 'textarea',	'section' => 'general'),
-            array('name' => 'stl_div_informations',  'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
-            array('name' => 'stl_div_loading_text',  'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),
-            array('name' => 'floor', 				'title' => 'Floor texture (floor)',     'type' => 'text',		'section' => 'render'),
-            array('name' => 'rotation', 			    'title' => 'Rotate object (rotation)', 	'type' => 'text',		'section' => 'render'),
+            array('name' => 'stl_div_informations', 'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'stl_div_loading_text', 'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'floor', 			    'title' => 'Floor texture (floor)',     'type' => 'text',		'section' => 'render'),
+            //array('name' => 'rotation', 			    'title' => 'Rotate object (rotation)', 	'type' => 'text',		'section' => 'render'),
             array('name' => 'webgl_test_success', 	'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'),
             array('name' => 'webgl_test_fail', 		'title' => 'Fail message', 			    'type' => 'textarea',	'section' => 'webgl_test'),
-        );      // Holding all settings fields in all sections
+        );
         private $helptext = array(
             'general'       => 'These settings do things for the WP Plugin Template.',
             'webgl_test'    => 'If you insert the shortcode [webgl_test] a WebGL test is run and will print the success- or fail-message.',
@@ -36,14 +36,14 @@ if(!class_exists('STLViewer_Settings')) {
         private $menu_slug = 'stlviewer'; // Also the page name
 
         public function __construct() {
-            foreach($this->tabs as $tab_key => $tab_caption) { add_action('admin_init', array(&$this, 'render_settings_tab_'.$tab_key)); }
+            foreach($this->tabs as $tab_key => $tab_caption) { add_action('admin_init', array(&$this, 'init_settings_tab_'.$tab_key)); }
             add_action('admin_menu', array(&$this, 'add_menu'));
         }
 
         // Return the helptext for a section
         // Todo: is a callback, can't take any options -> fix
-        private function helptext($section) {
-            //echo $this->helptext[$section];
+        private function helptext( $arg ) {
+            echo $this->helptext[$arg['id']];
         }
 
         // Return the tab for the actual field
@@ -54,14 +54,12 @@ if(!class_exists('STLViewer_Settings')) {
         }
 
         // Functions for the callbacks
-        // These function are called by render_settings()
-        // Todo: change name from render_ to something else to prevent confusion
-        public function render_settings_tab_default()       { $this->render_settings('default');    }
-        public function render_settings_tab_render()        { $this->render_settings('render');     }
-        public function render_settings_tab_webgl_test()    { $this->render_settings('webgl_test'); }
-        public function render_settings_tab_misc()          { $this->render_settings('misc');       }
+        public function init_settings_tab_default()       { $this->init_settings('default');    }
+        public function init_settings_tab_render()        { $this->init_settings('render');     }
+        public function init_settings_tab_webgl_test()    { $this->init_settings('webgl_test'); }
+        public function init_settings_tab_misc()          { $this->init_settings('misc');       }
 
-        private function render_settings($tab) {
+        private function init_settings($tab) {
             foreach ($this->settings as $field) {
                 if ($tab == $this->getTab($field)) $this->setup_field($field);
             }
@@ -122,9 +120,7 @@ if(!class_exists('STLViewer_Settings')) {
                 <form method="post" action="options.php">
                     <?php wp_nonce_field( 'update-options' ); ?>
                     <?php settings_fields( $tab ); ?>
-                    <?php //do_settings_fields( $tab ); ?>
                     <?php do_settings_sections( $tab ); ?>
-
                     <?php submit_button(); ?>
                 </form>
             </div>

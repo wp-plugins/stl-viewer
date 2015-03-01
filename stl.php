@@ -27,9 +27,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 if(!class_exists('STLViewer')) {
-	class STLViewer {
-
-		public function __construct() { 				// Construct the plugin object
+    class STLViewer {
+        public function __construct() { 				// Construct the plugin object
             require_once( sprintf( "%s/settings.php", dirname(__FILE__) ) ); 	// Initialize Settings
 
             add_shortcode( 'stl', array(&$this, 'insert_STL') );
@@ -52,40 +51,18 @@ if(!class_exists('STLViewer')) {
             ), $atts ) );
 
             // The code for the WebGL canvas
-            $thingiview="
-                    <script>
-
-                    var container = document.getElementById('canvas');
-
-                    var SCREEN_WIDTH = container.clientWidth;
-                    var SCREEN_HEIGHT = container.clientHeight;
-
+            $thingiview="<script>
                     file = '".$upload_dir['baseurl']."/".$file."';
                     floor = '".$floor."';
-                    rotation = '".$rotation."';
-
-                    if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
-                    else {
-
-                        $( 'progress' ).style.display = 'block';
-                        $( 'canvas' ).style.display = 'block';
-                        $( 'webGLError' ).style.display = 'none'
-
-                        init('STL');
-
-                        animate();
-
-                    } // Closes the else-command at the beginning. This executes only if there is WebGL support.
-                    </script>
-                ";
+                    STLViewer();
+                    </script>";
 
             // The canvas where the scene will be rendered.
             $thingiview_frame ='
-                    <div id="progress" style="width: 100%; text-align: center">'.get_option('stl_div_loading_text').'</div>
+                    <div id="progress" style="width: 100%; text-align: center">'.  get_option('stl_div_loading_text').'</div>
                     <div id="webGLError" style="width: 100%; text-align: center">'.get_option('stl_div_webgl_error').'</div>
                     <div id="canvas" style="width:'.$width.';height:'.$height.'"></div>
-                    <div id="quality_notes" style="width: 100%; text-align: center">'.get_option('stl_div_informations').'</div>
-                ';
+                    <div id="quality_notes" style="width: 100%; text-align: center">'.get_option('stl_div_informations').'</div>';
 
             return $thingiview_frame.$thingiview;
         } // End of insert_stl
@@ -137,7 +114,7 @@ function ThreeJS_Scripts() {
 	wp_enqueue_script( 'ThreeJS', 		plugins_url( 'js/three.min.js' , __FILE__ ));
 	wp_enqueue_script( 'STLLoader', 	plugins_url( 'js/STLLoader.js' , __FILE__ ));
 	//wp_enqueue_script( 'OBJLoader', 	plugins_url( 'js/OBJLoader.js' , __FILE__ )); // For later use
-	wp_enqueue_script( 'OrbitControls', 	plugins_url( 'js/OrbitControls.js' , __FILE__ ));
+	wp_enqueue_script( 'OrbitControls', plugins_url( 'js/OrbitControls.js' , __FILE__ ));
 	wp_enqueue_script( 'Detector', 		plugins_url( 'js/Detector.js' , __FILE__ ));
 	wp_enqueue_script( 'Viewer', 		plugins_url( 'js/STLViewer.js' , __FILE__ ));
 }

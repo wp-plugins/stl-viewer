@@ -3,6 +3,11 @@ var loader, controls, file;
 var camera, scene, renderer, mesh_object, mesh_floor, dimensions_x, dimensions_y, dimensions_z, loaded;
 var geometry_object, effect;
 
+var container = document.getElementById('canvas');
+
+var SCREEN_WIDTH = container.clientWidth;
+var SCREEN_HEIGHT = container.clientHeight;
+
 // IMPORTANT
 
 function $( id ) {
@@ -39,6 +44,19 @@ function noWebGL() { 	// Runs if no WebGL is found
 	$( 'webGLError' ).style.display = 'block';
 	$( 'quality_notes' ).style.display = 'none';
 } // End of noWebGL()
+
+function STLViewer() {
+    if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
+    else {
+        $( 'progress' ).style.display = 'block';
+        $( 'canvas' ).style.display = 'block';
+        $( 'webGLError' ).style.display = 'none'
+
+        init('STL');
+        animate();
+
+    }
+}
 	
 function init( inputfiletype ) {
 	$( 'progress' ).style.display = 'block';
