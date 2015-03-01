@@ -28,6 +28,8 @@ if(!class_exists('STLViewer_Settings')) {
             'render'        => 'How the model will be rendered.',
         );
 
+        private $current_tab = NULL;
+
         public function helptext($section) {
             //echo $this->helptext[$section];
         }
@@ -41,10 +43,7 @@ if(!class_exists('STLViewer_Settings')) {
 
         public function __construct() {
             // register actions
-            //while($tab = current($this->tabs)) {
-                add_action('admin_init', array(&$this, 'render_settings'));
-            //    next($this->tabs);
-            //}
+            add_action('admin_init', array(&$this, 'render_settings'));
             add_action('admin_menu', array(&$this, 'add_menu'));
         } // END public function __construct
 
@@ -57,14 +56,16 @@ if(!class_exists('STLViewer_Settings')) {
         }
 
         public function render_settings() {
-            foreach( $this->settings as $field) {
-                if(current($this->tabs) == $this->getTab($field)) $this->setup_field($field);
-            }
-            foreach( $this->sections as $section ) {
-                if(current($this->tabs) == $section['tab']) $this->setup_section($section);
+            foreach($this->tabs as $tab_key => $tab_caption) {
+                foreach ($this->settings as $field) {
+                    if ($tab_key == $this->getTab($field)) $this->setup_field($field);
+                }
+                foreach ($this->sections as $section) {
+                    if ($tab_key == $section['tab']) $this->setup_section($section);
+                }
             }
 
-        } // END public static function activate
+        }
 
         // These function get the option value from DB and render the field
         public function text($args) { 											// This function provides text inputs for settings fields
