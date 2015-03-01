@@ -109,7 +109,8 @@ if(!class_exists('STLViewer_Settings')) {
             if(!current_user_can('manage_options')) {
                 wp_die(__('You do not have sufficient permissions to access this page.'));
             }
-            include( sprintf( "%s/templates/settings.php", dirname(__FILE__) ) );
+            //include( sprintf( "%s/templates/settings.php", dirname(__FILE__) ) );
+            $this->display_options();
         }
 
         public function display_options() {
