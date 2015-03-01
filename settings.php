@@ -56,6 +56,7 @@ if(!class_exists('STLViewer_Settings')) {
         private function render_settings($tab) {
             foreach ($this->settings as $field) {
                 if ($tab == $this->getTab($field)) $this->setup_field($field);
+                print_r($this->getTab($field));
             }
             foreach ($this->sections as $section) {
                 if ($tab == $section['tab']) $this->setup_section($section);
@@ -113,12 +114,12 @@ if(!class_exists('STLViewer_Settings')) {
             <div class="wrap">
                 <?php $this->plugin_options_tabs(); ?>
                 <form method="post" action="options.php">
-                    <?php @settings_fields($tab); ?>
-                    <?php @do_settings_fields($tab); ?>
-
+                    <?php wp_nonce_field( 'update-options' ); ?>
+                    <?php settings_fields($tab); ?>
+                    <?php do_settings_fields($tab); ?>
                     <?php do_settings_sections('stlviewer'); ?>
 
-                    <?php @submit_button(); ?>
+                    <?php submit_button(); ?>
                 </form>
             </div>
             <?php
