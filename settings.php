@@ -65,10 +65,10 @@ if(!class_exists('STLViewer_Settings')) {
 
         private function setup_field($field) {
             register_setting($this->getTab($field), $field['name']);
-            add_settings_field($field['name'], $field['title'], array(&$this, $field['type']), 'stlviewer', $field['section'], array('field' => $field['name']));
+            add_settings_field($field['name'], $field['title'], array(&$this, $field['type']), $this->getTab($field), $field['section'], array('field' => $field['name']));
         }
         private function setup_section($section) {
-            add_settings_section( $section['name'], $section['title'], array(&$this, 'helptext'), 'stlviewer');
+            add_settings_section( $section['name'], $section['title'], array(&$this, 'helptext'), $section['tab']);
         }
 
 
@@ -115,9 +115,9 @@ if(!class_exists('STLViewer_Settings')) {
                 <?php $this->plugin_options_tabs(); ?>
                 <form method="post" action="options.php">
                     <?php wp_nonce_field( 'update-options' ); ?>
-                    <?php settings_fields($tab); ?>
-                    <?php do_settings_fields($tab); ?>
-                    <?php do_settings_sections('stlviewer'); ?>
+                    <?php settings_fields( $tab ); ?>
+                    <?php //do_settings_fields( $tab ); ?>
+                    <?php do_settings_sections( $tab ); ?>
 
                     <?php submit_button(); ?>
                 </form>
