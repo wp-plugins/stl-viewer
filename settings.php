@@ -3,9 +3,9 @@ if(!class_exists('STLViewer_Settings')) {
     class STLViewer_Settings {
 
         private $tabs = array(
-            'default'       => 'General Settings',
-            'render'        => 'Rendering options',
-            'webgl_test'    => 'WebGL Test options',
+            'default'       => '<span class="dashicons dashicons-admin-settings"></span> General Settings',
+            'render'        => '<span class="dashicons dashicons-admin-settings"></span> Rendering options',
+            'webgl_test'    => '<span class="dashicons dashicons-admin-generic"></span> WebGL Test options',
             //'misc'          => 'Misc'
         );
         private $sections = array(
