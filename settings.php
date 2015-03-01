@@ -3,27 +3,27 @@ if(!class_exists('STLViewer_Settings')) {
 
     class STLViewer_Settings { 							// Construct the plugin object
 
-        private $tabs = [
+        private $tabs = array(
             'stl-default'   => 'General Settings',
             'stl-test'      => 'WebGL Test'
-        ];
+        );
 
-        private $sections = [
-            ['name' => 'general', 		'title' =>'STL viewer settings',    'tab' => 'stl-default'],
-            ['name' => 'render', 		'title' =>'WebGL render settings',  'tab' => 'stl-default'],
-            ['name' => 'webgl_test', 	'title' =>'WebGL tester settings',  'tab' => 'stl-test']
-        ];
-        private $settings = [
-            ['name' => 'height', 				'title' => 'Height (height) ', 		    'type' => 'text',		'section' => 'general'],
-            ['name' => 'width', 				'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'],
-            ['name' => 'stl_div_webgl_error', 	'title' => 'WebGL error message', 	    'type' => 'textarea',	'section' => 'general'],
-            ['name' => 'stl_div_informations',  'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'],
-            ['name' => 'stl_div_loading_text',  'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'],
-            ['name' => 'floor', 				'title' => 'Floor texture (floor)',     'type' => 'text',		'section' => 'render'],
-            ['name' => 'rotation', 			    'title' => 'Rotate object (rotation)', 	'type' => 'text',		'section' => 'render'],
-            ['name' => 'webgl_test_success', 	'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'],
-            ['name' => 'webgl_test_fail', 		'title' => 'Fail message', 			    'type' => 'textarea',	'section' => 'webgl_test'],
-        ];
+        private $sections = array(
+            array('name' => 'general', 		'title' =>'STL viewer settings',    'tab' => 'stl-default'),
+            array('name' => 'render', 		'title' =>'WebGL render settings',  'tab' => 'stl-default'),
+            array('name' => 'webgl_test', 	'title' =>'WebGL tester settings',  'tab' => 'stl-test')
+        );
+        private $settings = array(
+            array('name' => 'height', 				'title' => 'Height (height) ', 		    'type' => 'text',		'section' => 'general'),
+            array('name' => 'width', 				'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'),
+            array('name' => 'stl_div_webgl_error', 	'title' => 'WebGL error message', 	    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'stl_div_informations',  'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'stl_div_loading_text',  'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'floor', 				'title' => 'Floor texture (floor)',     'type' => 'text',		'section' => 'render'),
+            array('name' => 'rotation', 			    'title' => 'Rotate object (rotation)', 	'type' => 'text',		'section' => 'render'),
+            array('name' => 'webgl_test_success', 	'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'),
+            array('name' => 'webgl_test_fail', 		'title' => 'Fail message', 			    'type' => 'textarea',	'section' => 'webgl_test'),
+        );
         private $helptext = [
             'general'       => 'These settings do things for the WP Plugin Template.',
             'webgl_test'    => 'If you insert the shortcode [webgl_test] a WebGL test is run and will print the success- or fail-message.',
@@ -132,5 +132,6 @@ if(!class_exists('STLViewer_Settings')) {
         }
         echo '</h2>';
     }
+
     }
 }
