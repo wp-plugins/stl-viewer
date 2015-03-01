@@ -31,8 +31,7 @@ if(!class_exists('STLViewer')) {
 
 		public function __construct() { 				// Construct the plugin object
             require_once(sprintf("%s/settings.php", dirname(__FILE__))); 	// Initialize Settings
-            $STLViewer_Settings = new STLViewer_Settings();
-
+            //$STLViewer_Settings = new STLViewer_Settings();
 
             function insert_STL( $atts ) {
 
@@ -87,9 +86,6 @@ if(!class_exists('STLViewer')) {
                 return $thingiview_frame.$thingiview;
             } // End of insert_stl
 
-            //////////////////////////////////////////////////
-            // Main function for the [webgl_test] shortcode //
-            //////////////////////////////////////////////////
 
             function WebGL_test() {
                 // The javascript
