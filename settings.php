@@ -1,13 +1,11 @@
 <?php
 if(!class_exists('STLViewer_Settings')) {
-
     class STLViewer_Settings { 							// Construct the plugin object
 
         private $tabs = array(
             'stl-default'   => 'General Settings',
             'stl-test'      => 'WebGL Test'
         );
-
         private $sections = array(
             array('name' => 'general', 		'title' =>'STL viewer settings',    'tab' => 'stl-default'),
             array('name' => 'render', 		'title' =>'WebGL render settings',  'tab' => 'stl-default'),
@@ -43,10 +41,10 @@ if(!class_exists('STLViewer_Settings')) {
 
         public function __construct() {
             // register actions
-            while($tab = current($this->tabs)) {
+            //while($tab = current($this->tabs)) {
                 add_action('admin_init', array(&$this, 'render_settings'));
-                next($this->tabs);
-            }
+            //    next($this->tabs);
+            //}
             add_action('admin_menu', array(&$this, 'add_menu'));
         } // END public function __construct
 
