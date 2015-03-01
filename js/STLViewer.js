@@ -3,11 +3,6 @@ var loader, controls, file;
 var camera, scene, renderer, mesh_object, mesh_floor, dimensions_x, dimensions_y, dimensions_z, loaded;
 var geometry_object, effect;
 
-var container = document.getElementById('canvas');
-
-var SCREEN_WIDTH = container.clientWidth;
-var SCREEN_HEIGHT = container.clientHeight;
-
 // IMPORTANT
 
 function $( id ) {

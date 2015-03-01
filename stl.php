@@ -52,6 +52,10 @@ if(!class_exists('STLViewer')) {
 
             // The code for the WebGL canvas
             $thingiview="<script>
+                    var container = document.getElementById('canvas');
+
+                    var SCREEN_WIDTH = container.clientWidth;
+                    var SCREEN_HEIGHT = container.clientHeight;
                     file = '".$upload_dir['baseurl']."/".$file."';
                     floor = '".$floor."';
                     if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
