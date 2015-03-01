@@ -34,10 +34,12 @@ if(!class_exists('STLViewer_Settings')) {
         }
 
         private function getTab($field) {
+            $tab = 'default';
             while( $section = current($this->sections)) {
-                if( $section['name'] == $field['section']) return $section['tab'];
+                if( $section['name'] == $field['section']) $tab = $section['tab'];
                 else next($this->sections);
             }
+            return $tab;
         }
 
         public function __construct() {
