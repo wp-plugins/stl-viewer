@@ -31,7 +31,7 @@ if(!class_exists('STLViewer_Settings')) {
         );
 
         public function helptext($section) {
-            echo $this->helptext[$section];
+            //echo $this->helptext[$section];
         }
 
         private function getTab($field) {
@@ -55,7 +55,7 @@ if(!class_exists('STLViewer_Settings')) {
             add_settings_field($field['name'], $field['title'], array(&$this, $field['type']), 'stlviewer', $field['section'], array('field' => $field['name']));
         }
         private function setup_section($section) {
-            add_settings_section( $section['name'], $section['title'], array(&$this, 'helptext('.$section['name'].')'), 'stlviewer');
+            add_settings_section( $section['name'], $section['title'], array(&$this, 'helptext'), 'stlviewer');
         }
 
         public function render_settings() {
