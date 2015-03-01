@@ -43,8 +43,8 @@ if(!class_exists('STLViewer_Settings')) {
 
         public function __construct() {
             // register actions
-            foreach($this->tabs as $tab) {
-                add_action('admin_init', array(&$this, 'render_settings(' . $tab . ')'));
+            foreach($this->tabs as $tabID => $tabTitle) {
+                add_action('admin_init', array(&$this, 'render_settings("' . $tabID . '"")'));
             }
             add_action('admin_menu', array(&$this, 'add_menu'));
         } // END public function __construct
