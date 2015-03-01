@@ -35,9 +35,8 @@ if(!class_exists('STLViewer_Settings')) {
 
         private function getTab($field) {
             $tab = 'default';
-            while( $section = current($this->sections)) {
+            foreach( $this->sections as $section ) {
                 if( $section['name'] == $field['section']) $tab = $section['tab'];
-                else next($this->sections);
             }
             return $tab;
         }
