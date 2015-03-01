@@ -3,13 +3,14 @@ if(!class_exists('STLViewer_Settings')) {
     class STLViewer_Settings { 							// Construct the plugin object
 
         private $tabs = array(
-            'stl-default'   => 'General Settings',
-            'stl-test'      => 'WebGL Test'
+            'default'   => 'General Settings',
+            'test'      => 'WebGL Test',
+            'misc'      => 'Misc'
         );
         private $sections = array(
-            array('name' => 'general', 		'title' =>'STL viewer settings',    'tab' => 'stl-default'),
-            array('name' => 'render', 		'title' =>'WebGL render settings',  'tab' => 'stl-default'),
-            array('name' => 'webgl_test', 	'title' =>'WebGL tester settings',  'tab' => 'stl-test')
+            array('name' => 'general', 		'title' =>'STL viewer settings',    'tab' => 'default'),
+            array('name' => 'render', 		'title' =>'WebGL render settings',  'tab' => 'default'),
+            array('name' => 'webgl_test', 	'title' =>'WebGL tester settings',  'tab' => 'test')
         );
         private $settings = array(
             array('name' => 'height', 				'title' => 'Height (height) ', 		    'type' => 'text',		'section' => 'general'),
@@ -28,8 +29,6 @@ if(!class_exists('STLViewer_Settings')) {
             'render'        => 'How the model will be rendered.',
         );
 
-        private $current_tab = NULL;
-
         public function helptext($section) {
             //echo $this->helptext[$section];
         }
@@ -43,9 +42,24 @@ if(!class_exists('STLViewer_Settings')) {
 
         public function __construct() {
             // register actions
-            add_action('admin_init', array(&$this, 'render_settings'));
+            foreach($this->tabs as $tab_key => $tab_caption) {
+                add_action('admin_init', array(&$this, 'render_settings_tab_'.$tab_key));
+            }
             add_action('admin_menu', array(&$this, 'add_menu'));
         } // END public function __construct
+
+        public function render_settings_tab_default() {$this->render_settings('default');}
+        public function render_settings_tab_test() {$this->render_settings('test');}
+        public function render_settings_tab_misc() {$this->render_settings('misc');}
+
+        private function render_settings($tab) {
+            foreach ($this->settings as $field) {
+                if ($tab == $this->getTab($field)) $this->setup_field($field);
+            }
+            foreach ($this->sections as $section) {
+                if ($tab == $section['tab']) $this->setup_section($section);
+            }
+        }
 
         private function setup_field($field) {
             register_setting($this->getTab($field), $field['name']);
@@ -55,17 +69,7 @@ if(!class_exists('STLViewer_Settings')) {
             add_settings_section( $section['name'], $section['title'], array(&$this, 'helptext'), 'stlviewer');
         }
 
-        public function render_settings() {
-            foreach($this->tabs as $tab_key => $tab_caption) {
-                foreach ($this->settings as $field) {
-                    if ($tab_key == $this->getTab($field)) $this->setup_field($field);
-                }
-                foreach ($this->sections as $section) {
-                    if ($tab_key == $section['tab']) $this->setup_section($section);
-                }
-            }
 
-        }
 
         // These function get the option value from DB and render the field
         public function text($args) { 											// This function provides text inputs for settings fields
@@ -122,8 +126,7 @@ if(!class_exists('STLViewer_Settings')) {
         }
 
     function plugin_options_tabs() {
-        $current_tab = isset( $_GET['ta' .
-            'b'] ) ? $_GET['tab'] : 'default';
+        $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'default';
 
         echo '<h2 class="nav-tab-wrapper">';
         foreach ( $this->tabs as $tab_key => $tab_caption ) {
