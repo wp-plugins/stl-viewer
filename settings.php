@@ -3,14 +3,15 @@ if(!class_exists('STLViewer_Settings')) {
     class STLViewer_Settings { 							// Construct the plugin object
 
         private $tabs = array(
-            'default'   => 'General Settings',
-            'test'      => 'WebGL Test',
-            'misc'      => 'Misc'
+            'default'       => 'General Settings',
+            'render'        => 'Rendering options',
+            'webgl_test'    => 'WebGL Test options',
+            'misc'          => 'Misc'
         );
         private $sections = array(
             array('name' => 'general', 		'title' =>'STL viewer settings',    'tab' => 'default'),
-            array('name' => 'render', 		'title' =>'WebGL render settings',  'tab' => 'default'),
-            array('name' => 'webgl_test', 	'title' =>'WebGL tester settings',  'tab' => 'test')
+            array('name' => 'render', 		'title' =>'WebGL renderer settings',  'tab' => 'render'),
+            array('name' => 'webgl_test', 	'title' =>'WebGL tester settings',  'tab' => 'webgl_test')
         );
         private $settings = array(
             array('name' => 'height', 				'title' => 'Height (height) ', 		    'type' => 'text',		'section' => 'general'),
@@ -50,13 +51,13 @@ if(!class_exists('STLViewer_Settings')) {
         } // END public function __construct
 
         public function render_settings_tab_default() {$this->render_settings('default');}
-        public function render_settings_tab_test() {$this->render_settings('test');}
+        public function render_settings_tab_render() {$this->render_settings('render');}
+        public function render_settings_tab_webgl_test() {$this->render_settings('webgl_test');}
         public function render_settings_tab_misc() {$this->render_settings('misc');}
 
         private function render_settings($tab) {
             foreach ($this->settings as $field) {
                 if ($tab == $this->getTab($field)) $this->setup_field($field);
-                print_r($this->getTab($field));
             }
             foreach ($this->sections as $section) {
                 if ($tab == $section['tab']) $this->setup_section($section);
