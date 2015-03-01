@@ -3,15 +3,28 @@ var loader, controls, file;
 var camera, scene, renderer, mesh_object, mesh_floor, dimensions_x, dimensions_y, dimensions_z, loaded;
 var geometry_object, effect;
 
+var rot_offset = new THREE.Euler(0, 0, Math.PI, 'XYZ');
+
 // IMPORTANT
+
+function showFront() {
+    mesh_object.rotation = rot_offset;
+}
+function showRear() {
+    var obj_rotation = rot_offset;
+    obj_rotation.y += Math.PI;
+}
+function showLeft() {
+    var obj_rotation = rot_offset;
+    obj_rotation.y -= Math.PI/2;
+}
+function showRight() {
+    var obj_rotation = rot_offset;
+    obj_rotation.y += Math.PI/2;
+}
 
 function $( id ) {
 	return document.getElementById( id );
-}
-
-// ToDo: Buttons machen, damit man Front,Left,Right,Top,Diagonal view auswählen kann
-// Drehung des Objektes, nicht Kamera
-function setViewFront(mesh) {
 }
 
 function setObjectRotation(x, y, z) {
@@ -89,7 +102,7 @@ function init( inputfiletype ) {
 		dimensions_x = geometry_object.boundingBox.max.x - geometry_object.boundingBox.min.x;
 		mesh_object.castShadow = mesh_object.receiveShadow = true;
 		camera.lookAt(mesh_object.center);
-		mesh_object.rotation.set( 0,0,Math.PI );
+		mesh_object.rotation = rot_offset;
 		scene.add( mesh_object );
 
 	} ); // End of loader.addEventListener()
