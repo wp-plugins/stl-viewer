@@ -30,90 +30,88 @@ if(!class_exists('STLViewer')) {
 	class STLViewer {
 
 		public function __construct() { 				// Construct the plugin object
-		require_once(sprintf("%s/settings.php", dirname(__FILE__))); 	// Initialize Settings
-		$STLViewer_Settings = new STLViewer_Settings();
+            require_once(sprintf("%s/settings.php", dirname(__FILE__))); 	// Initialize Settings
+            $STLViewer_Settings = new STLViewer_Settings();
 
-		///////////////////////////////////////////
-		// Main function for the [stl] shortcode //
-		///////////////////////////////////////////
 
-		function insert_STL( $atts ) { 
+            function insert_STL( $atts ) {
 
-			global $post; 	//This is needed to generate the filename from the postname.
-			$upload_dir = wp_upload_dir();
+                global $post; 	//This is needed to generate the filename from the postname.
+                $upload_dir = wp_upload_dir();
 
-			extract( shortcode_atts( array(
-				'file' 		=> $post->post_name.'-web.stl',
-				'name' 		=> 'default',
-				'rotation' 	=> get_option('rotation'),
-				'width' 	=> get_option('width'),
-				'height' 	=> get_option('height'),
-				'floor' 	=> get_option('floor')
-			), $atts ) );
-			
-			// The code for the WebGL canvas
-			$thingiview="
+                extract( shortcode_atts( array(
+                    'file' 		=> $post->post_name.'-web.stl',
+                    'name' 		=> 'default',
+                    'rotation' 	=> get_option('rotation'),
+                    'width' 	=> get_option('width'),
+                    'height' 	=> get_option('height'),
+                    'floor' 	=> get_option('floor')
+                ), $atts ) );
 
-<script>
+                // The code for the WebGL canvas
+                $thingiview="
+                    <script>
 
-	var container = document.getElementById('canvas');
+                    var container = document.getElementById('canvas');
 
-	var SCREEN_WIDTH = container.clientWidth;
-	var SCREEN_HEIGHT = container.clientHeight;
+                    var SCREEN_WIDTH = container.clientWidth;
+                    var SCREEN_HEIGHT = container.clientHeight;
 
-	file = '".$upload_dir['baseurl']."/".$file."';
-	floor = '".$floor."';
-	rotation = '".$rotation."';
+                    file = '".$upload_dir['baseurl']."/".$file."';
+                    floor = '".$floor."';
+                    rotation = '".$rotation."';
 
-	if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
-	else {
-		
-		$( 'progress' ).style.display = 'block';
-		$( 'canvas' ).style.display = 'block';
-		$( 'webGLError' ).style.display = 'none'
+                    if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
+                    else {
 
-		init('STL');
-		
-		animate();
+                        $( 'progress' ).style.display = 'block';
+                        $( 'canvas' ).style.display = 'block';
+                        $( 'webGLError' ).style.display = 'none'
 
-	} // Closes the else-command at the beginning. This executes only if there is WebGL support.
-</script>";
-		
-		// The canvas where the scene will be rendered.
-		$thingiview_frame ='
-			<div id="progress" style="width: 100%; text-align: center">'.get_option('stl_div_loading_text').'</div>
-			<div id="webGLError" style="width: 100%; text-align: center">'.get_option('stl_div_webgl_error').'</div>
-			<div id="canvas" style="width:'.$width.';height:'.$height.'"></div>
-			<div id="quality_notes" style="width: 100%; text-align: center">'.get_option('stl_div_informations').'</div>
-		';
+                        init('STL');
 
-		return $thingiview_frame.$thingiview;
-		} // End of insert_stl
+                        animate();
 
-		//////////////////////////////////////////////////
-		// Main function for the [webgl_test] shortcode //
-		//////////////////////////////////////////////////
+                    } // Closes the else-command at the beginning. This executes only if there is WebGL support.
+                    </script>
+                ";
 
-		function WebGL_test() { 
-			// The javascript
-			$test_webgl="<script>
-				text = document.getElementById('text');
-				if ( Detector.webgl ) {
-					console.log('WebGL is supported by your system.')
-					text.innerHTML = '".get_option('webgl_success_msg')."';
-				}
-				else {
-					console.log('WebGL is not supported by your system.')
-					text.innerHTML = '".get_option('webgl_fail_msg')."';
-				}
-			</script>";
+                // The canvas where the scene will be rendered.
+                $thingiview_frame ='
+                    <div id="progress" style="width: 100%; text-align: center">'.get_option('stl_div_loading_text').'</div>
+                    <div id="webGLError" style="width: 100%; text-align: center">'.get_option('stl_div_webgl_error').'</div>
+                    <div id="canvas" style="width:'.$width.';height:'.$height.'"></div>
+                    <div id="quality_notes" style="width: 100%; text-align: center">'.get_option('stl_div_informations').'</div>
+                ';
 
-			$text='<div id="text"></div>';
-			return $text.$test_webgl;
-		} // End of WebGL_test()
+                return $thingiview_frame.$thingiview;
+            } // End of insert_stl
 
-		add_shortcode( 'stl', 'insert_STL' );
-		add_shortcode( 'webgl_test', 'WebGL_test' );
+            //////////////////////////////////////////////////
+            // Main function for the [webgl_test] shortcode //
+            //////////////////////////////////////////////////
+
+            function WebGL_test() {
+                // The javascript
+                $test_webgl="
+                    <script>
+                        text = document.getElementById('text');
+                        if ( Detector.webgl ) {
+                            console.log('WebGL is supported by your system.')
+                            text.innerHTML = '".get_option('webgl_success_msg')."';
+                        }
+                        else {
+                            console.log('WebGL is not supported by your system.')
+                            text.innerHTML = '".get_option('webgl_fail_msg')."';
+                        }
+                    </script>";
+
+                $text='<div id="text"></div>';
+                return $text.$test_webgl;
+            } // End of WebGL_test()
+
+            add_shortcode( 'stl', 'insert_STL' );
+            add_shortcode( 'webgl_test', 'WebGL_test' );
 
 		} // END public function __construct
 

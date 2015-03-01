@@ -9,6 +9,11 @@ function $( id ) {
 	return document.getElementById( id );
 }
 
+// ToDo: Buttons machen, damit man Front,Left,Right,Top,Diagonal view auswählen kann
+// Drehung des Objektes, nicht Kamera
+function setViewFront(mesh) {
+}
+
 function setObjectRotation(x, y, z) {
 	mesh_object.rotation.set( x * Math.PI/2, y * Math.PI/2, z * Math.PI/2 );
 } // End of setObjectRotation()
@@ -113,7 +118,7 @@ function init( inputfiletype ) {
 } // End of init()
 
 function animate() {
-	cameraPosition();
+	cameraPosition(); // Only runs the first time after mesh is loaded
 	mesh_floor.position.y = -dimensions_y/2; //Adjust the height of the floor.
 	requestAnimationFrame( animate );
 	render();
