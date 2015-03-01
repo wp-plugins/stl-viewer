@@ -24,11 +24,11 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'webgl_test_success', 	'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'),
             array('name' => 'webgl_test_fail', 		'title' => 'Fail message', 			    'type' => 'textarea',	'section' => 'webgl_test'),
         );
-        private $helptext = [
+        private $helptext = array(
             'general'       => 'These settings do things for the WP Plugin Template.',
             'webgl_test'    => 'If you insert the shortcode [webgl_test] a WebGL test is run and will print the success- or fail-message.',
             'render'        => 'How the model will be rendered.',
-        ];
+        );
 
         public function helptext($section) {
             echo $this->helptext[$section];
