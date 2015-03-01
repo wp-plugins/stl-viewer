@@ -59,7 +59,8 @@ function init( inputfiletype ) {
 
     // Init the scene
 	scene = new THREE.Scene(); // Scene
-	scene.fog = new THREE.Fog( 0xd9dee5, 1, 10000 ); // Fog
+    // Fog
+	scene.fog = new THREE.Fog( 0xd9dee5, 1, 10000 );
 				
 	// Lights
 	scene.add( new THREE.AmbientLight( 0x202020, 1 ) );
