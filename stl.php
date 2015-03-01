@@ -31,7 +31,6 @@ if(!class_exists('STLViewer')) {
 
 		public function __construct() { 				// Construct the plugin object
             require_once(sprintf("%s/settings.php", dirname(__FILE__))); 	// Initialize Settings
-            //$STLViewer_Settings = new STLViewer_Settings();
 
             function insert_STL( $atts ) {
 

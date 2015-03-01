@@ -106,7 +106,9 @@ if(!class_exists('STLViewer_Settings')) {
         }
 
         public function plugin_settings_page() { 									// Menu Callback
-            if(!current_user_can('manage_options')) wp_die(__('You do not have sufficient permissions to access this page.'));
+            if(!current_user_can('manage_options')) {
+                wp_die(__('You do not have sufficient permissions to access this page.'));
+            }
             include( sprintf( "%s/templates/settings.php", dirname(__FILE__) ) );
         }
 
@@ -145,3 +147,5 @@ if(!class_exists('STLViewer_Settings')) {
 
     }
 }
+
+$STLViewer_Settings = new STLViewer_Settings();
