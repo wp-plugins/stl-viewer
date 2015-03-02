@@ -7,20 +7,25 @@ var rot_offset = new THREE.Euler(0, 0, Math.PI, 'XYZ');
 
 // IMPORTANT
 
-function showFront() {
-    mesh_object.rotation = rot_offset;
-}
-function showRear() {
+
+function showPos(mesh, pos) {
     var obj_rotation = rot_offset;
-    obj_rotation.y += Math.PI;
-}
-function showLeft() {
-    var obj_rotation = rot_offset;
-    obj_rotation.y -= Math.PI/2;
-}
-function showRight() {
-    var obj_rotation = rot_offset;
-    obj_rotation.y += Math.PI/2;
+
+    if( pos == 'front') {
+        mesh.rotation = obj_rotation
+    }
+    if( pos == 'rear') {
+        obj_rotation.y += Math.PI;
+        mesh.rotation = obj_rotation;
+    }
+    if( pos == 'left') {
+        obj_rotation.y += Math.PI/2;
+        mesh.rotation = obj_rotation;
+    }
+    if( pos == 'right') {
+        obj_rotation.y -= Math.PI/2;
+        mesh.rotation = obj_rotation;
+    }
 }
 
 function $( id ) {
