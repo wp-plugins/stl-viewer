@@ -1,9 +1,34 @@
-var loader, controls, file;
-	
+var loader;
+var controls;
+var file;
+
 var camera, scene, renderer, mesh_object, mesh_floor, dimensions_x, dimensions_y, dimensions_z, loaded;
 var geometry_object, effect;
 
-var rot_offset = new THREE.Euler(0, 0, Math.PI, 'XYZ');
+var rot_offset_x = 0;
+var rot_offset_y = 0;
+var rot_offset_z = 0;
+var object_rotation_offset = new THREE.Euler(rot_offset_x, rot_offset_z, rot_offset_y, 'XZY');
+
+
+var floor_scale_x = 100;
+var floor_scale_y = 100;
+var floor_scale_z = 1;
+var floor_scale = THREE.Vector3(floor_scale_x, floor_scale_y, floor_scale_z);
+
+var floor_repeat_x = 1;
+var floor_repeat_y = 1;
+var floor_repeat = THREE.Vector2( floor_repeat_x, floor_repeat_y);
+
+var enable_fog = true;
+var fog_color = '0xd9dee5';
+var fog_near = 1;
+var fog_far = 10000;
+
+var ambient_light_color = '0x202020';
+var ambient_light_intensity = 1;
+
+
 
 // IMPORTANT
 
@@ -32,10 +57,6 @@ function setObjectRotation(x, y, z) {
 	
 function cameraPosition() {				// This sets the camera position after loading the geometry.
   	if (geometry_object && !loaded) {
-
-        camera.position.set( 0, 0, dimensions_y*2.2 );
-        camera.lookAt(mesh_object.center);
-
         pointLight.position.set( 0, dimensions_y/2, -2*dimensions_x );
         directionalLight.position.set( 0, dimensions_y * 3/4, dimensions_z * 3 );
 
@@ -71,10 +92,12 @@ function init( inputfiletype ) {
     // Init the scene
 	scene = new THREE.Scene(); // Scene
     // Fog
-	scene.fog = new THREE.Fog( 0xd9dee5, 1, 10000 );
+    if(enable_fog) {
+        scene.fog = new THREE.Fog(fog_color, fog_near, fog_far);
+    }
 				
 	// Lights
-	scene.add( new THREE.AmbientLight( 0x202020, 1 ) );
+	scene.add( new THREE.AmbientLight( ambient_light_color, ambient_light_intensity ) );
 
 	directionalLight = new THREE.DirectionalLight(0xffffff, 0.7); 
     directionalLight.position.normalize();
@@ -99,8 +122,12 @@ function init( inputfiletype ) {
 		dimensions_y = geometry_object.boundingBox.max.y - geometry_object.boundingBox.min.y;
 		dimensions_x = geometry_object.boundingBox.max.x - geometry_object.boundingBox.min.x;
 		mesh_object.castShadow = mesh_object.receiveShadow = true;
+
 		camera.lookAt(mesh_object.center);
-		mesh_object.rotation = rot_offset;
+        camera.position.set( 0, 0, geometry_object.boundingSphere.radius*2.2 );
+        camera.lookAt(mesh_object.center);
+
+		mesh_object.rotation = object_rotation_offset;
 		scene.add( mesh_object );
 
 	} ); // End of loader.addEventListener()
@@ -111,13 +138,13 @@ function init( inputfiletype ) {
 	var texture_floor = THREE.ImageUtils.loadTexture( floor );
 	var material_floor = new THREE.MeshBasicMaterial( { map: texture_floor } );
 	texture_floor.wrapS = texture_floor.wrapT = THREE.RepeatWrapping;
-	texture_floor.repeat.set( 10, 10);
+	texture_floor.repeat = floor_repeat;
 
 	var geometry_floor = new THREE.PlaneGeometry( 100, 100 );
 
 	mesh_floor = new THREE.Mesh( geometry_floor, material_floor );
 	mesh_floor.rotation.x = - Math.PI / 2;
-	mesh_floor.scale.set( 100, 100, 100 );
+	mesh_floor.scale = floor_scale;
 	mesh_floor.receiveShadow = true;
 	scene.add( mesh_floor );
 

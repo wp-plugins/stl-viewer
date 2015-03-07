@@ -47,7 +47,11 @@ if(!class_exists('STLViewer')) {
                 'rotation' 	=> get_option('rotation'),
                 'width' 	=> get_option('width'),
                 'height' 	=> get_option('height'),
-                'floor' 	=> get_option('floor')
+                'floor' 	=> get_option('floor'),
+
+                'rotation_x' => get_option('rotation_x'),
+                'rotation_y' => get_option('rotation_y'),
+                'rotation_z' => get_option('rotation_z')
             ), $atts ) );
 
             // The code for the WebGL canvas
@@ -56,8 +60,11 @@ if(!class_exists('STLViewer')) {
 
                     var SCREEN_WIDTH = container.clientWidth;
                     var SCREEN_HEIGHT = container.clientHeight;
+
                     file = '".$upload_dir['baseurl']."/".$file."';
                     floor = '".$floor."';
+                    object_rotation_offset.set(".$rotation_x.", ".$rotation_z.", ".$rotation_y.", 'XZY');
+
                     if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
                     else {
                         $( 'progress' ).style.display = 'block';
