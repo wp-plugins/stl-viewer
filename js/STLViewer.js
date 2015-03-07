@@ -136,10 +136,10 @@ function init( inputfiletype ) {
 
 	// Floor
 	var texture_floor = THREE.ImageUtils.loadTexture( floor );
-	var material_floor = new THREE.MeshBasicMaterial( { map: texture_floor } );
-	texture_floor.wrapS = texture_floor.wrapT = THREE.RepeatWrapping;
-	texture_floor.repeat = floor_repeat;
+    texture_floor.wrapS = texture_floor.wrapT = THREE.RepeatWrapping;
+    texture_floor.repeat.set(10,10);
 
+	var material_floor = new THREE.MeshBasicMaterial( { map: texture_floor } );
 	var geometry_floor = new THREE.PlaneGeometry( 100, 100 );
 
 	mesh_floor = new THREE.Mesh( geometry_floor, material_floor );
