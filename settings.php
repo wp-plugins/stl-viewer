@@ -44,9 +44,9 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'ambient_light_color',  'title' => 'Ambient light color (hex)',         'type' => 'text',       'section' => 'alight'),
             array('name' => 'ambient_light_int',    'title' => 'Ambient light intensity (0..1)',    'type' => 'text',       'section' => 'alight'),
 
-            array('name' => 'rotationX', 			'title' => 'Rotate object (X-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
-            array('name' => 'rotationY', 			'title' => 'Rotate object (Y-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
-            array('name' => 'rotationZ', 			'title' => 'Rotate object (Z-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
+            array('name' => 'rotation_x', 			'title' => 'Rotate object (X-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
+            array('name' => 'rotation_y', 			'title' => 'Rotate object (Y-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
+            array('name' => 'rotation_z', 			'title' => 'Rotate object (Z-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
 
             array('name' => 'webgl_test_success', 	'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'),
             array('name' => 'webgl_test_fail', 		'title' => 'Fail message', 			    'type' => 'textarea',	'section' => 'webgl_test'),
