@@ -24,32 +24,38 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'alight', 	    'title' =>'Ambient light settings',     'tab' => 'render'),
         );
 
-        // Empty array('name' => '', 'title' => '', 'type' => '', 'section' => ''),
+        // Empty array('name' => '', 'default' => '', 'title' => '', 'type' => '', 'section' => ''),
         private $settings = array(
-            array('name' => 'height', 				'title' => 'Height (height)', 		    'type' => 'text',		'section' => 'general'),
-            array('name' => 'width', 				'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'),
-            array('name' => 'stl_div_webgl_error', 	'title' => 'WebGL error message', 	    'type' => 'textarea',	'section' => 'general'),
-            array('name' => 'stl_div_informations', 'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
-            array('name' => 'stl_div_loading_text', 'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'height', 				'default' => '', 'title' => 'Height (height)', 		    'type' => 'text',		'section' => 'general'),
+            array('name' => 'width', 				'default' => '', 'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'),
+            array('name' => 'stl_div_webgl_error', 	'default' => '', 'title' => 'WebGL error message', 	    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'stl_div_informations', 'default' => '', 'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'stl_div_loading_text', 'default' => '', 'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),
 
-            array('name' => 'floor', 			    'title' => 'Floor texture (floor)',     'type' => 'text',		'section' => 'render'),
-            array('name' => 'show_controls', 	    'title' => 'Show controls',             'type' => 'checkbox',	'section' => 'render'),
-            array('name' => 'autorotate', 			'title' => 'Enable autorotation',        'type' => 'checkbox',	'section' => 'render'),
+            array('name' => 'floor', 			    'default' => '', 'title' => 'Floor texture (floor)',     'type' => 'text',		'section' => 'render'),
+            array('name' => 'floor_repeat_x', 	    'default' => '', 'title' => 'Repeat texture (x)',        'type' => 'text',		'section' => 'render'),
+            array('name' => 'floor_repeat_y', 		'default' => '', 'title' => 'Repeat texture (y)',        'type' => 'text',		'section' => 'render'),
+            array('name' => 'floor_scale_x', 	    'default' => '', 'title' => 'Scale texture (x)',         'type' => 'text',		'section' => 'render'),
+            array('name' => 'floor_scale_y', 		'default' => '', 'title' => 'Scale texture (y)',         'type' => 'text',		'section' => 'render'),
 
-            array('name' => 'fog_enable',   'title' => 'Enable fog',        'type' => 'checkbox',   'section' => 'fog'),
-            array('name' => 'fog_color',    'title' => 'Fog color (hex)',   'type' => 'text',       'section' => 'fog'),
-            array('name' => 'fog_near',     'title' => 'Min. fog distance', 'type' => 'text',       'section' => 'fog'),
-            array('name' => 'fog_far',      'title' => 'Max. fog distance', 'type' => 'text',       'section' => 'fog'),
 
-            array('name' => 'ambient_light_color',  'title' => 'Ambient light color (hex)',         'type' => 'text',       'section' => 'alight'),
-            array('name' => 'ambient_light_int',    'title' => 'Ambient light intensity (0..1)',    'type' => 'text',       'section' => 'alight'),
+            array('name' => 'show_controls', 	    'default' => '', 'title' => 'Show controls',             'type' => 'checkbox',	'section' => 'render'),
+            array('name' => 'autorotate', 			'default' => '', 'title' => 'Enable autorotation',        'type' => 'checkbox',	'section' => 'render'),
 
-            array('name' => 'rotation_x', 			'title' => 'Rotate object (X-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
-            array('name' => 'rotation_y', 			'title' => 'Rotate object (Y-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
-            array('name' => 'rotation_z', 			'title' => 'Rotate object (Z-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
+            array('name' => 'fog_enable',   'default' => '', 'title' => 'Enable fog',        'type' => 'checkbox',   'section' => 'fog'),
+            array('name' => 'fog_color',    'default' => '', 'title' => 'Fog color (hex)',   'type' => 'text',       'section' => 'fog'),
+            array('name' => 'fog_near',     'default' => '', 'title' => 'Min. fog distance', 'type' => 'text',       'section' => 'fog'),
+            array('name' => 'fog_far',      'default' => '', 'title' => 'Max. fog distance', 'type' => 'text',       'section' => 'fog'),
 
-            array('name' => 'webgl_test_success', 	'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'),
-            array('name' => 'webgl_test_fail', 		'title' => 'Fail message', 			    'type' => 'textarea',	'section' => 'webgl_test'),
+            array('name' => 'ambient_light_color',  'default' => '', 'title' => 'Ambient light color (hex)',         'type' => 'text',       'section' => 'alight'),
+            array('name' => 'ambient_light_int',    'default' => '', 'title' => 'Ambient light intensity (0..1)',    'type' => 'text',       'section' => 'alight'),
+
+            array('name' => 'rotation_x', 			'default' => '', 'title' => 'Rotate object (X-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
+            array('name' => 'rotation_y', 			'default' => '', 'title' => 'Rotate object (Y-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
+            array('name' => 'rotation_z', 			'default' => '', 'title' => 'Rotate object (Z-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
+
+            array('name' => 'webgl_test_success', 	'default' => '', 'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'),
+            array('name' => 'webgl_test_fail', 		'default' => '', 'title' => 'Fail message', 			    'type' => 'textarea',	'section' => 'webgl_test'),
         );
 
         // Holds the helptext for the sections
@@ -183,5 +189,3 @@ if(!class_exists('STLViewer_Settings')) {
 
     }
 }
-
-$STLViewer_Settings = new STLViewer_Settings();

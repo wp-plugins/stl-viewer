@@ -92,9 +92,7 @@ function init( inputfiletype ) {
     // Init the scene
 	scene = new THREE.Scene(); // Scene
     // Fog
-    if(enable_fog) {
-        scene.fog = new THREE.Fog(fog_color, fog_near, fog_far);
-    }
+    scene.fog = new THREE.Fog(fog_color, fog_near, fog_far);
 				
 	// Lights
 	scene.add( new THREE.AmbientLight( ambient_light_color, ambient_light_intensity ) );
@@ -137,14 +135,14 @@ function init( inputfiletype ) {
 	// Floor
 	var texture_floor = THREE.ImageUtils.loadTexture( floor );
     texture_floor.wrapS = texture_floor.wrapT = THREE.RepeatWrapping;
-    texture_floor.repeat.set(10,10);
+    texture_floor.repeat.copy(floor_repeat);
 
 	var material_floor = new THREE.MeshBasicMaterial( { map: texture_floor } );
 	var geometry_floor = new THREE.PlaneGeometry( 100, 100 );
 
 	mesh_floor = new THREE.Mesh( geometry_floor, material_floor );
 	mesh_floor.rotation.x = - Math.PI / 2;
-	mesh_floor.scale.set(1,1,1);
+	mesh_floor.scale.copy(floor_scale);
 	mesh_floor.receiveShadow = true;
 	scene.add( mesh_floor );
 

@@ -28,8 +28,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 if(!class_exists('STLViewer')) {
     class STLViewer {
+
+        public $STLViewer_Settings;
+
         public function __construct() { 				// Construct the plugin object
             require_once( sprintf( "%s/settings.php", dirname(__FILE__) ) ); 	// Initialize Settings
+            $this->STLViewer_Settings = new STLViewer_Settings();
 
             add_shortcode( 'stl', array(&$this, 'insert_STL') );
             add_shortcode( 'webgl_test', array(&$this, 'WebGL_test') );
@@ -51,7 +55,15 @@ if(!class_exists('STLViewer')) {
 
                 'rotation_x' => get_option('rotation_x'),
                 'rotation_y' => get_option('rotation_y'),
-                'rotation_z' => get_option('rotation_z')
+                'rotation_z' => get_option('rotation_z'),
+
+                'floor_repeat_x' => get_option('floor_repeat_x'),
+                'floor_repeat_y' => get_option('floor_repeat_y'),
+
+                'floor_scale_x' => get_option('floor_scale_x'),
+                'floor_scale_y' => get_option('floor_scale_y'),
+
+
             ), $atts ) );
 
             // The code for the WebGL canvas
@@ -64,6 +76,8 @@ if(!class_exists('STLViewer')) {
                     file = '".$upload_dir['baseurl']."/".$file."';
                     floor = '".$floor."';
                     object_rotation_offset.set(".$rotation_x.", ".$rotation_z.", ".$rotation_y.", 'XZY');
+                    floor_repeat = THREE.Vector2( ".$floor_repeat_x.", ".$floor_repeat_y.");
+                    floor_scale = THREE.Vector3( ".$floor_scale_x.", ".$floor_scale_y.", 1);
 
                     if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
                     else {
