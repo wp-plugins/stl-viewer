@@ -144,7 +144,7 @@ function init( inputfiletype ) {
 
 	mesh_floor = new THREE.Mesh( geometry_floor, material_floor );
 	mesh_floor.rotation.x = - Math.PI / 2;
-	mesh_floor.scale = floor_scale;
+	mesh_floor.scale.set(1,1,1);
 	mesh_floor.receiveShadow = true;
 	scene.add( mesh_floor );
 
