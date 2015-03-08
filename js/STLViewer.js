@@ -3,7 +3,8 @@ var controls;
 var file;
 
 var camera, scene, renderer, mesh_object, mesh_floor, dimensions_x, dimensions_y, dimensions_z, loaded;
-var geometry_object, effect;
+var geometry_object;
+var effect;
 
 var rot_offset_x = 0;
 var rot_offset_y = 0;
@@ -40,7 +41,6 @@ function cameraPosition() {				// This sets the camera position after loading th
   	if (geometry_object && !loaded) {
         pointLight.position.set( 0, dimensions_y/2, -2*dimensions_x );
         directionalLight.position.set( 0, dimensions_y * 3/4, dimensions_z * 3 );
-
 		loaded = true; 				//Only run once.
 		$( 'progress' ).style.display = 'none';
 	} // End of if-command checking for the geometry
@@ -87,7 +87,8 @@ function init( inputfiletype ) {
 
 	if(inputfiletype == 'STL') loader = new THREE.STLLoader();
 	if(inputfiletype == 'OBJ') loader = new THREE.OBJLoader();
-	loader.load( file, function ( geometry_object ) {
+	loader.load( file, function ( geometry ) {
+        geometry_object = geometry;
 		mesh_object = new THREE.Mesh( geometry_object, material_object );
 		mesh_object.center = geometry_object.center;
 					
