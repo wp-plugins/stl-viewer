@@ -108,13 +108,13 @@ if(!class_exists('STLViewer')) {
             return $text.$test_webgl;
         } // End of WebGL_test()
 
-		public static function activate() {
+		public function activate() {
             $settings = $this->STLViewer_Settings->getSettingsArray();
             foreach($settings as $setting){
                 add_option($this->STLViewer_Settings->getSettingPrefix().$setting['name'], $setting['default']);
             }
         }
-		public static function deactivate() {
+		public function deactivate() {
             $settings = $this->STLViewer_Settings->getSettingsArray();
             foreach($settings as $setting){
                 delete_option($this->STLViewer_Settings->getSettingPrefix().$setting['name']);
