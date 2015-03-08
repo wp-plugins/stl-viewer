@@ -66,26 +66,19 @@ if(!class_exists('STLViewer')) {
                     var SCREEN_WIDTH = container.clientWidth;
                     var SCREEN_HEIGHT = container.clientHeight;
 
-                    file = '".$upload_dir['baseurl']."/".$file."';
-                    floor = '".$stlviewer_floor."';
-                    object_rotation_offset.set(".$stlviewer_rotation_x."*Math.PI/180, ".$stlviewer_rotation_z."*Math.PI/180, ".$stlviewer_rotation_y."*Math.PI/180, 'XZY');
+                    file        = '".$upload_dir['baseurl']."/".$file."';
+                    floor       = '".$stlviewer_floor."';
+                    object_rotation_offset.set( ".$stlviewer_rotation_x." * Math.PI / 180, ".$stlviewer_rotation_z." * Math.PI / 180, ".$stlviewer_rotation_y." * Math.PI / 180, 'XZY' );
                     ambient_light_color = ".$stlviewer_ambient_light_color.";
-                    fog_color = ".$stlviewer_fog_color.";
-                    fog_near = ".$stlviewer_fog_near.";
-                    fog_far = ".$stlviewer_fog_far.";
-                    floor_scale.set(".$stlviewer_floor_scale_x.", ".$stlviewer_floor_scale_y.", 1);
-                    floor_repeat.set(".$stlviewer_floor_repeat_x.", ".$stlviewer_floor_repeat_y.");
+                    fog_color   = ".$stlviewer_fog_color.";
+                    fog_near    = ".$stlviewer_fog_near.";
+                    fog_far     = ".$stlviewer_fog_far.";
+                    floor_scale.set( ".$stlviewer_floor_scale_x.", ".$stlviewer_floor_scale_y.", 1 );
+                    floor_repeat.set( ".$stlviewer_floor_repeat_x.", ".$stlviewer_floor_repeat_y." );
 
-                    if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
-                    else {
-                        $( 'progress' ).style.display = 'block';
-                        $( 'canvas' ).style.display = 'block';
-                        $( 'webGLError' ).style.display = 'none'
+                    if ( ! Detector.webgl ) noWebGL();
+                    else STLViewer();
 
-                        init('STL');
-                        animate();
-
-                    }
                     </script>";
 
             // The canvas where the scene will be rendered.

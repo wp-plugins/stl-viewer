@@ -36,6 +36,7 @@ if(!class_exists('STLViewer_Settings')) {
         private $settings = array(
             array('name' => 'height', 				'default' => '600px',       'title' => 'Height (height)', 		    'type' => 'text',		'section' => 'general'),
             array('name' => 'width', 				'default' => '100%',        'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'),
+            array('name' => 'object_color', 		'default' => '100%',        'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'),
             array('name' => 'webgl_error', 	        'default' => 'WebGL Error', 'title' => 'WebGL error message', 	    'type' => 'textarea',	'section' => 'general'),
             array('name' => 'informations',         'default' => '',            'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
             array('name' => 'loading_text',         'default' => '',            'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),
@@ -46,14 +47,14 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'floor_scale_x', 	    'default' => '1',   'title' => 'Scale texture (x)',         'type' => 'text',		'section' => 'render'),
             array('name' => 'floor_scale_y', 		'default' => '1',   'title' => 'Scale texture (y)',         'type' => 'text',		'section' => 'render'),
 
-            array('name' => 'show_controls', 	    'default' => '0', 'title' => 'Show controls',            'type' => 'checkbox',	'section' => 'render'),
-            array('name' => 'autorotate', 			'default' => '0', 'title' => 'Enable autorotation',      'type' => 'checkbox',	'section' => 'render'),
+            //array('name' => 'show_controls', 	    'default' => '0', 'title' => 'Show controls',            'type' => 'checkbox',	'section' => 'render'),
+            //array('name' => 'autorotate', 			'default' => '0', 'title' => 'Enable autorotation',      'type' => 'checkbox',	'section' => 'render'),
 
             array('name' => 'fog_color',    'default' => '0xd9dee5',        'title' => 'Fog color (hex)',     'type' => 'text',       'section' => 'fog'),
             array('name' => 'fog_near',     'default' => '1',       'title' => 'Min. fog distance',   'type' => 'text',       'section' => 'fog'),
             array('name' => 'fog_far',      'default' => '10000',   'title' => 'Max. fog distance',   'type' => 'text',       'section' => 'fog'),
 
-            array('name' => 'ambient_light_color',  'default' => '0xffffff',    'title' => 'Ambient light color (hex)',         'type' => 'text',       'section' => 'alight'),
+            array('name' => 'ambient_light_color',  'default' => '0x202020',    'title' => 'Ambient light color (hex)',         'type' => 'text',       'section' => 'alight'),
 
             array('name' => 'rotation_x', 			'default' => '0', 'title' => 'Rotate object (X-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
             array('name' => 'rotation_y', 			'default' => '0', 'title' => 'Rotate object (Y-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
