@@ -46,11 +46,11 @@ var ambient_light;
 
 var point_light;
 var point_light_color = 0xffffff;
-var point_light_intensity = 1;
+var point_light_intensity = 0.7;
 
 var directional_light;
 var directional_light_color = 0xffffff;
-var directional_light_intensity = 1;
+var directional_light_intensity = 0.7;
 
 // IMPORTANT
 

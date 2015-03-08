@@ -17,6 +17,7 @@ if(!class_exists('STLViewer_Settings')) {
         private $tabs = array(
             'default'       => '<span class="dashicons dashicons-admin-settings"></span> General Settings',
             'render'        => '<span class="dashicons dashicons-desktop"></span> Rendering options',
+            'lights'        => '<span class="dashicons dashicons-lightbulb"></span> Lightning options',
             'webgl_test'    => '<span class="dashicons dashicons-admin-generic"></span> WebGL Test options',
             //'misc'          => 'Misc'
         );
@@ -29,7 +30,9 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'default_rot', 	'title' =>'Default Object rotation',    'tab' => 'render'),
             array('name' => 'webgl_test', 	'title' =>'WebGL tester settings',      'tab' => 'webgl_test'),
             array('name' => 'fog', 	        'title' =>'Fog settings',               'tab' => 'render'),
-            array('name' => 'alight', 	    'title' =>'Ambient light settings',     'tab' => 'render'),
+            array('name' => 'alight', 	    'title' =>'Ambient light settings',     'tab' => 'lights'),
+            array('name' => 'plight', 	    'title' =>'Pointlight settings',        'tab' => 'lights'),
+            array('name' => 'dlight', 	    'title' =>'Directional light settings', 'tab' => 'lights'),
         );
 
         // Empty array('name' => '', 'default' => '', 'title' => '', 'type' => '', 'section' => ''),
@@ -54,7 +57,11 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'fog_near',     'default' => '1',       'title' => 'Min. fog distance',   'type' => 'text',       'section' => 'fog'),
             array('name' => 'fog_far',      'default' => '10000',   'title' => 'Max. fog distance',   'type' => 'text',       'section' => 'fog'),
 
-            array('name' => 'ambient_light_color',  'default' => '0x202020',    'title' => 'Ambient light color (hex)',         'type' => 'text',       'section' => 'alight'),
+            array('name' => 'ambient_light_color',          'default' => '0x202020',    'title' => 'Ambient light color (hex)',             'type' => 'text',       'section' => 'alight'),
+            array('name' => 'point_light_intensity',        'default' => '0.7',         'title' => 'Point light intensity (0..1)',          'type' => 'text',       'section' => 'plight'),
+            array('name' => 'directional_light_intensity',  'default' => '0.7',         'title' => 'Directional light intensity (0..1)',    'type' => 'text',       'section' => 'dlight'),
+            array('name' => 'point_light_color',            'default' => '0xffffff',         'title' => 'Point light color (hex)',          'type' => 'text',       'section' => 'plight'),
+            array('name' => 'directional_light_color',      'default' => '0xffffff',         'title' => 'Directional light color (hex)',    'type' => 'text',       'section' => 'dlight'),
 
             array('name' => 'rotation_x', 			'default' => '0', 'title' => 'Rotate object (X-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
             array('name' => 'rotation_y', 			'default' => '0', 'title' => 'Rotate object (Y-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
@@ -112,6 +119,7 @@ if(!class_exists('STLViewer_Settings')) {
         // Functions for the callbacks
         public function init_settings_tab_default()       { $this->init_settings('default');    }
         public function init_settings_tab_render()        { $this->init_settings('render');     }
+        public function init_settings_tab_lights()        { $this->init_settings('lights'); }
         public function init_settings_tab_webgl_test()    { $this->init_settings('webgl_test'); }
         public function init_settings_tab_misc()          { $this->init_settings('misc');       }
 
