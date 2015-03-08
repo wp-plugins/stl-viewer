@@ -74,7 +74,7 @@ if(!class_exists('STLViewer')) {
                     fog_near = ".$stlviewer_fog_near.";
                     fog_far = ".$stlviewer_fog_far.";
                     floor_scale.set(".$stlviewer_floor_scale_x.", ".$stlviewer_floor_scale_y.", 1);
-                    floor_repeat.set(".$stlviewer_floor_repeat_x.", ".$stlviewer_floor_repeat_y.")
+                    floor_repeat.set(".$stlviewer_floor_repeat_x.", ".$stlviewer_floor_repeat_y.");
 
                     if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
                     else {
