@@ -108,9 +108,7 @@ function init( inputfiletype ) {
 
 	if(inputfiletype == 'STL') loader = new THREE.STLLoader();
 	if(inputfiletype == 'OBJ') loader = new THREE.OBJLoader();
-	loader.addEventListener( 'load', function ( event ) {
-
-		geometry_object = event.content;
+	loader.load( file, function ( geometry_object ) {
 		mesh_object = new THREE.Mesh( geometry_object, material_object );
 		mesh_object.center = THREE.GeometryUtils.center(geometry_object);
 					
@@ -127,9 +125,7 @@ function init( inputfiletype ) {
 		mesh_object.rotation = object_rotation_offset;
 		scene.add( mesh_object );
 
-	} ); // End of loader.addEventListener()
-
-	loader.load( file );
+	} );
 
 	// Floor
 	var texture_floor = THREE.ImageUtils.loadTexture( floor );
