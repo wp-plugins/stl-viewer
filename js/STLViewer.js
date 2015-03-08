@@ -51,6 +51,22 @@ var directional_light;
 var directional_light_color = 0xffffff;
 var directional_light_intensity = 0.7;
 
+function viewTop() {
+    var size;
+    if(dimensions.y > dimensions.x) size = dimensions.y;
+    else size = dimensions.x;
+    camera.position.set(0,0, size*2.2);
+    camera.up.set(0,1,0);
+}
+
+function viewFront() {
+    var size;
+    if(dimensions.z > dimensions.x) size = dimensions.z;
+    else size = dimensions.x;
+    camera.position.set(0,-size * 2.2, dimensions.z / 2);
+    camera.up.set(0,0,1);
+}
+
 // IMPORTANT
 
 function $( id ) {
@@ -128,7 +144,6 @@ function init( inputfiletype ) {
         camera.position.set( 0, 0, dimensions.w * 2.2 );
 		mesh_object.rotation.copy(object_rotation_offset);
 
-        mesh_floor.position.y = - dimensions.y / 2;
         mesh_object.position.x = - dimensions.x / 2;
 
 		scene.add( mesh_object );
@@ -142,6 +157,7 @@ function init( inputfiletype ) {
 	//mesh_floor.rotation.x = - Math.PI / 2;
 	mesh_floor.scale.copy( floor_scale );
 	mesh_floor.receiveShadow = true;
+    mesh_floor.position.z = -dimensions.z;
 	scene.add( mesh_floor );
 
 	// RENDERER
