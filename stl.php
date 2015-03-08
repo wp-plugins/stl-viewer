@@ -25,15 +25,15 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+require_once( sprintf( "%s/settings.php", dirname(__FILE__) ) );
 
 if(!class_exists('STLViewer')) {
     class STLViewer {
 
         public $STLViewer_Settings;
 
-        public function __construct() { 				// Construct the plugin object
-            require_once( sprintf( "%s/settings.php", dirname(__FILE__) ) ); 	// Initialize Settings
-            $this->STLViewer_Settings = new STLViewer_Settings();
+        public function __construct() {
+            $this->STLViewer_Settings = new STLViewer_Settings(); // Initialize the settings class
 
             add_shortcode( 'stl', array(&$this, 'insert_STL') );
             add_shortcode( 'webgl_test', array(&$this, 'WebGL_test') );
@@ -45,26 +45,15 @@ if(!class_exists('STLViewer')) {
             global $post; 	//This is needed to generate the filename from the postname.
             $upload_dir = wp_upload_dir();
 
-            extract( shortcode_atts( array(
-                'file' 		=> $post->post_name.'-web.stl',
-                'name' 		=> 'default',
-                'rotation' 	=> get_option('rotation'),
-                'width' 	=> get_option('width'),
-                'height' 	=> get_option('height'),
-                'floor' 	=> get_option('floor'),
+            $shortcode_defaults = array();
+            $settings = $this->STLViewer_Settings->getSettingsArray();
+            foreach($settings as $setting) {
+                $setting_name = $this->STLViewer_Settings->getSettingPrefix().$setting['name'];
+                $shortcode_defaults[$setting_name] = get_option($setting_name);
+            }
+            $shortcode_defaults['file'] = $post->post_name.'-web.stl';
 
-                'rotation_x' => get_option('rotation_x'),
-                'rotation_y' => get_option('rotation_y'),
-                'rotation_z' => get_option('rotation_z'),
-
-                'floor_repeat_x' => get_option('floor_repeat_x'),
-                'floor_repeat_y' => get_option('floor_repeat_y'),
-
-                'floor_scale_x' => get_option('floor_scale_x'),
-                'floor_scale_y' => get_option('floor_scale_y'),
-
-
-            ), $atts ) );
+            extract( shortcode_atts( $shortcode_defaults, $atts ) );
 
             // The code for the WebGL canvas
             $thingiview="<script>
@@ -76,8 +65,8 @@ if(!class_exists('STLViewer')) {
                     file = '".$upload_dir['baseurl']."/".$file."';
                     floor = '".$floor."';
                     object_rotation_offset.set(".$rotation_x.", ".$rotation_z.", ".$rotation_y.", 'XZY');
-                    floor_repeat = THREE.Vector2( ".$floor_repeat_x.", ".$floor_repeat_y.");
-                    floor_scale = THREE.Vector3( ".$floor_scale_x.", ".$floor_scale_y.", 1);
+                    //floor_repeat = THREE.Vector2( ".$floor_repeat_x.", ".$floor_repeat_y.");
+                    //floor_scale = THREE.Vector3( ".$floor_scale_x.", ".$floor_scale_y.", 1);
 
                     if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
                     else {
@@ -119,8 +108,26 @@ if(!class_exists('STLViewer')) {
             return $text.$test_webgl;
         } // End of WebGL_test()
 
-		public static function activate() {}
-		public static function deactivate() {}
+        private function addSettingsToDB() {
+            $settings = $this->STLViewer_Settings->getSettingsArray();
+            foreach($settings as $setting){
+                add_option($this->STLViewer_Settings->getSettingPrefix().$setting['name'], $setting['default']);
+            }
+        }
+
+        private function deleteSettingsFromFB() {
+            $settings = $this->STLViewer_Settings->getSettingsArray();
+            foreach($settings as $setting){
+                delete_option($this->STLViewer_Settings->getSettingPrefix().$setting['name']);
+            }
+        }
+
+		public static function activate() {
+            $this->addSettingsToDB();
+        }
+		public static function deactivate() {
+            $this->deleteSettingsFromFB();
+        }
 
 	} // END class STLViewer
 } // END if(!class_exists('STLViewer'))

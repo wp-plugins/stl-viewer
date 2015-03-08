@@ -2,10 +2,18 @@
 if(!class_exists('STLViewer_Settings')) {
     class STLViewer_Settings {
 
+        // General settings for the settings page / class
+        const PAGE_TITLE = 'STL Viewer Settings';// Page title
+        const MENU_TITLE = 'STL Viewer';         // Title in the menu
+        const CAPABILITY = 'manage_options';     // Who is allowed to change settings
+        const MENU_SLUG = 'stlviewer';           // Also the page name
+        const SETTINGS_PREFIX = 'stlviewer_';
+
         // Add the tabs for the settings page here
         // For each tab you need to create a callback function
         // public function init_settings_tab_tabname() { $this->init_settings('tabname'); }
         //
+
         private $tabs = array(
             'default'       => '<span class="dashicons dashicons-admin-settings"></span> General Settings',
             'render'        => '<span class="dashicons dashicons-desktop"></span> Rendering options',
@@ -26,36 +34,34 @@ if(!class_exists('STLViewer_Settings')) {
 
         // Empty array('name' => '', 'default' => '', 'title' => '', 'type' => '', 'section' => ''),
         private $settings = array(
-            array('name' => 'height', 				'default' => '', 'title' => 'Height (height)', 		    'type' => 'text',		'section' => 'general'),
-            array('name' => 'width', 				'default' => '', 'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'),
-            array('name' => 'stl_div_webgl_error', 	'default' => '', 'title' => 'WebGL error message', 	    'type' => 'textarea',	'section' => 'general'),
-            array('name' => 'stl_div_informations', 'default' => '', 'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
-            array('name' => 'stl_div_loading_text', 'default' => '', 'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'height', 				'default' => '600px',       'title' => 'Height (height)', 		    'type' => 'text',		'section' => 'general'),
+            array('name' => 'width', 				'default' => '100%',        'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'),
+            array('name' => 'webgl_error', 	        'default' => 'WebGL Error', 'title' => 'WebGL error message', 	    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'informations',         'default' => '',            'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'loading_text',         'default' => '',            'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),
 
-            array('name' => 'floor', 			    'default' => '', 'title' => 'Floor texture (floor)',     'type' => 'text',		'section' => 'render'),
-            array('name' => 'floor_repeat_x', 	    'default' => '', 'title' => 'Repeat texture (x)',        'type' => 'text',		'section' => 'render'),
-            array('name' => 'floor_repeat_y', 		'default' => '', 'title' => 'Repeat texture (y)',        'type' => 'text',		'section' => 'render'),
-            array('name' => 'floor_scale_x', 	    'default' => '', 'title' => 'Scale texture (x)',         'type' => 'text',		'section' => 'render'),
-            array('name' => 'floor_scale_y', 		'default' => '', 'title' => 'Scale texture (y)',         'type' => 'text',		'section' => 'render'),
+            array('name' => 'floor', 			    'default' => '',    'title' => 'Floor texture (floor)',     'type' => 'text',		'section' => 'render'),
+            array('name' => 'floor_repeat_x', 	    'default' => '0',   'title' => 'Repeat texture (x)',        'type' => 'text',		'section' => 'render'),
+            array('name' => 'floor_repeat_y', 		'default' => '0',   'title' => 'Repeat texture (y)',        'type' => 'text',		'section' => 'render'),
+            array('name' => 'floor_scale_x', 	    'default' => '1',   'title' => 'Scale texture (x)',         'type' => 'text',		'section' => 'render'),
+            array('name' => 'floor_scale_y', 		'default' => '1',   'title' => 'Scale texture (y)',         'type' => 'text',		'section' => 'render'),
 
+            array('name' => 'show_controls', 	    'default' => '0', 'title' => 'Show controls',            'type' => 'checkbox',	'section' => 'render'),
+            array('name' => 'autorotate', 			'default' => '0', 'title' => 'Enable autorotation',      'type' => 'checkbox',	'section' => 'render'),
 
-            array('name' => 'show_controls', 	    'default' => '', 'title' => 'Show controls',             'type' => 'checkbox',	'section' => 'render'),
-            array('name' => 'autorotate', 			'default' => '', 'title' => 'Enable autorotation',        'type' => 'checkbox',	'section' => 'render'),
+            array('name' => 'fog_color',    'default' => '0xd9dee5',        'title' => 'Fog color (hex)',     'type' => 'text',       'section' => 'fog'),
+            array('name' => 'fog_near',     'default' => '1',       'title' => 'Min. fog distance',   'type' => 'text',       'section' => 'fog'),
+            array('name' => 'fog_far',      'default' => '10000',   'title' => 'Max. fog distance',   'type' => 'text',       'section' => 'fog'),
 
-            array('name' => 'fog_enable',   'default' => '', 'title' => 'Enable fog',        'type' => 'checkbox',   'section' => 'fog'),
-            array('name' => 'fog_color',    'default' => '', 'title' => 'Fog color (hex)',   'type' => 'text',       'section' => 'fog'),
-            array('name' => 'fog_near',     'default' => '', 'title' => 'Min. fog distance', 'type' => 'text',       'section' => 'fog'),
-            array('name' => 'fog_far',      'default' => '', 'title' => 'Max. fog distance', 'type' => 'text',       'section' => 'fog'),
+            array('name' => 'ambient_light_color',  'default' => '0x202020',    'title' => 'Ambient light color (hex)',         'type' => 'text',       'section' => 'alight'),
+            array('name' => 'ambient_light_int',    'default' => '1',   'title' => 'Ambient light intensity (0..1)',    'type' => 'text',       'section' => 'alight'),
 
-            array('name' => 'ambient_light_color',  'default' => '', 'title' => 'Ambient light color (hex)',         'type' => 'text',       'section' => 'alight'),
-            array('name' => 'ambient_light_int',    'default' => '', 'title' => 'Ambient light intensity (0..1)',    'type' => 'text',       'section' => 'alight'),
+            array('name' => 'rotation_x', 			'default' => '0', 'title' => 'Rotate object (X-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
+            array('name' => 'rotation_y', 			'default' => '0', 'title' => 'Rotate object (Y-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
+            array('name' => 'rotation_z', 			'default' => '0', 'title' => 'Rotate object (Z-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
 
-            array('name' => 'rotation_x', 			'default' => '', 'title' => 'Rotate object (X-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
-            array('name' => 'rotation_y', 			'default' => '', 'title' => 'Rotate object (Y-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
-            array('name' => 'rotation_z', 			'default' => '', 'title' => 'Rotate object (Z-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
-
-            array('name' => 'webgl_test_success', 	'default' => '', 'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'),
-            array('name' => 'webgl_test_fail', 		'default' => '', 'title' => 'Fail message', 			    'type' => 'textarea',	'section' => 'webgl_test'),
+            array('name' => 'webgl_test_success', 	'default' => 'WebGL wird von Ihrem System unterstützt.', 'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'),
+            array('name' => 'webgl_test_fail', 		'default' => 'WebGL wird nicht von Ihrem System unterstützt.', 'title' => 'Fail message',       'type' => 'textarea',	'section' => 'webgl_test'),
         );
 
         // Holds the helptext for the sections
@@ -68,19 +74,21 @@ if(!class_exists('STLViewer_Settings')) {
             'alight'        => 'Set the parameters for the ambient light.',
         );
 
-        // General settings for the settings page / class
-        private $page_title = 'STL Viewer Settings';// Page title
-        private $menu_title = 'STL Viewer';         // Title in the menu
-        private $capability = 'manage_options';     // Who is allowed to change settings
-        private $menu_slug = 'stlviewer';           // Also the page name
-
         // Class functions
 
         public function __construct() {
+            // Initialize the settings
             foreach($this->tabs as $tab_key => $tab_caption) {
                 add_action('admin_init', array(&$this, 'init_settings_tab_'.$tab_key));
             }
             add_action('admin_menu', array(&$this, 'add_menu'));
+        }
+        public function getSettingsArray() {
+            return $this->settings;
+        }
+
+        public function getSettingPrefix() {
+            return self::SETTINGS_PREFIX;
         }
 
         // Return the helptext for a section
@@ -115,8 +123,8 @@ if(!class_exists('STLViewer_Settings')) {
 
         // Used inside render_settings, just to keep code clean.
         private function setup_field($field) {
-            register_setting($this->getTab($field), $field['name']);
-            add_settings_field($field['name'], $field['title'], array(&$this, $field['type']), $this->getTab($field), $field['section'], array('field' => $field['name']));
+            register_setting($this->getTab($field), self::SETTINGS_PREFIX.$field['name']);
+            add_settings_field(self::SETTINGS_PREFIX.$field['name'], $field['title'], array(&$this, $field['type']), $this->getTab($field), $field['section'], array('field' => self::SETTINGS_PREFIX.$field['name']));
         }
         private function setup_section($section) {
             add_settings_section( $section['name'], $section['title'], array(&$this, 'helptext'), $section['tab']);
@@ -146,7 +154,7 @@ if(!class_exists('STLViewer_Settings')) {
 
         // Register the menu in WordPress
         public function add_menu() {
-            add_options_page($this->page_title, $this->menu_title, $this->capability, $this->menu_slug, array(&$this, 'plugin_settings_page'));
+            add_options_page(self::PAGE_TITLE, self::MENU_TITLE, self::CAPABILITY, self::MENU_SLUG, array(&$this, 'plugin_settings_page'));
         }
 
         // Gives out the settings page with echo
