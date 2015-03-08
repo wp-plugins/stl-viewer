@@ -59,11 +59,27 @@ function viewTop() {
     camera.up.set(0,1,0);
 }
 
-function viewFront() {
+function viewSide(side) {
+    var size;
+    var factor = new THEE.Vector2(0,0);
+    var window_height_factor = SCREEN_HEIGHT/SCREEN_WIDTH;
+
+    if(dimensions.z > dimensions.x) size = dimensions.z;
+    else size = dimensions.x;
+
+    if(side == front) {factor.set(0,-1);}
+    if(side == rear) {factor.set(0,1);}
+    if(side == left) {factor.set(-1,0);}
+    if(side == right) {factor.set(1,0);}
+    camera.position.set(factor.x*(size * 2.2 * window_height_factor + dimensions.y),factor.y*(size * 2.2 - dimensions.y), dimensions.z / 2);
+    camera.up.set(0,0,1);
+}
+
+function viewRear() {
     var size;
     if(dimensions.z > dimensions.x) size = dimensions.z;
     else size = dimensions.x;
-    camera.position.set(0,-size * 2.2, dimensions.z / 2);
+    camera.position.set(0,size * 2.2 - dimensions.y, dimensions.z / 2);
     camera.up.set(0,0,1);
 }
 
@@ -113,7 +129,7 @@ function init( inputfiletype ) {
     controls.noZoom = false;
     controls.noPan = true;
 
-    controls.staticMoving = true;
+    controls.staticMoving = false;
     controls.dynamicDampingFactor = 0.3;
 
     controls.keys = [ 65, 83, 68 ];
@@ -145,8 +161,10 @@ function init( inputfiletype ) {
 		mesh_object.rotation.copy(object_rotation_offset);
 
         mesh_object.position.x = - dimensions.x / 2;
+        mesh_floor.position.z = -dimensions.z;
 
-		scene.add( mesh_object );
+
+        scene.add( mesh_object );
 
 	} );
 
@@ -157,7 +175,6 @@ function init( inputfiletype ) {
 	//mesh_floor.rotation.x = - Math.PI / 2;
 	mesh_floor.scale.copy( floor_scale );
 	mesh_floor.receiveShadow = true;
-    mesh_floor.position.z = -dimensions.z;
 	scene.add( mesh_floor );
 
 	// RENDERER
