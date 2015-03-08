@@ -13,9 +13,8 @@ var renderer;
 var renderer_antialias = true;
 var material_object;
 
-var dimensions_x;
-var dimensions_y;
-var dimensions_z;
+var dimensions = new THREE.Vector4();
+
 var loaded;
 var geometry_object;
 var material_floor;
@@ -99,27 +98,27 @@ function init( inputfiletype ) {
     directional_light.position.normalize();
     scene.add(directional_light);
     scene.add(point_light);
+    camera.lookAt(0,0,0);
 
-	loader.load( file, function ( geometry ) {
+    loader.load( file, function ( geometry ) {
         geometry_object = geometry;
-		mesh_object = new THREE.Mesh( geometry_object, material_object );
+		mesh_object = new THREE.Mesh( geometry, material_object );
         mesh_object.castShadow = mesh_object.receiveShadow = true;
 
         geometry.computeBoundingBox();
         geometry.computeBoundingSphere();
-		dimensions_z = geometry.boundingBox.max.z - geometry.boundingBox.min.z;
-		dimensions_y = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
-		dimensions_x = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
 
-        point_light.position.set( 0, dimensions_y / 2, - 2 * dimensions_x );
-        directional_light.position.set( 0, dimensions_y * 3 / 4, dimensions_z * 3 );
+        dimensions.subVectors(geometry.boundingBox.max, geometry.boundingBox.min);
+        dimensions.setW(geometry.boundingSphere.radius);
 
-        camera.position.set( 0, 0, geometry.boundingSphere.radius * 2.2 );
-        camera.lookAt(0,0,0);
+        point_light.position.set( 0, dimensions.y / 2, - 2 * dimensions.x );
+        directional_light.position.set( 0, dimensions.y * 3 / 4, dimensions.z * 3 );
+
+        camera.position.set( 0, 0, dimensions.w * 2.2 );
 		mesh_object.rotation.copy(object_rotation_offset);
 
-        mesh_floor.position.y = - dimensions_y / 2;
-        mesh_object.position.x = - dimensions_x / 2;
+        mesh_floor.position.y = - dimensions.y / 2;
+        mesh_object.position.x = - dimensions.x / 2;
 
 		scene.add( mesh_object );
 

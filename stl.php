@@ -73,8 +73,8 @@ if(!class_exists('STLViewer')) {
                     fog_color   = ".$stlviewer_fog_color.";
                     fog_near    = ".$stlviewer_fog_near.";
                     fog_far     = ".$stlviewer_fog_far.";
-                    floor_scale.set( ".$stlviewer_floor_scale_x.", ".$stlviewer_floor_scale_y.", 1 );
-                    floor_repeat.set( ".$stlviewer_floor_repeat_x.", ".$stlviewer_floor_repeat_y." );
+                    floor_scale.set( ".$stlviewer_floor_scale.", 1 );
+                    floor_repeat.set( ".$stlviewer_floor_repeat." );
                     point_light_intensity = ".$stlviewer_point_light_intensity.";
                     directional_light_intensity = ".$stlviewer_directional_light_intensity.";
                     point_light_color = ".$stlviewer_point_light_color.";
