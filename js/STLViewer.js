@@ -31,27 +31,9 @@ var ambient_light_intensity = 1;
 
 // IMPORTANT
 
-function clone(obj) {
-    if(obj == null || typeof(obj) != 'object')
-        return obj;
-
-    var temp = obj.constructor(); // changed
-
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key)) {
-            temp[key] = clone(obj[key]);
-        }
-    }
-    return temp;
-}
-
 function $( id ) {
 	return document.getElementById( id );
 }
-
-function setObjectRotation(x, y, z) {
-	mesh_object.rotation.set( x * Math.PI/2, y * Math.PI/2, z * Math.PI/2 );
-} // End of setObjectRotation()
 
 	
 function cameraPosition() {				// This sets the camera position after loading the geometry.
@@ -70,9 +52,6 @@ function noWebGL() { 	// Runs if no WebGL is found
 	$( 'webGLError' ).style.display = 'block';
 	$( 'quality_notes' ).style.display = 'none';
 } // End of noWebGL()
-
-function STLViewer() {
-}
 	
 function init( inputfiletype ) {
 	$( 'progress' ).style.display = 'block';
@@ -110,7 +89,7 @@ function init( inputfiletype ) {
 	if(inputfiletype == 'OBJ') loader = new THREE.OBJLoader();
 	loader.load( file, function ( geometry_object ) {
 		mesh_object = new THREE.Mesh( geometry_object, material_object );
-		mesh_object.center = THREE.GeometryUtils.center(geometry_object);
+		mesh_object.center = geometry_object.center;
 					
 		geometry_object.computeBoundingBox();
 		dimensions_z = geometry_object.boundingBox.max.z - geometry_object.boundingBox.min.z;
@@ -118,7 +97,6 @@ function init( inputfiletype ) {
 		dimensions_x = geometry_object.boundingBox.max.x - geometry_object.boundingBox.min.x;
 		mesh_object.castShadow = mesh_object.receiveShadow = true;
 
-		camera.lookAt(mesh_object.center);
         camera.position.set( 0, 0, geometry_object.boundingSphere.radius*2.2 );
         camera.lookAt(mesh_object.center);
 
@@ -130,14 +108,14 @@ function init( inputfiletype ) {
 	// Floor
 	var texture_floor = THREE.ImageUtils.loadTexture( floor );
     texture_floor.wrapS = texture_floor.wrapT = THREE.RepeatWrapping;
-    texture_floor.repeat.set(10,10);
+    texture_floor.repeat.set( 10, 10 );
 
 	var material_floor = new THREE.MeshBasicMaterial( { map: texture_floor } );
-	var geometry_floor = new THREE.PlaneGeometry( 100, 100 );
+	var geometry_floor = new THREE.PlaneBufferGeometry( 100, 100 );
 
 	mesh_floor = new THREE.Mesh( geometry_floor, material_floor );
 	mesh_floor.rotation.x = - Math.PI / 2;
-	mesh_floor.scale.set(1,1,1);
+	mesh_floor.scale.set(10, 10, 1);
 	mesh_floor.receiveShadow = true;
 	scene.add( mesh_floor );
 

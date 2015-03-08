@@ -70,9 +70,6 @@ if(!class_exists('STLViewer')) {
                     floor = '".$stlviewer_floor."';
                     object_rotation_offset.set(".$stlviewer_rotation_x.", ".$stlviewer_rotation_z.", ".$stlviewer_rotation_y.", 'XZY');
 
-                    //floor_repeat = THREE.Vector2( ".$stlviewer_repeat_x.", ".$stlviewer_floor_repeat_y.");
-                    //floor_scale = THREE.Vector3( ".$stlviewer_scale_x.", ".$stlviewer_floor_scale_y.", 1);
-
                     if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
                     else {
                         $( 'progress' ).style.display = 'block';
