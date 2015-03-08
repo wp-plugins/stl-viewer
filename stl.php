@@ -168,7 +168,7 @@ $stlviewer_plugin = new STLViewer(); 					// instantiate the plugin class
 
 add_action( 'wp_enqueue_scripts', 'ThreeJS_Scripts' );
 $plugin = plugin_basename(__FILE__);
-add_filter("plugin_action_links_$plugin", 'plugin_settings_link');
+add_filter("plugin_action_links_".$plugin, 'plugin_settings_link');
 
 
 
