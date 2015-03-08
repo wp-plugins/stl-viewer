@@ -26,9 +26,6 @@ var fog_near = 1;
 var fog_far = 10000;
 
 var ambient_light_color = '0x202020';
-var ambient_light_intensity = 1;
-
-
 
 // IMPORTANT
 
@@ -73,7 +70,7 @@ function init( inputfiletype ) {
     scene.fog = new THREE.Fog(fog_color, fog_near, fog_far);
 				
 	// Lights
-	scene.add( new THREE.AmbientLight( ambient_light_color, ambient_light_intensity ) );
+	scene.add( new THREE.AmbientLight( ambient_light_color ) );
 
 	directionalLight = new THREE.DirectionalLight(0xffffff, 0.7); 
     directionalLight.position.normalize();
@@ -104,7 +101,7 @@ function init( inputfiletype ) {
         camera.position.set( 0, 0, geometry.boundingSphere.radius*2.2 );
         camera.lookAt(mesh_object.center);
 
-		mesh_object.rotation = object_rotation_offset;
+		mesh_object.rotation.copy(object_rotation_offset);
 		scene.add( mesh_object );
 
 	} );
@@ -112,14 +109,14 @@ function init( inputfiletype ) {
 	// Floor
 	var texture_floor = THREE.ImageUtils.loadTexture( floor );
     texture_floor.wrapS = texture_floor.wrapT = THREE.RepeatWrapping;
-    texture_floor.repeat.set( 10, 10 );
+    texture_floor.repeat.copy(floor_repeat);
 
 	var material_floor = new THREE.MeshBasicMaterial( { map: texture_floor } );
 	var geometry_floor = new THREE.PlaneGeometry( 100, 100 );
 
 	mesh_floor = new THREE.Mesh( geometry_floor, material_floor );
 	mesh_floor.rotation.x = - Math.PI / 2;
-	mesh_floor.scale.set(10, 10, 1);
+	mesh_floor.scale.copy(floor_scale);
 	mesh_floor.receiveShadow = true;
 	scene.add( mesh_floor );
 
