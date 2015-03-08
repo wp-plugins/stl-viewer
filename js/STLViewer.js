@@ -22,13 +22,13 @@ function cameraPosition() {				// This sets the camera position after loading th
 		camera.position.z = dimensions_y*2;
 		camera.position.y = dimensions_y/2;
 
-     	pointLight.position.x = 0;
-     	pointLight.position.y = dimensions_y/2;
-     	pointLight.position.z = -2*dimensions_x;
+     	point_light.position.x = 0;
+     	point_light.position.y = dimensions_y/2;
+     	point_light.position.z = -2*dimensions_x;
 
-      	directionalLight.position.x = 0;
-     	directionalLight.position.y = dimensions_y * 3/4;
-     	directionalLight.position.z = dimensions_z * 3;
+      	directional_light.position.x = 0;
+     	directional_light.position.y = dimensions_y * 3/4;
+     	directional_light.position.z = dimensions_z * 3;
 
 		loaded = true; 				//Only run once.
 
@@ -66,11 +66,11 @@ function init( inputfiletype ) {
 	// Lights
 	scene.add( new THREE.AmbientLight( 0x202020, 1 ) );
 
-	directionalLight = new THREE.DirectionalLight(0xffffff, 0.7); 
+	directional_light = new THREE.DirectionalLight(0xffffff, 0.7);
     directionalLight.position.normalize();
     scene.add(directionalLight);
     
-    pointLight = new THREE.PointLight(0xffffff, 0.7);
+    point_light = new THREE.PointLight(0xffffff, 0.7);
     scene.add(pointLight);
 
 	// Object
