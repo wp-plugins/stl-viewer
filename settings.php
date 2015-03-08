@@ -137,7 +137,8 @@ if(!class_exists('STLViewer_Settings')) {
         // Used inside render_settings, just to keep code clean.
         private function setup_field($field) {
             register_setting($this->getTab($field), self::SETTINGS_PREFIX.$field['name']);
-            add_settings_field(self::SETTINGS_PREFIX.$field['name'], $field['title'], array(&$this, $field['type']), $this->getTab($field), $field['section'], array('field' => self::SETTINGS_PREFIX.$field['name']));
+            $title = $field['title'].' [<i>'.self::SETTINGS_PREFIX.$field['name'].'</i>]';
+            add_settings_field(self::SETTINGS_PREFIX.$field['name'], $title, array(&$this, $field['type']), $this->getTab($field), $field['section'], array('field' => self::SETTINGS_PREFIX.$field['name']));
         }
         private function setup_section($section) {
             add_settings_section( $section['name'], $section['title'], array(&$this, 'getHelptext'), $section['tab']);
