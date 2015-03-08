@@ -58,7 +58,7 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'ambient_light_color',          'default' => '0x202020',    'title' => 'Ambient light color (hex)',             'type' => 'text',       'section' => 'alight'),
             array('name' => 'point_light_intensity',        'default' => '0.7',         'title' => 'Point light intensity (0..1)',          'type' => 'text',       'section' => 'plight'),
             array('name' => 'point_light_color',            'default' => '0xffffff',    'title' => 'Point light color (hex)',          'type' => 'text',       'section' => 'plight'),
-            array('name' => 'point_light_position_x',       'default' => '',         'title' => 'Point light position (x, y, z)',          'type' => 'text',       'section' => 'plight'),
+            array('name' => 'point_light_position',       'default' => '',         'title' => 'Point light position (x, y, z)',          'type' => 'text',       'section' => 'plight'),
 
             array('name' => 'directional_light_intensity',  'default' => '0.7',         'title' => 'Directional light intensity (0..1)',    'type' => 'text',       'section' => 'dlight'),
             array('name' => 'directional_light_color',      'default' => '0xffffff',    'title' => 'Directional light color (hex)',    'type' => 'text',       'section' => 'dlight'),

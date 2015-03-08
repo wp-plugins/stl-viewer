@@ -70,7 +70,7 @@ function init( inputfiletype ) {
     $( 'webGLError' ).style.display = 'none';
 
 	camera      = new THREE.PerspectiveCamera( camera_fov, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 25000 );
-    controls    = new THREE.OrbitControls( camera, container );
+    controls    = new THREE.TrackballControls( camera );
     scene       = new THREE.Scene();
     renderer    = new THREE.WebGLRenderer( { antialias: renderer_antialias } );
     fog         = new THREE.Fog(fog_color, fog_near, fog_far);
@@ -89,7 +89,18 @@ function init( inputfiletype ) {
     //if(inputfiletype == 'STL') loader = new THREE.STLLoader();
     //if(inputfiletype == 'OBJ') loader = new THREE.OBJLoader();
 
-    controls.maxPolarAngle = Math.PI/2;
+    //controls.maxPolarAngle = Math.PI/2;
+    controls.rotateSpeed = 1.0;
+    controls.zoomSpeed = 1.2;
+    controls.panSpeed = 0.8;
+
+    controls.noZoom = false;
+    controls.noPan = true;
+
+    controls.staticMoving = true;
+    controls.dynamicDampingFactor = 0.3;
+
+    controls.keys = [ 65, 83, 68 ];
     controls.addEventListener( 'change', render );
 
     scene.fog = fog;
@@ -128,7 +139,7 @@ function init( inputfiletype ) {
     texture_floor.wrapS = texture_floor.wrapT = THREE.RepeatWrapping;
     texture_floor.repeat.copy( floor_repeat );
 
-	mesh_floor.rotation.x = - Math.PI / 2;
+	//mesh_floor.rotation.x = - Math.PI / 2;
 	mesh_floor.scale.copy( floor_scale );
 	mesh_floor.receiveShadow = true;
 	scene.add( mesh_floor );
@@ -150,7 +161,9 @@ function animate() {
         $( 'progress' ).style.display = 'none';
     }
     requestAnimationFrame( animate );
+    controls.update();
 	render();
+
 } // End of animate()
 
 function render() {
