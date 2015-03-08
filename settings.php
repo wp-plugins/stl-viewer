@@ -91,6 +91,10 @@ if(!class_exists('STLViewer_Settings')) {
             return self::SETTINGS_PREFIX;
         }
 
+        public function getMenuSlug() {
+            return self::MENU_SLUG;
+        }
+
         // Return the helptext for a section
         public function getHelptext( $arg ) {
             echo $this->helptext[$arg['id']];
@@ -181,7 +185,7 @@ if(!class_exists('STLViewer_Settings')) {
             echo '<h2 class="nav-tab-wrapper">';
             foreach ( $this->tabs as $tab_key => $tab_caption ) {
                 $active = $current_tab == $tab_key ? 'nav-tab-active' : '';
-                echo '<a class="nav-tab ' . $active . '" href="?page=' . $this->menu_slug . '&tab=' . $tab_key . '">' . $tab_caption . '</a>';
+                echo '<a class="nav-tab ' . $active . '" href="?page=' . self::MENU_SLUG . '&tab=' . $tab_key . '">' . $tab_caption . '</a>';
             }
             echo '</h2>';
         }
