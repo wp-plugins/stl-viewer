@@ -92,7 +92,7 @@ if(!class_exists('STLViewer_Settings')) {
         }
 
         // Return the helptext for a section
-        public function helptext( $arg ) {
+        public function getHelptext( $arg ) {
             echo $this->helptext[$arg['id']];
         }
 
@@ -127,7 +127,7 @@ if(!class_exists('STLViewer_Settings')) {
             add_settings_field(self::SETTINGS_PREFIX.$field['name'], $field['title'], array(&$this, $field['type']), $this->getTab($field), $field['section'], array('field' => self::SETTINGS_PREFIX.$field['name']));
         }
         private function setup_section($section) {
-            add_settings_section( $section['name'], $section['title'], array(&$this, 'helptext'), $section['tab']);
+            add_settings_section( $section['name'], $section['title'], array(&$this, 'getHelptext'), $section['tab']);
         }
 
         // These function get the option value from DB and render the field

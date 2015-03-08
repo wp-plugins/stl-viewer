@@ -108,25 +108,17 @@ if(!class_exists('STLViewer')) {
             return $text.$test_webgl;
         } // End of WebGL_test()
 
-        private function addSettingsToDB() {
+		public static function activate() {
             $settings = $this->STLViewer_Settings->getSettingsArray();
             foreach($settings as $setting){
                 add_option($this->STLViewer_Settings->getSettingPrefix().$setting['name'], $setting['default']);
             }
         }
-
-        private function deleteSettingsFromFB() {
+		public static function deactivate() {
             $settings = $this->STLViewer_Settings->getSettingsArray();
             foreach($settings as $setting){
                 delete_option($this->STLViewer_Settings->getSettingPrefix().$setting['name']);
             }
-        }
-
-		public static function activate() {
-            $this->addSettingsToDB();
-        }
-		public static function deactivate() {
-            $this->deleteSettingsFromFB();
         }
 
 	} // END class STLViewer
