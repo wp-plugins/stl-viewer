@@ -93,12 +93,13 @@ function init( inputfiletype ) {
         geometry_object = geometry;
 		mesh_object = new THREE.Mesh( geometry_object, material_object );
 		mesh_object.center = geometry_object.center;
-					
-		geometry.computeBoundingBox();
+        mesh_object.castShadow = mesh_object.receiveShadow = true;
+
+        geometry.computeBoundingBox();
+        geometry.computeBoundingSphere();
 		dimensions_z = geometry.boundingBox.max.z - geometry.boundingBox.min.z;
 		dimensions_y = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
 		dimensions_x = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
-		mesh_object.castShadow = mesh_object.receiveShadow = true;
 
         camera.position.set( 0, 0, geometry.boundingSphere.radius*2.2 );
         camera.lookAt(mesh_object.center);
