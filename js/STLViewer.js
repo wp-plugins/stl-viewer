@@ -68,7 +68,7 @@ function noWebGL() { 	// Runs if no WebGL is found
 function init( inputfiletype ) {
     $( 'progress' ).style.display = 'block';
     $( 'canvas' ).style.display = 'block';
-    $( 'webGLError' ).style.display = 'none'
+    $( 'webGLError' ).style.display = 'none';
 
 	camera      = new THREE.PerspectiveCamera( camera_fov, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 25000 );
     controls    = new THREE.OrbitControls( camera, container );
@@ -119,7 +119,7 @@ function init( inputfiletype ) {
 		mesh_object.rotation.copy(object_rotation_offset);
 
         mesh_floor.position.y = - dimensions_y / 2;
-        mesh_object.position.x = - dimensions_x / 2
+        mesh_object.position.x = - dimensions_x / 2;
 
 		scene.add( mesh_object );
 
