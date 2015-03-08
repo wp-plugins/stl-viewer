@@ -83,22 +83,24 @@ function init( inputfiletype ) {
     scene.add(pointLight);
 
 	// Object
-	var material_object = new THREE.MeshLambertMaterial({color:0xffffff, shading: THREE.FlatShading});
+	//var material_object = new THREE.MeshLambertMaterial({color:0xffffff, shading: THREE.FlatShading});
+    var material_object = new THREE.MeshPhongMaterial( { ambient: 0x555555, color: 0xffffff, specular: 0x111111, shininess: 200 } );
 
-	if(inputfiletype == 'STL') loader = new THREE.STLLoader();
-	if(inputfiletype == 'OBJ') loader = new THREE.OBJLoader();
+	//if(inputfiletype == 'STL') loader = new THREE.STLLoader();
+	//if(inputfiletype == 'OBJ') loader = new THREE.OBJLoader();
+    loader = new THREE.STLLoader();
 	loader.load( file, function ( geometry ) {
         geometry_object = geometry;
 		mesh_object = new THREE.Mesh( geometry_object, material_object );
 		mesh_object.center = geometry_object.center;
 					
-		geometry_object.computeBoundingBox();
-		dimensions_z = geometry_object.boundingBox.max.z - geometry_object.boundingBox.min.z;
-		dimensions_y = geometry_object.boundingBox.max.y - geometry_object.boundingBox.min.y;
-		dimensions_x = geometry_object.boundingBox.max.x - geometry_object.boundingBox.min.x;
+		geometry.computeBoundingBox();
+		dimensions_z = geometry.boundingBox.max.z - geometry.boundingBox.min.z;
+		dimensions_y = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
+		dimensions_x = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
 		mesh_object.castShadow = mesh_object.receiveShadow = true;
 
-        camera.position.set( 0, 0, geometry_object.boundingSphere.radius*2.2 );
+        camera.position.set( 0, 0, geometry.boundingSphere.radius*2.2 );
         camera.lookAt(mesh_object.center);
 
 		mesh_object.rotation = object_rotation_offset;

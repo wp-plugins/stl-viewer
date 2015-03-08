@@ -86,7 +86,7 @@ if(!class_exists('STLViewer')) {
             $thingiview_frame ='
                     <div id="progress" style="width: 100%; text-align: center">'.  get_option('stl_div_loading_text').'</div>
                     <div id="webGLError" style="width: 100%; text-align: center">'.get_option('stl_div_webgl_error').'</div>
-                    <div id="canvas" style="width:'.$width.';height:'.$height.'"></div>
+                    <div id="canvas" style="width:'.$stlviewer_width.';height:'.$stlviewer_height.'"></div>
                     <div id="quality_notes" style="width: 100%; text-align: center">'.get_option('stl_div_informations').'</div>';
 
             return $thingiview_frame.$thingiview;
