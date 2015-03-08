@@ -83,8 +83,8 @@ function init( inputfiletype ) {
     scene.add(pointLight);
 
 	// Object
-	//var material_object = new THREE.MeshLambertMaterial({color:0xffffff, shading: THREE.FlatShading});
-    var material_object = new THREE.MeshPhongMaterial( { ambient: 0x555555, color: 0xffffff, specular: 0x111111, shininess: 200 } );
+	var material_object = new THREE.MeshLambertMaterial({color:0xffffff, shading: THREE.FlatShading});
+    //var material_object = new THREE.MeshPhongMaterial( { ambient: 0x555555, color: 0xffffff, specular: 0x111111, shininess: 200 } );
 
 	//if(inputfiletype == 'STL') loader = new THREE.STLLoader();
 	//if(inputfiletype == 'OBJ') loader = new THREE.OBJLoader();
@@ -115,7 +115,7 @@ function init( inputfiletype ) {
     texture_floor.repeat.set( 10, 10 );
 
 	var material_floor = new THREE.MeshBasicMaterial( { map: texture_floor } );
-	var geometry_floor = new THREE.PlaneBufferGeometry( 100, 100 );
+	var geometry_floor = new THREE.PlaneGeometry( 100, 100 );
 
 	mesh_floor = new THREE.Mesh( geometry_floor, material_floor );
 	mesh_floor.rotation.x = - Math.PI / 2;

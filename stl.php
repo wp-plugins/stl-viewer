@@ -68,7 +68,7 @@ if(!class_exists('STLViewer')) {
 
                     file = '".$upload_dir['baseurl']."/".$file."';
                     floor = '".$stlviewer_floor."';
-                    object_rotation_offset.set(".$stlviewer_rotation_x.", ".$stlviewer_rotation_z.", ".$stlviewer_rotation_y.", 'XZY');
+                    object_rotation_offset.set(".$stlviewer_rotation_x."*Math.PI/180, ".$stlviewer_rotation_z."*Math.PI/180, ".$stlviewer_rotation_y."*Math.PI/180, 'XZY');
 
                     if ( ! Detector.webgl ) noWebGL(); // Run if WebGL is not supported.
                     else {
