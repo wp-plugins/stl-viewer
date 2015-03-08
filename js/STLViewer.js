@@ -15,7 +15,7 @@ var object_rotation_offset = new THREE.Euler(rot_offset_x, rot_offset_z, rot_off
 var floor_scale_x = 100;
 var floor_scale_y = 100;
 var floor_scale_z = 1;
-var floor_scale = new THREE.Vector3(floor_scale_x, floor_scale_y, floor_scale_z);
+var floor_scale = new THREE.Vector3( floor_scale_x, floor_scale_y, floor_scale_z );
 
 var floor_repeat_x = 10;
 var floor_repeat_y = 10;
@@ -25,7 +25,7 @@ var fog_color = '0xd9dee5';
 var fog_near = 1;
 var fog_far = 10000;
 
-var ambient_light_color = '0x202020';
+var ambient_light_color = '0xffffff';
 
 // IMPORTANT
 

@@ -53,7 +53,7 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'fog_near',     'default' => '1',       'title' => 'Min. fog distance',   'type' => 'text',       'section' => 'fog'),
             array('name' => 'fog_far',      'default' => '10000',   'title' => 'Max. fog distance',   'type' => 'text',       'section' => 'fog'),
 
-            array('name' => 'ambient_light_color',  'default' => '0x202020',    'title' => 'Ambient light color (hex)',         'type' => 'text',       'section' => 'alight'),
+            array('name' => 'ambient_light_color',  'default' => '0xffffff',    'title' => 'Ambient light color (hex)',         'type' => 'text',       'section' => 'alight'),
 
             array('name' => 'rotation_x', 			'default' => '0', 'title' => 'Rotate object (X-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
             array('name' => 'rotation_y', 			'default' => '0', 'title' => 'Rotate object (Y-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
