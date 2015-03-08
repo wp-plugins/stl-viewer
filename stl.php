@@ -38,6 +38,9 @@ if(!class_exists('STLViewer')) {
             add_shortcode( 'stl', array(&$this, 'insert_STL') );
             add_shortcode( 'webgl_test', array(&$this, 'WebGL_test') );
 
+            register_activation_hook( 	__FILE__, array( $this, 'activate' ));
+            register_deactivation_hook(	__FILE__, array( $this, 'deactivate' ));
+
 		} // END public function __construct
 
         public function insert_STL( $atts ) {
@@ -152,21 +155,20 @@ function ThreeJS_Scripts() {
 	wp_enqueue_script( 'Viewer', 		plugins_url( 'js/STLViewer.js' , __FILE__ ));
 }
 
+function plugin_settings_link($links) { 			// Add the settings link to the plugins page
+    $settings_link = '<a href="options-general.php?page=stlviewer">Settings</a>';
+    array_unshift($links, $settings_link);
+    return $links;
+}
+
 if(class_exists('STLViewer')) { 						// Installation and uninstallation hooks
-	register_activation_hook( 	__FILE__, array( 'STLViewer', 'activate' ));
-	register_deactivation_hook(	__FILE__, array( 'STLViewer', 'deactivate' ));
-	
 	$stlviewer_plugin = new STLViewer(); 					// instantiate the plugin class
+
 	//add_filter( 'add_attachment', 'stl_img_create' );		// For later use
 	//add_filter( 'delete_attachment', 'stl_img_delete' );	// For later use
-	add_action( 'wp_enqueue_scripts', 'ThreeJS_Scripts' );
 
-    if(isset($stlviewer_plugin)) { 							// Add a link to the settings page onto the plugin page 
-        function plugin_settings_link($links) { 			// Add the settings link to the plugins page
-            $settings_link = '<a href="options-general.php?page=stlviewer">Settings</a>';
-            array_unshift($links, $settings_link);
-            return $links;
-        }
+    if(isset($stlviewer_plugin)) {
+        add_action( 'wp_enqueue_scripts', 'ThreeJS_Scripts' );
         $plugin = plugin_basename(__FILE__);
         add_filter("plugin_action_links_$plugin", 'plugin_settings_link');
     }
