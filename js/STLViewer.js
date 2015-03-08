@@ -21,11 +21,11 @@ var floor_repeat_x = 10;
 var floor_repeat_y = 10;
 var floor_repeat = new THREE.Vector2( floor_repeat_x, floor_repeat_y);
 
-var fog_color = '0xd9dee5';
+var fog_color = 0xd9dee5;
 var fog_near = 1;
 var fog_far = 10000;
 
-var ambient_light_color = '0xffffff';
+var ambient_light_color = 0xffffff;
 
 // IMPORTANT
 

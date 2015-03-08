@@ -69,8 +69,8 @@ if(!class_exists('STLViewer')) {
                     file = '".$upload_dir['baseurl']."/".$file."';
                     floor = '".$stlviewer_floor."';
                     object_rotation_offset.set(".$stlviewer_rotation_x."*Math.PI/180, ".$stlviewer_rotation_z."*Math.PI/180, ".$stlviewer_rotation_y."*Math.PI/180, 'XZY');
-                    ambient_light_color = '".$stlviewer_ambient_light_color."';
-                    fog_color = '".$stlviewer_fog_color."';
+                    ambient_light_color = ".$stlviewer_ambient_light_color.";
+                    fog_color = ".$stlviewer_fog_color.";
                     fog_near = ".$stlviewer_fog_near.";
                     fog_far = ".$stlviewer_fog_far.";
                     floor_scale.set(".$stlviewer_floor_scale_x.", ".$stlviewer_floor_scale_y.", 1);
