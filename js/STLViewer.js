@@ -172,8 +172,5 @@ function render() {
 	renderer.render( scene, camera );
 } // End of render()
 
-function STLViewer() {
-    init('STL');
-    animate();
-}
+
 

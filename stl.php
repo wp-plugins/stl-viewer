@@ -81,7 +81,10 @@ if(!class_exists('STLViewer')) {
                     directional_light_color = ".$stlviewer_directional_light_color.";
 
                     if ( ! Detector.webgl ) noWebGL();
-                    else STLViewer();
+                    else {
+                        init('STL');
+                        animate();
+                    }
 
                     </script>";
 
@@ -152,7 +155,7 @@ function ThreeJS_Scripts() {
 	wp_enqueue_script( 'ThreeJS', 		plugins_url( 'js/three.min.js' , __FILE__ ));
 	wp_enqueue_script( 'STLLoader', 	plugins_url( 'js/STLLoader.js' , __FILE__ ));
 	//wp_enqueue_script( 'OBJLoader', 	plugins_url( 'js/OBJLoader.js' , __FILE__ )); // For later use
-	wp_enqueue_script( 'OrbitControls', plugins_url( 'js/OrbitControls.js' , __FILE__ ));
+	wp_enqueue_script( 'TrackballControls', plugins_url( 'js/TrackballControls.js' , __FILE__ ));
 	wp_enqueue_script( 'Detector', 		plugins_url( 'js/Detector.js' , __FILE__ ));
 	wp_enqueue_script( 'Viewer', 		plugins_url( 'js/STLViewer.js' , __FILE__ ));
 }
