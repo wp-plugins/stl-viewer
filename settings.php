@@ -39,7 +39,6 @@ if(!class_exists('STLViewer_Settings')) {
         private $settings = array(
             array('name' => 'height', 				'default' => '600px',       'title' => 'Height (height)', 		    'type' => 'text',		'section' => 'general'),
             array('name' => 'width', 				'default' => '100%',        'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'),
-            array('name' => 'object_color', 		'default' => '100%',        'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'),
             array('name' => 'webgl_error', 	        'default' => 'WebGL Error', 'title' => 'WebGL error message', 	    'type' => 'textarea',	'section' => 'general'),
             array('name' => 'informations',         'default' => '',            'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
             array('name' => 'loading_text',         'default' => '',            'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),

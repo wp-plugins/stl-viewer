@@ -34,6 +34,7 @@ var floor_repeat_x = 10;
 var floor_repeat_y = 10;
 var floor_repeat = new THREE.Vector2( floor_repeat_x, floor_repeat_y);
 var floor;
+var floor_z = - dimensions.z / 2;
 
 var fog_color = 0xd9dee5;
 var fog_near = 1;
@@ -46,10 +47,15 @@ var ambient_light;
 var point_light;
 var point_light_color = 0xffffff;
 var point_light_intensity = 0.7;
+var point_light_position = new THREE.Vector3();
 
 var directional_light;
 var directional_light_color = 0xffffff;
 var directional_light_intensity = 0.7;
+var directional_light_position = new THREE.Vector3();
+
+//point_light.position.set( 0, dimensions.y / 2, - 2 * dimensions.x );
+//directional_light.position.set( 0, dimensions.y * 3 / 4, dimensions.z * 3 );
 
 function viewTop() {
     var size;
@@ -69,11 +75,12 @@ function viewSide( side ) {
     if( dimensions.z > dimensions.x ) size = dimensions.z;
     else size = dimensions.x;
 
-    if( side == 'front' )     { factor.setComponent(1, -1); }
-    if( side == 'rear' )      { factor.setComponent(1, 1); }
-    if( side == 'left' )      { factor.setComponent(0, -1); }
-    if( side == 'right' )     { factor.setComponent(0, 1); }
+    if( side == 'front' )      { factor.setComponent(1, -1); }
+    else if( side == 'rear' )  { factor.setComponent(1, 1); }
+    else if( side == 'left' )  { factor.setComponent(0, -1); }
+    else if( side == 'right' ) { factor.setComponent(0, 1); }
     else { factor.setComponent(1, -1); } // Default to front
+
     camera.position.set( factor.x * ( size * size_factor * factor.z + dimensions.x ), factor.y * ( size * size_factor * factor.w - dimensions.y) ,0 );
     camera.up.set( 0, 0, 1 );
 }
@@ -149,14 +156,14 @@ function init( inputfiletype ) {
         dimensions.subVectors( geometry.boundingBox.max, geometry.boundingBox.min );
         dimensions.setW( geometry.boundingSphere.radius );
 
-        point_light.position.set( 0, dimensions.y / 2, - 2 * dimensions.x );
-        directional_light.position.set( 0, dimensions.y * 3 / 4, dimensions.z * 3 );
-
         camera.position.set( 0, 0, dimensions.w * 2.2 );
 		mesh_object.rotation.copy( object_rotation_offset );
 
         mesh_object.position.x = - dimensions.x / 2;
-        mesh_floor.position.z = - dimensions.z / 2 ;
+        mesh_floor.position.z = floor_z;
+
+        point_light.position.copy( point_light_position );
+        directional_light.position.copy( directional_light_position );
 
         scene.add( mesh_object );
 
@@ -184,6 +191,7 @@ function init( inputfiletype ) {
 function animate() {
     if ( geometry_object && !loaded ) {
         loaded = true;
+
         $( 'progress' ).style.display = 'none';
     }
     requestAnimationFrame( animate );
