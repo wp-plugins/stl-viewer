@@ -63,20 +63,17 @@ function viewTop() {
 function viewSide( side ) {
     var size;
     var size_factor = 2.2;
-    var factor = new THREE.Vector4( 0, 0, 1, 1 );
     var window_factor = SCREEN_HEIGHT/SCREEN_WIDTH;
-
-    factor.c = THREE.Math.clamp( window_factor, 0, 1 );
-    factor.d = THREE.Math.clamp( 1 / window_factor, 0, 1 );
+    var factor = new THREE.Vector4( 0, 0, THREE.Math.clamp( window_factor, 0, 1 ), THREE.Math.clamp( 1 / window_factor, 0, 1 ) );
 
     if( dimensions.z > dimensions.x ) size = dimensions.z;
     else size = dimensions.x;
 
-    if( side == 'front' )     { factor.set( 0,  -1, factor.c, factor.d ); }
-    if( side == 'rear' )      { factor.set( 0,  1,  factor.c, factor.d ); }
-    if( side == 'left' )      { factor.set( -1, 0,  factor.c, factor.d ); }
-    if( side == 'right' )     { factor.set( 1,  0,  factor.c, factor.d ); }
-    camera.position.set( factor.a * ( size * size_factor * factor.c + dimensions.y ), factor.b * ( size * size_factor * factor.d - dimensions.y) ,0 );
+    if( side == 'front' )     { factor.setComponent(1, -1); }
+    if( side == 'rear' )      { factor.setComponent(1, 1); }
+    if( side == 'left' )      { factor.setComponent(0, -1); }
+    if( side == 'right' )     { factor.setComponent(0, 1); }
+    camera.position.set( factor.x * ( size * size_factor * factor.z + dimensions.y ), factor.y * ( size * size_factor * factor.w - dimensions.y) ,0 );
     camera.up.set( 0, 0, 1 );
 }
 
@@ -158,8 +155,7 @@ function init( inputfiletype ) {
 		mesh_object.rotation.copy( object_rotation_offset );
 
         mesh_object.position.x = - dimensions.x / 2;
-        mesh_floor.position.z = - dimensions.z;
-
+        mesh_floor.position.z = - dimensions.z / 2 ;
 
         scene.add( mesh_object );
 
