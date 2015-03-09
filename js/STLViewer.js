@@ -53,10 +53,11 @@ var directional_light_intensity = 0.7;
 
 function viewTop() {
     var size;
+    var size_factor = 2.2;
     if( dimensions.y > dimensions.x ) size = dimensions.y;
     else size = dimensions.x;
-    camera.position.set(0,0, size*2.2);
-    camera.up.set(0,1,0);
+    camera.position.set( 0, 0, size * size_factor );
+    camera.up.set( 0, 1, 0);
 }
 
 function viewSide( side ) {
@@ -186,7 +187,6 @@ function init( inputfiletype ) {
 function animate() {
     if ( geometry_object && !loaded ) {
         loaded = true;
-        viewSide('front');
         $( 'progress' ).style.display = 'none';
     }
     requestAnimationFrame( animate );
