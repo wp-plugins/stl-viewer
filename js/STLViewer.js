@@ -101,7 +101,7 @@ function init( inputfiletype ) {
     $( 'webGLError' ).style.display = 'none';
 
 	camera      = new THREE.PerspectiveCamera( camera_fov, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 25000 );
-    controls    = new THREE.TrackballControls( camera );
+    controls    = new THREE.TrackballControls( camera, container );
     scene       = new THREE.Scene();
     renderer    = new THREE.WebGLRenderer( { antialias: renderer_antialias } );
     fog         = new THREE.Fog( fog_color, fog_near, fog_far );
@@ -185,6 +185,7 @@ function animate() {
     if ( geometry_object && !loaded ) {
         loaded = true;
         mesh_floor.position.z = - dimensions.z / 2;
+        viewSide('front');
         $( 'progress' ).style.display = 'none';
     }
     requestAnimationFrame( animate );
