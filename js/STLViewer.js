@@ -53,7 +53,7 @@ var directional_light_intensity = 0.7;
 
 function viewTop() {
     var size;
-    if(dimensions.y > dimensions.x) size = dimensions.y;
+    if( dimensions.y > dimensions.x ) size = dimensions.y;
     else size = dimensions.x;
     camera.position.set(0,0, size*2.2);
     camera.up.set(0,1,0);
@@ -62,7 +62,7 @@ function viewTop() {
 function viewSide( side ) {
     var size;
     var size_factor = 2.2;
-    var factor = new TRHEE.Vector4( 0, 0, 1, 1 );
+    var factor = new THREE.Vector4( 0, 0, 1, 1 );
     var window_factor = SCREEN_HEIGHT/SCREEN_WIDTH;
 
     factor.c = THREE.Math.clamp( window_factor, 0, 1 );
@@ -75,7 +75,7 @@ function viewSide( side ) {
     if( side == 'rear' )      { factor.set( 0,  1,  factor.c, factor.d ); }
     if( side == 'left' )      { factor.set( -1, 0,  factor.c, factor.d ); }
     if( side == 'right' )     { factor.set( 1,  0,  factor.c, factor.d ); }
-    camera.position.set( factor.a * ( size * size_factor * factor.c + dimensions.y ), factor.b * ( size * size_factor * factor.d - dimensions.y) , 0);
+    camera.position.set( factor.a * ( size * size_factor * factor.c + dimensions.y ), factor.b * ( size * size_factor * factor.d - dimensions.y) ,0 );
     camera.up.set( 0, 0, 1 );
 }
 
@@ -101,11 +101,11 @@ function init( inputfiletype ) {
     controls    = new THREE.TrackballControls( camera );
     scene       = new THREE.Scene();
     renderer    = new THREE.WebGLRenderer( { antialias: renderer_antialias } );
-    fog         = new THREE.Fog(fog_color, fog_near, fog_far);
+    fog         = new THREE.Fog( fog_color, fog_near, fog_far );
     ambient_light       = new THREE.AmbientLight( ambient_light_color );
-    directional_light   = new THREE.DirectionalLight(directional_light_color, directional_light_intensity);
-    point_light         = new THREE.PointLight(point_light_color, point_light_intensity);
-    material_object     = new THREE.MeshLambertMaterial({color:0xffffff, shading: THREE.FlatShading});
+    directional_light   = new THREE.DirectionalLight( directional_light_color, directional_light_intensity );
+    point_light         = new THREE.PointLight( point_light_color, point_light_intensity);
+    material_object     = new THREE.MeshLambertMaterial( { color:0xffffff, shading: THREE.FlatShading } );
     //material_object = new THREE.MeshPhongMaterial( { ambient: 0x555555, color: 0xffffff, specular: 0x111111, shininess: 200 } );
 
     texture_floor   = THREE.ImageUtils.loadTexture( floor );
@@ -135,9 +135,9 @@ function init( inputfiletype ) {
 				
 	scene.add( ambient_light );
     directional_light.position.normalize();
-    scene.add(directional_light);
-    scene.add(point_light);
-    camera.lookAt(0,0,0);
+    scene.add( directional_light );
+    scene.add( point_light );
+    camera.lookAt( 0, 0, 0 );
 
     loader.load( file, function ( geometry ) {
         geometry_object = geometry;
@@ -147,17 +147,17 @@ function init( inputfiletype ) {
         geometry.computeBoundingBox();
         geometry.computeBoundingSphere();
 
-        dimensions.subVectors(geometry.boundingBox.max, geometry.boundingBox.min);
-        dimensions.setW(geometry.boundingSphere.radius);
+        dimensions.subVectors( geometry.boundingBox.max, geometry.boundingBox.min );
+        dimensions.setW( geometry.boundingSphere.radius );
 
         point_light.position.set( 0, dimensions.y / 2, - 2 * dimensions.x );
         directional_light.position.set( 0, dimensions.y * 3 / 4, dimensions.z * 3 );
 
         camera.position.set( 0, 0, dimensions.w * 2.2 );
-		mesh_object.rotation.copy(object_rotation_offset);
+		mesh_object.rotation.copy( object_rotation_offset );
 
         mesh_object.position.x = - dimensions.x / 2;
-        mesh_floor.position.z = -dimensions.z;
+        mesh_floor.position.z = - dimensions.z;
 
 
         scene.add( mesh_object );
@@ -168,7 +168,6 @@ function init( inputfiletype ) {
     texture_floor.wrapS = texture_floor.wrapT = THREE.RepeatWrapping;
     texture_floor.repeat.copy( floor_repeat );
 
-	//mesh_floor.rotation.x = - Math.PI / 2;
 	mesh_floor.scale.copy( floor_scale );
 	mesh_floor.receiveShadow = true;
 	scene.add( mesh_floor );
@@ -185,7 +184,7 @@ function init( inputfiletype ) {
 } // End of init()
 
 function animate() {
-    if (geometry_object && !loaded) {
+    if ( geometry_object && !loaded ) {
         loaded = true;
         viewSide('front');
         $( 'progress' ).style.display = 'none';
