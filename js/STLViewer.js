@@ -1,3 +1,7 @@
+// STLViewer.js
+// Written by Christian Lölkes
+// Based on examples from threejs.org
+
 var loader;
 var controls;
 var file;
@@ -50,9 +54,6 @@ var point_light_intensity = 0.7;
 var directional_light;
 var directional_light_color = 0xffffff;
 var directional_light_intensity = 0.7;
-
-//point_light.position.set( 0, dimensions.y / 2, - 2 * dimensions.x );
-//directional_light.position.set( 0, dimensions.y * 3 / 4, dimensions.z * 3 );
 
 function viewTop() {
     var size;

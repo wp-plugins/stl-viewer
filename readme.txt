@@ -3,25 +3,25 @@ Contributors: christian.loelkes
 Plugin Name: STL Viewer
 Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
-Version: 0.6
-Stable tag: 0.5
+Version: 1.0
+Stable tag: 1.0
 Tags: stl, 3d, viewer, shortcode, 3d printing, 3d scanning, kinect
 Requires at least: 3.0
-Tested up to: 3.5.1
+Tested up to: 4.1.1
 Author: Christian Lölkes
 Author URI: http://www.db4cl.com
 License: GPLv2
 
 == Description ==
 
-With a simple shortcode you can enable and embed a javascript viewer called thingiview. This plugin is still under development and things might change alot until version 1.0.
+With a simple shortcode you can enable and embed a WebGL viewer to show 3d stl files.
 
 In the current version:
 
 * STL files have to be uploaded to /wp-content/uploads
-* the viewer can't be used more than one time per page. This might be a feature because the viewer needs a lot of resources.
+* The viewer can't be used more than one time per page. This might be a feature because the viewer needs a lot of resources.
 
-This plugin uses thingiview. Check out the HowTo in the Installtion tab.
+A complete description of the plugin can be found on [my blog](https://www.db4cl.com/projects/stlviewer-1-0-for-wordpress/).
 
 == Installation ==
 
@@ -29,22 +29,19 @@ This plugin uses thingiview. Check out the HowTo in the Installtion tab.
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 3. Upload an STL-File to WordPress
-4. Insert the shortcode [stl file="filename.stl" /]
+4. Insert the shortcode [stl file="filename.stl" ]
 
-5. You can use the following options in the shortcode. These will override the default settings.
-
-* file: the filname in wp-content/uploads/
-* color: set the object color (hex value).
-* background: set the background color (hex value).
-* width: width of the viewer. Can be in % or px.
-* height: height of the viewer. Can be in % or px.
-* show controls: use true/false to show/hide the control buttons.
+A complete description of the plugin can be found on [my blog](https://www.db4cl.com/projects/stlviewer-1-0-for-wordpress/)
 
 == Screenshots ==
 
-1. The viewer with control buttons.
+None for the moment.
 
 == Changelog ==
+
+= 1.0 =
+* Complete rewrite of the plugin.
+* Many settings
 
 = 0.5 =
 * Removed hard-coded links.

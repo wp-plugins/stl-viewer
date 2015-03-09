@@ -4,8 +4,8 @@
 Plugin Name: STL Viewer
 Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
-Version: 0.6
-Stable tag: 0.5
+Version: 1.0
+Stable tag: 1.0
 Author: Christian Loelkes
 Author URI: http://www.db4cl.com
 License: GPL2
@@ -136,11 +136,21 @@ if(!class_exists('STLViewer')) {
             return $text.$test_webgl;
         } // End of WebGL_test()
 
+        function updateNotice() {
+            ?>
+            <div class="updated">
+                <p>Thank you for updating or installing version 1.0 of the STL viewer plugin. A lot of things have changed and many settings are now available.</p>
+                <p>For more informations and help with this plugin take a look at <a href="https://www.db4cl.com/projects/stlviewer-1-0-for-wordpress/">my blog.</a></p>
+            </div>
+            <?php
+        }
+
 		public function activate() {
             $settings = $this->STLViewer_Settings->getSettingsArray();
             foreach($settings as $setting){
                 add_option($this->STLViewer_Settings->getSettingPrefix().$setting['name'], $setting['default']);
             }
+            add_action( 'admin_notices', array(&$this, 'updateNotice') );
         }
 		public function deactivate() {
             if( get_option('stlviewer_delete_settings') ) {
