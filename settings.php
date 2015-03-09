@@ -68,8 +68,8 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'rotation_y', 			'default' => '0', 'title' => 'Rotate object (Y-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
             array('name' => 'rotation_z', 			'default' => '0', 'title' => 'Rotate object (Z-Axis) in Deg.', 	'type' => 'text',		'section' => 'default_rot'),
 
-            array('name' => 'webgl_test_success', 	'default' => 'WebGL wird von Ihrem System unterstützt.', 'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'),
-            array('name' => 'webgl_test_fail', 		'default' => 'WebGL wird nicht von Ihrem System unterstützt.', 'title' => 'Fail message',       'type' => 'textarea',	'section' => 'webgl_test'),
+            array('name' => 'webgl_test_success', 	'default' => 'WebGL is supported by your system.', 'title' => 'Success message', 		    'type' => 'textarea',	'section' => 'webgl_test'),
+            array('name' => 'webgl_test_fail', 		'default' => 'WebGL is not supported by your system.', 'title' => 'Fail message',       'type' => 'textarea',	'section' => 'webgl_test'),
         );
 
         // Holds the helptext for the sections
