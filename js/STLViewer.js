@@ -186,7 +186,7 @@ function init( inputfiletype ) {
 function animate() {
     if ( geometry_object && !loaded ) {
         loaded = true;
-        mesh_floor.position.z = dimensions.z / 2;
+        mesh_floor.position.z = - dimensions.z / 2;
         point_light.position.copy( point_light_position );
         directional_light.position.copy( directional_light_position );
         $( 'progress' ).style.display = 'none';
