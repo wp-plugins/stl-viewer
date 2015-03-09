@@ -113,7 +113,7 @@ if(!class_exists('STLViewer')) {
                     <button onclick="viewTop()">Top</button>
                     ';
 
-            if( get_option('stlviewer_show_controls') != 'checked' ) $controls = NULL;
+            if( $stlviewer_hide_controls ) $controls = NULL;
 
             return $webgl_canvas.$threejs.$controls;
         } // End of insert_stl
@@ -143,7 +143,7 @@ if(!class_exists('STLViewer')) {
             }
         }
 		public function deactivate() {
-            if( get_option('stlviewer_delete_settings') == 'checked') {
+            if( get_option('stlviewer_delete_settings') ) {
                 $settings = $this->STLViewer_Settings->getSettingsArray();
                 foreach ($settings as $setting) {
                     delete_option($this->STLViewer_Settings->getSettingPrefix() . $setting['name']);

@@ -48,8 +48,8 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'floor_repeat', 	    'default' => '0, 0',   'title' => 'Repeat texture (x, y)',        'type' => 'text',		'section' => 'render'),
             array('name' => 'floor_scale', 	        'default' => '1, 1',   'title' => 'Scale texture (x, y)',         'type' => 'text',		'section' => 'render'),
 
-            array('name' => 'show_controls', 	    'default' => '0', 'title' => 'Show controls',            'type' => 'checkbox',	'section' => 'render'),
-            //array('name' => 'autorotate', 			'default' => '0', 'title' => 'Enable autorotation',      'type' => 'checkbox',	'section' => 'render'),
+            array('name' => 'hide_controls', 	    'default' => '', 'title' => 'Hide controls',            'type' => 'checkbox',	'section' => 'render'),
+            //array('name' => 'autorotate', 			'default' => '', 'title' => 'Enable autorotation',      'type' => 'checkbox',	'section' => 'render'),
 
             array('name' => 'fog_color',    'default' => '0xd9dee5',        'title' => 'Fog color (hex)',     'type' => 'text',       'section' => 'fog'),
             array('name' => 'fog_near',     'default' => '1',       'title' => 'Min. fog distance',   'type' => 'text',       'section' => 'fog'),
