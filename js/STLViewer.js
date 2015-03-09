@@ -46,12 +46,10 @@ var ambient_light;
 var point_light;
 var point_light_color = 0xffffff;
 var point_light_intensity = 0.7;
-var point_light_position = new THREE.Vector3();
 
 var directional_light;
 var directional_light_color = 0xffffff;
 var directional_light_intensity = 0.7;
-var directional_light_position = new THREE.Vector3();
 
 //point_light.position.set( 0, dimensions.y / 2, - 2 * dimensions.x );
 //directional_light.position.set( 0, dimensions.y * 3 / 4, dimensions.z * 3 );
@@ -159,7 +157,7 @@ function init( inputfiletype ) {
 		mesh_object.rotation.copy( object_rotation_offset );
 
         mesh_object.position.x = - dimensions.x / 2;
-
+        setLights();
         scene.add( mesh_object );
 
 	} );
@@ -187,8 +185,6 @@ function animate() {
     if ( geometry_object && !loaded ) {
         loaded = true;
         mesh_floor.position.z = - dimensions.z / 2;
-        point_light.position.copy( point_light_position );
-        directional_light.position.copy( directional_light_position );
         $( 'progress' ).style.display = 'none';
     }
     requestAnimationFrame( animate );

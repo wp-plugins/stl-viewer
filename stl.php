@@ -85,8 +85,10 @@ if(!class_exists('STLViewer')) {
                     point_light_color = ".$stlviewer_point_light_color.";
                     directional_light_color = ".$stlviewer_directional_light_color.";
 
-                    directional_light_position.set(".$stlviewer_directional_light_position.");
-                    point_light_position.set(".$stlviewer_point_light_position.");
+                    function setLights() {
+                        directional_light.position.set(" . $stlviewer_directional_light_position . ");
+                        point_light.position.set(" . $stlviewer_point_light_position . ");
+                    }
 
                     if ( ! Detector.webgl ) noWebGL();
                     else {
