@@ -34,7 +34,6 @@ var floor_repeat_x = 10;
 var floor_repeat_y = 10;
 var floor_repeat = new THREE.Vector2( floor_repeat_x, floor_repeat_y);
 var floor;
-var floor_z = - dimensions.z / 2;
 
 var fog_color = 0xd9dee5;
 var fog_near = 1;
@@ -160,10 +159,6 @@ function init( inputfiletype ) {
 		mesh_object.rotation.copy( object_rotation_offset );
 
         mesh_object.position.x = - dimensions.x / 2;
-        mesh_floor.position.z = floor_z;
-
-        point_light.position.copy( point_light_position );
-        directional_light.position.copy( directional_light_position );
 
         scene.add( mesh_object );
 
@@ -191,7 +186,9 @@ function init( inputfiletype ) {
 function animate() {
     if ( geometry_object && !loaded ) {
         loaded = true;
-
+        mesh_floor.position.z = dimensions.z / 2;
+        point_light.position.copy( point_light_position );
+        directional_light.position.copy( directional_light_position );
         $( 'progress' ).style.display = 'none';
     }
     requestAnimationFrame( animate );

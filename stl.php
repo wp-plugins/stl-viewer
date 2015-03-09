@@ -103,6 +103,11 @@ if(!class_exists('STLViewer')) {
                     <div id="canvas" style="width:'.$stlviewer_width.';height:'.$stlviewer_height.'"></div>
                     <div id="quality_notes" style="width: 100%; text-align: center">'.get_option('stl_div_informations').'</div>
                     <button onclick="viewSide(\'front\')">Front</button>
+                    <button onclick="viewSide(\'left\')">Left</button>
+                    <button onclick="viewSide(\'right\')">Right</button>
+                    <button onclick="viewSide(\'rear\')">Rear</button>
+                    <button onclick="viewTop()">Top</button>
+
                     ';
 
             return $thingiview_frame.$thingiview;
