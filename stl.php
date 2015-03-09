@@ -60,7 +60,7 @@ if(!class_exists('STLViewer')) {
 
 
             // The code for the WebGL canvas
-            $thingiview="<script>
+            $threejs="<script>
                     var container = document.getElementById('canvas');
 
                     var SCREEN_WIDTH = container.clientWidth;
@@ -99,20 +99,23 @@ if(!class_exists('STLViewer')) {
                     </script>";
 
             // The canvas where the scene will be rendered.
-            $thingiview_frame ='
+            $webgl_canvas ='
                     <div id="progress" style="width: 100%; text-align: center">'.  get_option('stl_div_loading_text').'</div>
                     <div id="webGLError" style="width: 100%; text-align: center">'.get_option('stl_div_webgl_error').'</div>
                     <div id="canvas" style="width:'.$stlviewer_width.';height:'.$stlviewer_height.'"></div>
-                    <div id="quality_notes" style="width: 100%; text-align: center">'.get_option('stl_div_informations').'</div>
+                    <div id="quality_notes" style="width: 100%; text-align: center">'.get_option('stl_div_informations').'</div>';
+
+            $controls = '
                     <button onclick="viewSide(\'front\')">Front</button>
                     <button onclick="viewSide(\'left\')">Left</button>
                     <button onclick="viewSide(\'right\')">Right</button>
                     <button onclick="viewSide(\'rear\')">Rear</button>
                     <button onclick="viewTop()">Top</button>
-
                     ';
 
-            return $thingiview_frame.$thingiview;
+            if( get_option('stlviewer_show_controls') != 'checked' ) $controls = NULL;
+
+            return $webgl_canvas.$threejs.$controls;
         } // End of insert_stl
         public function WebGL_test() {
             // The javascript
