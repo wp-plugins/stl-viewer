@@ -59,28 +59,24 @@ function viewTop() {
     camera.up.set(0,1,0);
 }
 
-function viewSide(side) {
+function viewSide( side ) {
     var size;
-    var factor = new THEE.Vector2(0,0);
-    var window_height_factor = SCREEN_HEIGHT/SCREEN_WIDTH;
+    var size_factor = 2.2;
+    var factor = new TRHEE.Vector4( 0, 0, 1, 1 );
+    var window_factor = SCREEN_HEIGHT/SCREEN_WIDTH;
 
-    if(dimensions.z > dimensions.x) size = dimensions.z;
+    factor.c = THREE.Math.clamp( window_factor, 0, 1 );
+    factor.d = THREE.Math.clamp( 1 / window_factor, 0, 1 );
+
+    if( dimensions.z > dimensions.x ) size = dimensions.z;
     else size = dimensions.x;
 
-    if(side == front) {factor.set(0,-1);}
-    if(side == rear) {factor.set(0,1);}
-    if(side == left) {factor.set(-1,0);}
-    if(side == right) {factor.set(1,0);}
-    camera.position.set(factor.x*(size * 2.2 * window_height_factor + dimensions.y),factor.y*(size * 2.2 - dimensions.y), dimensions.z / 2);
-    camera.up.set(0,0,1);
-}
-
-function viewRear() {
-    var size;
-    if(dimensions.z > dimensions.x) size = dimensions.z;
-    else size = dimensions.x;
-    camera.position.set(0,size * 2.2 - dimensions.y, dimensions.z / 2);
-    camera.up.set(0,0,1);
+    if( side == 'front' )     { factor.set( 0,  -1, factor.c, factor.d ); }
+    if( side == 'rear' )      { factor.set( 0,  1,  factor.c, factor.d ); }
+    if( side == 'left' )      { factor.set( -1, 0,  factor.c, factor.d ); }
+    if( side == 'right' )     { factor.set( 1,  0,  factor.c, factor.d ); }
+    camera.position.set( factor.a * ( size * size_factor * factor.c + dimensions.y ), factor.b * ( size * size_factor * factor.d - dimensions.y) , 0);
+    camera.up.set( 0, 0, 1 );
 }
 
 // IMPORTANT
@@ -121,13 +117,13 @@ function init( inputfiletype ) {
     //if(inputfiletype == 'STL') loader = new THREE.STLLoader();
     //if(inputfiletype == 'OBJ') loader = new THREE.OBJLoader();
 
-    //controls.maxPolarAngle = Math.PI/2;
     controls.rotateSpeed = 1.0;
     controls.zoomSpeed = 1.2;
     controls.panSpeed = 0.8;
 
     controls.noZoom = false;
     controls.noPan = true;
+    controls.noRotate = false;
 
     controls.staticMoving = false;
     controls.dynamicDampingFactor = 0.3;
@@ -191,6 +187,7 @@ function init( inputfiletype ) {
 function animate() {
     if (geometry_object && !loaded) {
         loaded = true;
+        viewSide('front');
         $( 'progress' ).style.display = 'none';
     }
     requestAnimationFrame( animate );
