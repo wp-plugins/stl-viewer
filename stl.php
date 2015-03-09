@@ -143,9 +143,11 @@ if(!class_exists('STLViewer')) {
             }
         }
 		public function deactivate() {
-            $settings = $this->STLViewer_Settings->getSettingsArray();
-            foreach($settings as $setting){
-                delete_option($this->STLViewer_Settings->getSettingPrefix().$setting['name']);
+            if( get_option('stlviewer_delete_settings') == 'checked') {
+                $settings = $this->STLViewer_Settings->getSettingsArray();
+                foreach ($settings as $setting) {
+                    delete_option($this->STLViewer_Settings->getSettingPrefix() . $setting['name']);
+                }
             }
         }
 

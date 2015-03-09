@@ -42,6 +42,7 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'webgl_error', 	        'default' => 'WebGL Error', 'title' => 'WebGL error message', 	    'type' => 'textarea',	'section' => 'general'),
             array('name' => 'informations',         'default' => '',            'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
             array('name' => 'loading_text',         'default' => '',            'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'delete_settings',      'default' => '',            'title' => 'Delete settings if plugin is deactivated / updated',    'type' => 'checkbox',	'section' => 'general'),
 
             array('name' => 'floor', 			    'default' => '',    'title' => 'Floor texture (floor)',     'type' => 'text',		'section' => 'render'),
             array('name' => 'floor_repeat', 	    'default' => '0, 0',   'title' => 'Repeat texture (x, y)',        'type' => 'text',		'section' => 'render'),
