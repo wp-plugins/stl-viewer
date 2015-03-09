@@ -73,7 +73,8 @@ function viewSide( side ) {
     if( side == 'rear' )      { factor.setComponent(1, 1); }
     if( side == 'left' )      { factor.setComponent(0, -1); }
     if( side == 'right' )     { factor.setComponent(0, 1); }
-    camera.position.set( factor.x * ( size * size_factor * factor.z + dimensions.y ), factor.y * ( size * size_factor * factor.w - dimensions.y) ,0 );
+    else { factor.setComponent(1, -1); } // Default to front
+    camera.position.set( factor.x * ( size * size_factor * factor.z + dimensions.x ), factor.y * ( size * size_factor * factor.w - dimensions.y) ,0 );
     camera.up.set( 0, 0, 1 );
 }
 
