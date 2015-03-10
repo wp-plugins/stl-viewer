@@ -32,18 +32,34 @@ if(!class_exists('STLViewer')) {
 
         public $STLViewer_Settings;
 
+        static $ADD_STLVIEWER_SCRIPTS = false;
+
         public function __construct() {
             $this->STLViewer_Settings = new STLViewer_Settings(); // Initialize the settings class
 
-            add_shortcode( 'stl', array(&$this, 'insert_STL') );
-            add_shortcode( 'webgl_test', array(&$this, 'WebGL_test') );
+            add_shortcode( 'stl', array( &$this, 'insert_STL' ) );
+            add_shortcode( 'webgl_test', array( &$this, 'WebGL_test' ) );
 
-            register_activation_hook( 	__FILE__, array( $this, 'activate' ));
-            register_deactivation_hook(	__FILE__, array( $this, 'deactivate' ));
+            register_activation_hook( 	__FILE__, array( &$this, 'activate' ));
+            register_deactivation_hook(	__FILE__, array( &$this, 'deactivate' ));
+
+            add_action( 'wp_enqueue_scripts', array( &$this, 'ThreeJS_Scripts') );
 
 		} // END public function __construct
 
+        // Add the JS Scripts
+        static function ThreeJS_Scripts() {
+            wp_enqueue_script( 'ThreeJS', 		plugins_url( 'js/three.min.js' , __FILE__ ));
+            wp_enqueue_script( 'STLLoader', 	plugins_url( 'js/STLLoader.js' , __FILE__ ));
+            //wp_enqueue_script( 'OBJLoader', 	plugins_url( 'js/OBJLoader.js' , __FILE__ )); // For later use
+            wp_enqueue_script( 'TrackballControls', plugins_url( 'js/TrackballControls.js' , __FILE__ ));
+            wp_enqueue_script( 'Detector', 		plugins_url( 'js/Detector.js' , __FILE__ ));
+            wp_enqueue_script( 'Viewer', 		plugins_url( 'js/STLViewer.js' , __FILE__ ));
+        }
+
         public function insert_STL( $atts ) {
+
+            self::$ADD_STLVIEWER_SCRIPTS = TRUE;
 
             global $post; 	//This is needed to generate the filename from the postname.
             $upload_dir = wp_upload_dir();
@@ -58,6 +74,8 @@ if(!class_exists('STLViewer')) {
 
             extract( shortcode_atts( $shortcode_defaults, $atts ) );
 
+            $file_url = $upload_dir['baseurl']."/".$file;
+            $floor_url = $upload_dir['baseurl']."/".$stlviewer_floor;
 
             // The code for the WebGL canvas
             $threejs="<script>
@@ -66,8 +84,8 @@ if(!class_exists('STLViewer')) {
                     var SCREEN_WIDTH = container.clientWidth;
                     var SCREEN_HEIGHT = container.clientHeight;
 
-                    file        = '".$upload_dir['baseurl']."/".$file."';
-                    floor       = '".$upload_dir['baseurl']."/".$stlviewer_floor."';
+                    file        = '".$file_url."';
+                    floor       = '".$floor_url."';
 
                     object_rotation_offset.set( ".$stlviewer_rotation_x." * Math.PI / 180, ".$stlviewer_rotation_z." * Math.PI / 180, ".$stlviewer_rotation_y." * Math.PI / 180, 'XZY' );
                     ambient_light_color = ".$stlviewer_ambient_light_color.";
@@ -112,10 +130,13 @@ if(!class_exists('STLViewer')) {
                     <button onclick="viewSide(\'rear\')">Rear</button>
                     <button onclick="viewTop()">Top</button>
                     ';
+            $download = '<form action="'.$file_url.'"><input type="submit" class="button" value="Download this file"></form>';
 
             if( $stlviewer_hide_controls ) $controls = NULL;
+            if( !$stlviewer_download_button ) $download = NULL;
 
-            return $webgl_canvas.$threejs.$controls;
+
+            return $webgl_canvas.$threejs.$controls.$download;
         } // End of insert_stl
         public function WebGL_test() {
             // The javascript
@@ -173,16 +194,6 @@ function stl_img_delete($file_ID) {
 	if( isSTL($file_ID) ) rmdir( $plugin_dir.'img/stl-'.$file_ID );
 }
 
-// Add the JS Scripts
-function ThreeJS_Scripts() {
-	wp_enqueue_script( 'ThreeJS', 		plugins_url( 'js/three.min.js' , __FILE__ ));
-	wp_enqueue_script( 'STLLoader', 	plugins_url( 'js/STLLoader.js' , __FILE__ ));
-	//wp_enqueue_script( 'OBJLoader', 	plugins_url( 'js/OBJLoader.js' , __FILE__ )); // For later use
-	wp_enqueue_script( 'TrackballControls', plugins_url( 'js/TrackballControls.js' , __FILE__ ));
-	wp_enqueue_script( 'Detector', 		plugins_url( 'js/Detector.js' , __FILE__ ));
-	wp_enqueue_script( 'Viewer', 		plugins_url( 'js/STLViewer.js' , __FILE__ ));
-}
-
 function plugin_settings_link($links) { 			// Add the settings link to the plugins page
     $settings_link = '<a href="options-general.php?page=stlviewer">Settings</a>';
     array_unshift($links, $settings_link);
@@ -193,7 +204,6 @@ $stlviewer_plugin = new STLViewer(); 					// instantiate the plugin class
 //add_filter( 'add_attachment', 'stl_img_create' );		// For later use
 //add_filter( 'delete_attachment', 'stl_img_delete' );	// For later use
 
-add_action( 'wp_enqueue_scripts', 'ThreeJS_Scripts' );
 $plugin = plugin_basename(__FILE__);
 add_filter("plugin_action_links_".$plugin, 'plugin_settings_link');
 
