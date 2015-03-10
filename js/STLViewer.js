@@ -156,8 +156,6 @@ function init( inputfiletype ) {
 
         camera.position.set( 0, 0, dimensions.w * 2.2 );
 		mesh_object.rotation.copy( object_rotation_offset );
-
-        mesh_object.position.x = - dimensions.x / 2;
         setLights();
         scene.add( mesh_object );
 

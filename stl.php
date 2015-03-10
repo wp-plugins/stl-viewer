@@ -4,7 +4,7 @@
 Plugin Name: STL Viewer
 Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
-Version: 1.0
+Version: 1.1
 Stable tag: 1.0
 Author: Christian Loelkes
 Author URI: http://www.db4cl.com
@@ -67,7 +67,7 @@ if(!class_exists('STLViewer')) {
                     var SCREEN_HEIGHT = container.clientHeight;
 
                     file        = '".$upload_dir['baseurl']."/".$file."';
-                    floor       = '".$stlviewer_floor."';
+                    floor       = '".$upload_dir['baseurl']."/".$stlviewer_floor."';
 
                     object_rotation_offset.set( ".$stlviewer_rotation_x." * Math.PI / 180, ".$stlviewer_rotation_z." * Math.PI / 180, ".$stlviewer_rotation_y." * Math.PI / 180, 'XZY' );
                     ambient_light_color = ".$stlviewer_ambient_light_color.";
@@ -100,10 +100,10 @@ if(!class_exists('STLViewer')) {
 
             // The canvas where the scene will be rendered.
             $webgl_canvas ='
-                    <div id="progress" style="width: 100%; text-align: center">'.  get_option('stl_div_loading_text').'</div>
-                    <div id="webGLError" style="width: 100%; text-align: center">'.get_option('stl_div_webgl_error').'</div>
+                    <div id="progress" style="width: 100%; text-align: center">'.$stlviewer_loading_text.'</div>
+                    <div id="webGLError" style="width: 100%; text-align: center">'.$stlviewer_webgl_error.'</div>
                     <div id="canvas" style="width:'.$stlviewer_width.';height:'.$stlviewer_height.'"></div>
-                    <div id="quality_notes" style="width: 100%; text-align: center">'.get_option('stl_div_informations').'</div>';
+                    <div id="quality_notes" style="width: 100%; text-align: center">'.$stlviewer_informations.'</div>';
 
             $controls = '
                     <button onclick="viewSide(\'front\')">Front</button>
@@ -134,6 +134,7 @@ if(!class_exists('STLViewer')) {
 
             $text='<div id="text"></div>';
             return $text.$test_webgl;
+
         } // End of WebGL_test()
 
 		public function activate() {
