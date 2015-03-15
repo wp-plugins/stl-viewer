@@ -4,7 +4,6 @@
 
 var loader;
 var controls;
-var file;
 
 var camera;
 var camera_fov;
@@ -25,11 +24,6 @@ var material_floor;
 var geometry_floor;
 var texture_floor;
 
-var rot_offset_x = 0;
-var rot_offset_y = 0;
-var rot_offset_z = 0;
-var object_rotation_offset = new THREE.Euler(rot_offset_x, rot_offset_z, rot_offset_y, 'XZY');
-
 var floor_scale_x = 100;
 var floor_scale_y = 100;
 var floor_scale_z = 1;
@@ -37,23 +31,22 @@ var floor_scale = new THREE.Vector3( floor_scale_x, floor_scale_y, floor_scale_z
 var floor_repeat_x = 10;
 var floor_repeat_y = 10;
 var floor_repeat = new THREE.Vector2( floor_repeat_x, floor_repeat_y);
-var floor;
 
-var fog_color = 0xd9dee5;
-var fog_near = 1;
-var fog_far = 10000;
+//var fog_color = 0xd9dee5;
+//var fog_near = 1;
+//var fog_far = 10000;
 var fog;
 
-var ambient_light_color = 0x202020;
+//var ambient_light_color = 0x202020;
 var ambient_light;
 
 var point_light;
-var point_light_color = 0xffffff;
-var point_light_intensity = 0.7;
+//var point_light_color = 0xffffff;
+//var point_light_intensity = 0.7;
 
 var directional_light;
-var directional_light_color = 0xffffff;
-var directional_light_intensity = 0.7;
+//var directional_light_color = 0xffffff;
+//var directional_light_intensity = 0.7;
 
 function viewTop() {
     var size;
@@ -154,11 +147,12 @@ function init( inputfiletype ) {
         dimensions.subVectors( geometry.boundingBox.max, geometry.boundingBox.min );
         dimensions.setW( geometry.boundingSphere.radius );
 
+        setRotationOffset();
+
         camera.position.set( 0, 0, dimensions.w * 2.2 );
 		mesh_object.rotation.copy( object_rotation_offset );
-
-        mesh_object.position.x = - dimensions.x / 2;
         setLights();
+        setFloor();
         scene.add( mesh_object );
 
 	} );
@@ -201,5 +195,10 @@ function render() {
 	renderer.render( scene, camera );
 } // End of render()
 
+// Le awesome stuff
 
-
+if ( ! Detector.webgl ) noWebGL();
+else {
+    init('STL');
+    animate();
+}

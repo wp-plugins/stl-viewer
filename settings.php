@@ -40,11 +40,12 @@ if(!class_exists('STLViewer_Settings')) {
             array('name' => 'height', 				'default' => '600px',       'title' => 'Height (height)', 		    'type' => 'text',		'section' => 'general'),
             array('name' => 'width', 				'default' => '100%',        'title' => 'Width (width)', 		    'type' => 'text',		'section' => 'general'),
             array('name' => 'webgl_error', 	        'default' => 'WebGL Error', 'title' => 'WebGL error message', 	    'type' => 'textarea',	'section' => 'general'),
+            array('name' => 'download_link',        'default' => '',            'title' => 'Show download link',        'type' => 'checkbox',	'section' => 'general'),
             array('name' => 'informations',         'default' => '',            'title' => 'Informations', 			    'type' => 'textarea',	'section' => 'general'),
             array('name' => 'loading_text',         'default' => '',            'title' => 'Loading text', 			    'type' => 'textarea',	'section' => 'general'),
             array('name' => 'delete_settings',      'default' => '',            'title' => 'Delete settings if plugin is deactivated / updated',    'type' => 'checkbox',	'section' => 'general'),
 
-            array('name' => 'floor', 			    'default' => '',    'title' => 'Floor texture (floor)',     'type' => 'text',		'section' => 'render'),
+            array('name' => 'floor', 			    'default' => '',    'title' => 'Floor texture file / URL (floor)',     'type' => 'text',		'section' => 'render'),
             array('name' => 'floor_repeat', 	    'default' => '0, 0',   'title' => 'Repeat texture (x, y)',        'type' => 'text',		'section' => 'render'),
             array('name' => 'floor_scale', 	        'default' => '1, 1',   'title' => 'Scale texture (x, y)',         'type' => 'text',		'section' => 'render'),
 
@@ -74,12 +75,14 @@ if(!class_exists('STLViewer_Settings')) {
 
         // Holds the helptext for the sections
         private $helptext = array(
-            'general'       => 'These settings do things for the WP Plugin Template.',
+            'general'       => 'General settings.',
             'render'        => 'How the model will be rendered.',
             'default_rot'   => 'Rotate the model',
             'webgl_test'    => 'If you insert the shortcode [webgl_test] a WebGL test is run and will print the success- or fail-message.',
             'fog'           => 'Set the parameters for the fog.',
             'alight'        => 'Set the parameters for the ambient light.',
+            'plight'        => 'Set the parameters for the point light.',
+            'dlight'        => 'Set the parameters for the directional light.',
         );
 
         // Class functions
@@ -174,17 +177,20 @@ if(!class_exists('STLViewer_Settings')) {
         // Gives out the settings page with echo
         public function display_options() {
             $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'default';
-            ?>
-            <div class="wrap">
-                <?php $this->plugin_options_tabs(); ?>
-                <form method="post" action="options.php">
-                    <?php wp_nonce_field( 'update-options' ); ?>
-                    <?php settings_fields( $tab ); ?>
-                    <?php do_settings_sections( $tab ); ?>
-                    <?php submit_button(); ?>
-                </form>
-            </div>
-            <?php
+            echo '<div class="wrap">';
+                $this->plugin_options_tabs();
+                if($tab == 'help') {
+                    include_once(sprintf( "%s/help.php", dirname(__FILE__) ));
+                }
+                else {
+                    echo '<form method="post" action="options.php">';
+                    wp_nonce_field( 'update-options' );
+                    settings_fields( $tab );
+                    do_settings_sections( $tab );
+                    submit_button();
+                    echo '</form>';
+                }
+            echo '</div>';
         }
 
         // Gives out the tab-navbar with echo
