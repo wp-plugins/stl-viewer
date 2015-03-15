@@ -152,7 +152,7 @@ if(!class_exists('STLViewer')) {
                     <button onclick="viewSide(\'left\')">Left</button>
                     <button onclick="viewSide(\'right\')">Right</button>
                     <button onclick="viewSide(\'rear\')">Rear</button>
-                    <button onclick="viewTop()">Top</button>
+                    <button onclick="viewTop()">Top</button><br />
                     ';
             $download = '<form action="'.$file_url.'"><input type="submit" class="button" value="Download this file"></form>';
 
