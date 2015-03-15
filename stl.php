@@ -131,12 +131,6 @@ if(!class_exists('STLViewer')) {
                         point_light.position.set(" . $stlviewer_point_light_position . ");
                     }
 
-                    if ( ! Detector.webgl ) noWebGL();
-                    else {
-                        init('STL');
-                        animate();
-                    }
-
                     </script>";
 
             // The canvas where the scene will be rendered.

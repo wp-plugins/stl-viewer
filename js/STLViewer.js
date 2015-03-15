@@ -199,5 +199,10 @@ function render() {
 	renderer.render( scene, camera );
 } // End of render()
 
+// Le awesome stuff
 
-
+if ( ! Detector.webgl ) noWebGL();
+else {
+    init('STL');
+    animate();
+}
