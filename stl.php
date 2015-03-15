@@ -1,30 +1,20 @@
 <?php
 
 /*
+Contributors: christian.loelkes
 Plugin Name: STL Viewer
 Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
 Version: 1.1
-Stable tag: 1.0
+Stable tag: 1.1
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VNRJ5FSUV3C6L
-Author: Christian Loelkes
+Tags: stl, 3d, viewer, shortcode, 3d printing, 3d scanning, kinect
+Requires at least: 3.0
+Tested up to: 4.1.1
+Author: Christian Lölkes
 Author URI: http://www.db4cl.com
-License: GPL2
+License: CC Attribution-NoDerivatives 4.0 International
 
-Copyright 2013  Christian Loelkes  (email : christian.loelkes@gmail.com)
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
-published by the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 require_once( sprintf( '%s/settings.php', dirname(__FILE__) ) );
 
