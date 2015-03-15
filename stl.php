@@ -6,6 +6,7 @@ Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
 Version: 1.1
 Stable tag: 1.0
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VNRJ5FSUV3C6L
 Author: Christian Loelkes
 Author URI: http://www.db4cl.com
 License: GPL2
@@ -25,7 +26,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-require_once( sprintf( "%s/settings.php", dirname(__FILE__) ) );
+require_once( sprintf( '%s/settings.php', dirname(__FILE__) ) );
 
 if(!class_exists('STLViewer')) {
     class STLViewer {
@@ -33,6 +34,7 @@ if(!class_exists('STLViewer')) {
         public $STLViewer_Settings;
 
         static $ADD_STLVIEWER_SCRIPTS = false;
+        static $ADD_TEST_SCRIPTS = false;
 
         public function __construct() {
             $this->STLViewer_Settings = new STLViewer_Settings(); // Initialize the settings class
@@ -44,17 +46,38 @@ if(!class_exists('STLViewer')) {
             register_deactivation_hook(	__FILE__, array( &$this, 'deactivate' ));
 
             add_action( 'wp_enqueue_scripts', array( &$this, 'ThreeJS_Scripts') );
+            add_action( 'wp_footer', array( &$this, 'print_Scripts'));
+
+            //add_filter( 'add_attachment', 'stl_img_create' );		// For later use
+            //add_filter( 'delete_attachment', 'stl_img_delete' );	// For later use
+
+            $plugin = plugin_basename( __FILE__ );
+            add_filter( 'plugin_action_links_'.$plugin, array( &$this, 'plugin_settings_link')) ;
 
 		} // END public function __construct
 
-        // Add the JS Scripts
         static function ThreeJS_Scripts() {
-            wp_enqueue_script( 'ThreeJS', 		plugins_url( 'js/three.min.js' , __FILE__ ));
-            wp_enqueue_script( 'STLLoader', 	plugins_url( 'js/STLLoader.js' , __FILE__ ));
-            //wp_enqueue_script( 'OBJLoader', 	plugins_url( 'js/OBJLoader.js' , __FILE__ )); // For later use
-            wp_enqueue_script( 'TrackballControls', plugins_url( 'js/TrackballControls.js' , __FILE__ ));
-            wp_enqueue_script( 'Detector', 		plugins_url( 'js/Detector.js' , __FILE__ ));
-            wp_enqueue_script( 'Viewer', 		plugins_url( 'js/STLViewer.js' , __FILE__ ));
+            wp_register_script( 'ThreeJS', 		plugins_url( 'js/three.min.js' , __FILE__ ));
+            wp_register_script( 'STLLoader', 	plugins_url( 'js/STLLoader.js' , __FILE__ ));
+            //wp_register_script( 'OBJLoader', 	plugins_url( 'js/OBJLoader.js' , __FILE__ )); // For later use
+            wp_register_script( 'TrackballControls', plugins_url( 'js/TrackballControls.js' , __FILE__ ));
+            wp_register_script( 'Detector', 	plugins_url( 'js/Detector.js' , __FILE__ ));
+            wp_register_script( 'Viewer', 		plugins_url( 'js/STLViewer.js' , __FILE__ ));
+        }
+
+        static function print_Scripts() {
+            if( self::$ADD_STLVIEWER_SCRIPTS ) {
+                wp_print_scripts( 'ThreeJS'     );
+                wp_print_scripts( 'STLLoader'   );
+                //wp_print_scripts( 'OBJLoader' ); // For later use
+                wp_print_scripts( 'TrackballControls');
+                wp_print_scripts( 'Detector'    );
+                wp_print_scripts( 'Viewer'      );
+            }
+            else if( self::$ADD_TEST_SCRIPTS ) {
+                wp_print_scripts( 'ThreeJS'     );
+                wp_print_scripts( 'Detector'    );
+            }
         }
 
         public function insert_STL( $atts ) {
@@ -133,12 +156,14 @@ if(!class_exists('STLViewer')) {
             $download = '<form action="'.$file_url.'"><input type="submit" class="button" value="Download this file"></form>';
 
             if( $stlviewer_hide_controls ) $controls = NULL;
-            if( !$stlviewer_download_button ) $download = NULL;
+            if( !$stlviewer_download_link ) $download = NULL;
 
 
             return $webgl_canvas.$threejs.$controls.$download;
         } // End of insert_stl
         public function WebGL_test() {
+            self::$ADD_TEST_SCRIPTS = TRUE;
+
             // The javascript
             $test_webgl="
                     <script>
@@ -173,6 +198,21 @@ if(!class_exists('STLViewer')) {
             }
         }
 
+        public function plugin_settings_link($links) { 			// Add the settings link to the plugins page
+            $settings_link = '<a href="options-general.php?page=stlviewer">Settings</a>';
+            array_unshift($links, $settings_link);
+            return $links;
+        }
+
+        public function stl_img_create($file_ID) {
+            $plugin_dir = plugin_dir_path( __FILE__ );
+            if( isSTL($file_ID) ) mkdir( $plugin_dir.'img/stl-'.$file_ID );
+        } // Later use
+        public function stl_img_delete($file_ID) {
+            $plugin_dir = plugin_dir_path( __FILE__ );
+            if( isSTL($file_ID) ) rmdir( $plugin_dir.'img/stl-'.$file_ID );
+        } // Later use
+
 	} // END class STLViewer
 } // END if(!class_exists('STLViewer'))
 
@@ -180,32 +220,12 @@ if(!class_exists('STLViewer')) {
 function isSTL( $file_ID ) {
 	$file = get_attached_file( $file_ID );
 	$extension = strtolower( substr( $file, -3 ));
-	if( $extension == "stl" ) return true;
+	if( $extension == 'stl' ) return true;
 	else return false;
 }
 
-function stl_img_create($file_ID) {
-	$plugin_dir = plugin_dir_path( __FILE__ );
-	if( isSTL($file_ID) ) mkdir( $plugin_dir.'img/stl-'.$file_ID );
-}
-
-function stl_img_delete($file_ID) {
-	$plugin_dir = plugin_dir_path( __FILE__ );
-	if( isSTL($file_ID) ) rmdir( $plugin_dir.'img/stl-'.$file_ID );
-}
-
-function plugin_settings_link($links) { 			// Add the settings link to the plugins page
-    $settings_link = '<a href="options-general.php?page=stlviewer">Settings</a>';
-    array_unshift($links, $settings_link);
-    return $links;
-}
-
 $stlviewer_plugin = new STLViewer(); 					// instantiate the plugin class
-//add_filter( 'add_attachment', 'stl_img_create' );		// For later use
-//add_filter( 'delete_attachment', 'stl_img_delete' );	// For later use
 
-$plugin = plugin_basename(__FILE__);
-add_filter("plugin_action_links_".$plugin, 'plugin_settings_link');
 
 
 

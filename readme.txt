@@ -5,6 +5,7 @@ Plugin URI: http://wordpress.org/extend/plugins/stl-viewer/
 Description: STL Viewer for WordPress
 Version: 1.1
 Stable tag: 1.0
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VNRJ5FSUV3C6L
 Tags: stl, 3d, viewer, shortcode, 3d printing, 3d scanning, kinect
 Requires at least: 3.0
 Tested up to: 4.1.1
@@ -41,6 +42,7 @@ None for the moment.
 
 = 1.1 =
 * Minor bug fixing.
+* Scripts are only loaded if a shortcode was found on the page.
 
 = 1.0 =
 * Complete rewrite of the plugin.

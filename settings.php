@@ -177,17 +177,20 @@ if(!class_exists('STLViewer_Settings')) {
         // Gives out the settings page with echo
         public function display_options() {
             $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'default';
-            ?>
-            <div class="wrap">
-                <?php $this->plugin_options_tabs(); ?>
-                <form method="post" action="options.php">
-                    <?php wp_nonce_field( 'update-options' ); ?>
-                    <?php settings_fields( $tab ); ?>
-                    <?php do_settings_sections( $tab ); ?>
-                    <?php submit_button(); ?>
-                </form>
-            </div>
-            <?php
+            echo '<div class="wrap">';
+                $this->plugin_options_tabs();
+                if($tab == 'help') {
+                    include_once(sprintf( "%s/help.php", dirname(__FILE__) ));
+                }
+                else {
+                    echo '<form method="post" action="options.php">';
+                    wp_nonce_field( 'update-options' );
+                    settings_fields( $tab );
+                    do_settings_sections( $tab );
+                    submit_button();
+                    echo '</form>';
+                }
+            echo '</div>';
         }
 
         // Gives out the tab-navbar with echo
