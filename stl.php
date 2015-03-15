@@ -107,24 +107,31 @@ if(!class_exists('STLViewer')) {
                     var SCREEN_WIDTH = container.clientWidth;
                     var SCREEN_HEIGHT = container.clientHeight;
 
-                    file        = '".$file_url."';
-                    floor       = '".$floor_url."';
+                    var file        = '".$file_url."';
+                    var floor       = '".$floor_url."';
 
-                    object_rotation_offset.set( ".$stlviewer_rotation_x." * Math.PI / 180, ".$stlviewer_rotation_z." * Math.PI / 180, ".$stlviewer_rotation_y." * Math.PI / 180, 'XZY' );
-                    ambient_light_color = ".$stlviewer_ambient_light_color.";
+                    var object_rotation_offset;
 
-                    fog_color   = ".$stlviewer_fog_color.";
-                    fog_near    = ".$stlviewer_fog_near.";
-                    fog_far     = ".$stlviewer_fog_far.";
+                    function setRotationOffset() {
+                        object_rotation_offset = new THREE.Euler(" . $stlviewer_rotation_x . " * Math.PI / 180, " . $stlviewer_rotation_z . " * Math.PI / 180, " . $stlviewer_rotation_y . " * Math.PI / 180, 'XZY');
+                    }
 
-                    floor_scale.set( ".$stlviewer_floor_scale.", 1 );
-                    floor_repeat.set( ".$stlviewer_floor_repeat." );
+                    var ambient_light_color = ".$stlviewer_ambient_light_color.";
 
-                    point_light_intensity = ".$stlviewer_point_light_intensity.";
-                    directional_light_intensity = ".$stlviewer_directional_light_intensity.";
+                    var fog_color   = ".$stlviewer_fog_color.";
+                    var fog_near    = ".$stlviewer_fog_near.";
+                    var fog_far     = ".$stlviewer_fog_far.";
 
-                    point_light_color = ".$stlviewer_point_light_color.";
-                    directional_light_color = ".$stlviewer_directional_light_color.";
+                    function setFloor() {
+                        floor_scale.set( " . $stlviewer_floor_scale . ", 1 );
+                        floor_repeat.set( " . $stlviewer_floor_repeat . " );
+                    }
+
+                    var point_light_intensity = ".$stlviewer_point_light_intensity.";
+                    var directional_light_intensity = ".$stlviewer_directional_light_intensity.";
+
+                    var point_light_color = ".$stlviewer_point_light_color.";
+                    var directional_light_color = ".$stlviewer_directional_light_color.";
 
                     function setLights() {
                         directional_light.position.set(" . $stlviewer_directional_light_position . ");
